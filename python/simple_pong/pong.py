@@ -7,7 +7,7 @@
 # Released under the GNU General Public License
 
 VERSION = "0.4"
-SPEED = 13
+SPEED = 9
 WINDOWS_SIZE = (640, 480)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -192,9 +192,11 @@ def main():
     pygame.display.set_caption('Basic Pong')
 
     # Fill background
+    background_image = pygame.image.load("data/back.jpg").convert()
     background = pygame.Surface(screen.get_size())
     background = background.convert()
     background.fill(BLACK)
+    screen.blit(background_image, [0, 0])
 
     # Initialise players
     global player1
@@ -249,7 +251,8 @@ def main():
                 if event.key == K_UP or event.key == K_DOWN:
                     player2.movepos = [0,0]
                     player2.state = "still"
-        screen.fill(BLACK)
+        #screen.fill(BLACK)
+        screen.blit(background_image, [0, 0])
         screen.blit(background, ball.rect, ball.rect)
         screen.blit(background, player1.rect, player1.rect)
         screen.blit(background, player2.rect, player2.rect)
