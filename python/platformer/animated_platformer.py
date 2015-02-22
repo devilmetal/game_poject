@@ -20,6 +20,7 @@ http://programarcadegames.com/python_examples/sprite_sheets/
 """
 
 import pygame
+import os
 
 # Global constants
 
@@ -34,6 +35,20 @@ GREEN    = (   0, 255,   0)
 SCREEN_WIDTH  = 800
 SCREEN_HEIGHT = 600
 
+def load_png(name):
+        """ Load image and return image object"""
+        fullname = os.path.join('data', name)
+        try:
+                image = pygame.image.load(fullname)
+                if image.get_alpha is None:
+                        image = image.convert()
+                else:
+                        image = image.convert_alpha()
+        except pygame.error, message:
+                print 'Cannot load image:', fullname
+                raise SystemExit, message
+        return image, image.get_rect()
+
 
 class Player(pygame.sprite.Sprite):
     """
@@ -44,15 +59,17 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         """ Constructor function """
         super(Player, self).__init__()
-        # Create an image of the block, and fill it with a color.
-        # This could also be an image loaded from the disk.
-        width = 40
-        height = 60
-        self.image = pygame.Surface([width, height])
-        self.image.fill(RED)
 
+        #Load images and rectangles
+        self.jump_l_image, self.jump_l_image_rect =  load_png('hero/jump_l.png')
+        self.jump_r_image, self.jump_r_image_rect =  load_png('hero/jump_r.png')
+        self.idle_l_image, self.idle_l_image_rect = load_png('hero/idle_l.png')
+        self.idle_r_image, self.idle_r_image_rect = load_png('hero/idle_r.png')
+
+        self.image = self.idle_l_image
+        self.rect = self.idle_l_image_rect
         # Set a referance to the image rect.
-        self.rect = self.image.get_rect()
+        #self.rect = self.image.get_rect()
 
         # Set speed vector of player
         self.change_x = 0
@@ -61,7 +78,8 @@ class Player(pygame.sprite.Sprite):
         # List of sprites we can bump against
         self.level = None
 
-        self.status = 'stand' #stand,moving, used for mobile platform
+        self.status = 'idle_r' #idle,move,jump,
+        self.location = 'ground' #ground,air,block
 
     def update(self):
         """ Move the player. """
@@ -92,22 +110,59 @@ class Player(pygame.sprite.Sprite):
             # Reset our position based on the top/bottom of the object.
             if self.change_y > 0:
                 self.rect.bottom = block.rect.top
+                self.location = 'block'
+                if self.status == 'air':
+                    if self.status == 'move_r':
+                        self.status = 'idle_r'
+                    else:
+                        self.status = 'idle_l'
             elif self.change_y < 0:
                 self.rect.top = block.rect.bottom
 
             # Stop our vertical movement
             self.change_y = 0
 
+        #Finally calculate the image to display
+        self.calc_image()
+
+    def calc_image(self):
+        if self.location == 'air':
+            if self.status == 'move_r' or self.status == 'idle_r' :
+                self.image = self.jump_r_image
+            else:
+                self.image = self.jump_l_image
+        else:
+            if self.status == 'idle_l':
+                self.image = self.idle_l_image
+            elif self.status == 'idle_r':
+                self.image = self.idle_r_image
+            elif self.status == 'move_r':
+                #TODO
+                self.image = self.idle_r_image
+            elif self.status == 'move_l':
+                #TODO
+                self.image = self.idle_l_image
+            else:
+                self.image = self.idle_r_image
+
+
     def calc_grav(self):
         """ Calculate effect of gravity. """
         if self.change_y == 0:
             self.change_y = 1
         else:
+            self.location = 'air'
             self.change_y += .35
 
         # See if we are on the ground.
         if self.rect.y >= SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
             self.change_y = 0
+            if self.location == 'air':
+                if self.status == 'move_r':
+                    self.status = 'idle_r'
+                else:
+                    self.status = 'idle_l'
+            self.location = 'ground'
             self.rect.y = SCREEN_HEIGHT - self.rect.height
 
     def jump(self):
@@ -123,20 +178,23 @@ class Player(pygame.sprite.Sprite):
         # If it is ok to jump, set our speed upwards
         if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
             self.change_y = -10
-            self.status = 'moving'
+            self.location = 'air'
     # Player-controlled movement:
     def go_left(self):
         """ Called when the user hits the left arrow. """
         self.change_x += -6
-        self.status = 'moving'
+        self.status = 'move_l'
     def go_right(self):
         """ Called when the user hits the right arrow. """
         self.change_x += 6
-        self.status = 'moving'
+        self.status = 'move_r'
     def stop(self):
         """ Called when the user lets off the keyboard. """
         self.change_x = 0
-        self.status = 'stand'
+        if self.status == 'move_r':
+            self.status = 'idle_r'
+        else:
+            self.status = 'idle_l'
 
 class Platform(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -214,7 +272,7 @@ class MovingPlatform(Platform):
         self.player.rect.y -= 1
 
         if hit:
-            if self.player.status == 'stand':
+            if self.player.location == 'block' and (self.player.status == 'idle_l' or self.player.status == 'idle_r') :
                 self.player.change_x = self.change_x
 
         # Check the boundaries and see if we need to reverse
@@ -286,7 +344,7 @@ class Level_01(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.level_limit = -1500
+        self.level_limit = -1800
 
         # Array with width, height, x, and y of platform
         level = [[210, 70, 500, 500],
@@ -309,11 +367,12 @@ class Level_01(Level):
         block.rect.x = 1350
         block.rect.y = 380
         block.boundary_left = 1350
-        block.boundary_right = 1600
+        block.boundary_right = 1500
         block.change_x = 1
         block.player = self.player
         block.level = self
         self.platform_list.add(block)
+
 
 # Create platforms for the level
 class Level_02(Level):
@@ -351,7 +410,7 @@ def main():
     size = [SCREEN_WIDTH, SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption("Empty Platformer")
+    pygame.display.set_caption("Animated Platformer")
 
     # Create the player
     player = Player()
@@ -380,29 +439,12 @@ def main():
 
     # -------- Main Program Loop -----------
     while not done:
-        for event in pygame.event.get(): # User did something
-            if event.type == pygame.QUIT: # If user clicked close
-                done = True # Flag that we are done so we exit this loop
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    player.go_left()
-                if event.key == pygame.K_RIGHT:
-                    player.go_right()
-                if event.key == pygame.K_UP:
-                    player.jump()
-
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT and player.change_x < 0:
-                    player.stop()
-                if event.key == pygame.K_RIGHT and player.change_x > 0:
-                    player.stop()
+        print(player.location)
 
 
 
         # Update the player.
         active_sprite_list.update()
-
         # Update items in the level
         current_level.update()
 
@@ -434,6 +476,25 @@ def main():
         # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 
         # Limit to 60 frames per second
+
+        for event in pygame.event.get(): # User did something
+            if event.type == pygame.QUIT: # If user clicked close
+                done = True # Flag that we are done so we exit this loop
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    player.go_left()
+                if event.key == pygame.K_RIGHT:
+                    player.go_right()
+                if event.key == pygame.K_UP:
+                    player.jump()
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT and player.change_x < 0:
+                    player.stop()
+                if event.key == pygame.K_RIGHT and player.change_x > 0:
+                    player.stop()
+
         clock.tick(60)
 
         # Go ahead and update the screen with what we've drawn.
