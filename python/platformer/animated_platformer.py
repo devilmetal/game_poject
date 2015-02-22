@@ -35,6 +35,11 @@ GREEN    = (   0, 255,   0)
 SCREEN_WIDTH  = 800
 SCREEN_HEIGHT = 600
 
+#Moving speed variables
+MOVING_FRAME = 0
+FRAME_INC = 0
+STEP_SPEED = 3
+
 def load_png(name):
         """ Load image and return image object"""
         fullname = os.path.join('data', name)
@@ -65,6 +70,11 @@ class Player(pygame.sprite.Sprite):
         self.jump_r_image, self.jump_r_image_rect =  load_png('hero/jump_r.png')
         self.idle_l_image, self.idle_l_image_rect = load_png('hero/idle_l.png')
         self.idle_r_image, self.idle_r_image_rect = load_png('hero/idle_r.png')
+        self.move_1_r_image, self.move_1_r_image_rect = load_png('hero/move_1_r.png')
+        self.move_1_l_image, self.move_1_l_image_rect = load_png('hero/move_1_l.png')
+        self.move_2_r_image, self.move_2_r_image_rect = load_png('hero/move_2_r.png')
+        self.move_2_l_image, self.move_2_l_image_rect = load_png('hero/move_2_l.png')
+
 
         self.image = self.idle_l_image
         self.rect = self.idle_l_image_rect
@@ -126,6 +136,9 @@ class Player(pygame.sprite.Sprite):
         self.calc_image()
 
     def calc_image(self):
+        global MOVING_FRAME
+        global FRAME_INC
+        global STEP_SPEED
         if self.location == 'air':
             if self.status == 'move_r' or self.status == 'idle_r' :
                 self.image = self.jump_r_image
@@ -134,15 +147,46 @@ class Player(pygame.sprite.Sprite):
         else:
             if self.status == 'idle_l':
                 self.image = self.idle_l_image
+                MOVING_FRAME = 0
             elif self.status == 'idle_r':
                 self.image = self.idle_r_image
+                MOVING_FRAME = 0
             elif self.status == 'move_r':
-                #TODO
-                self.image = self.idle_r_image
+                if (int(MOVING_FRAME) % 2) == 0:
+                    if FRAME_INC < STEP_SPEED:
+                        self.image = self.move_1_r_image
+                        FRAME_INC += 1
+                    else:
+                        self.image = self.move_1_r_image
+                        FRAME_INC = 0
+                        MOVING_FRAME += 1
+                else:
+                    if FRAME_INC < STEP_SPEED:
+                        self.image = self.move_2_r_image
+                        FRAME_INC += 1
+                    else:
+                        self.image = self.move_2_r_image
+                        FRAME_INC = 0
+                        MOVING_FRAME += 1
             elif self.status == 'move_l':
-                #TODO
-                self.image = self.idle_l_image
+                if (int(MOVING_FRAME) % 2) == 0:
+                    if FRAME_INC < STEP_SPEED:
+                        self.image = self.move_1_l_image
+                        FRAME_INC += 1
+                    else:
+                        self.image = self.move_1_l_image
+                        FRAME_INC = 0
+                        MOVING_FRAME += 1
+                else:
+                    if FRAME_INC < STEP_SPEED:
+                        self.image = self.move_2_l_image
+                        FRAME_INC += 1
+                    else:
+                        self.image = self.move_2_l_image
+                        FRAME_INC = 0
+                        MOVING_FRAME += 1
             else:
+                #FORBIDDEN
                 self.image = self.idle_r_image
 
 
@@ -439,9 +483,6 @@ def main():
 
     # -------- Main Program Loop -----------
     while not done:
-        print(player.location)
-
-
 
         # Update the player.
         active_sprite_list.update()
