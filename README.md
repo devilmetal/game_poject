@@ -1,4 +1,4 @@
-# project_PCST
+# project_SUPERCOOL
 
 ## Abstract
 This project is developed for the course  Design and Graphics Programming for Video-Games. The goal is to develop a video game.
