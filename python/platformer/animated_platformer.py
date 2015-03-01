@@ -247,6 +247,21 @@ class Platform(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
 
+class BoostPlatform(Platform):
+    """ Booster platform """
+    player = None
+    level = None
+    direction = 1 #+1,-1
+    boost = 0.1
+    def update(self):
+        #check if the player is on top of the platform
+        self.player.rect.y += 1
+        hit = pygame.sprite.collide_rect(self.player, self)
+        self.player.rect.y -= 1
+
+        if hit:
+            self.player.change_x = 6*self.direction
+
 class MovingPlatform(Platform):
     """ This is a fancier platform that can actually move. """
     change_x = 0
@@ -408,6 +423,16 @@ class Level_01(Level):
         block.boundary_left = 1350
         block.boundary_right = 1500
         block.change_x = 1
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        # Add a custom booster platform
+        block = BoostPlatform(70, 40)
+        block.rect.x = 1500
+        block.rect.y = 500
+        block.boost = 0.5
+        block.direction = 1
         block.player = self.player
         block.level = self
         self.platform_list.add(block)
