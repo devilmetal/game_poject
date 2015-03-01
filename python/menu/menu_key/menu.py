@@ -43,31 +43,31 @@ class Menu:
         zaznaczenie_rect = pygame.Rect
 
     def move_menu(self, top, left):
-        self.pozycja_wklejenia = (top,left) 
+        self.pozycja_wklejenia = (top,left)
 
     def set_colors(self, text, selection, background):
         self.kolor_tla = background
         self.kolor_tekstu =  text
         self.kolor_zaznaczenia = selection
-        
+
     def set_fontsize(self,font_size):
         self.rozmiar_fontu = font_size
-        
+
     def set_font(self, path):
         self.font_path = path
-        
+
     def get_position(self):
         return self.pozycja_zaznaczenia
-    
+
     def init(self, lista, dest_surface):
         self.lista = lista
         self.dest_surface = dest_surface
         self.ilosc_pol = len(self.lista)
-        self.stworz_strukture()        
-        
+        self.stworz_strukture()
+
     def draw(self,przesun=0):
         if przesun:
-            self.pozycja_zaznaczenia += przesun 
+            self.pozycja_zaznaczenia += przesun
             if self.pozycja_zaznaczenia == -1:
                 self.pozycja_zaznaczenia = self.ilosc_pol - 1
             self.pozycja_zaznaczenia %= self.ilosc_pol
@@ -98,7 +98,7 @@ class Menu:
             self.pola[i].pole_rect.top = przesuniecie+(przesuniecie*2+height)*i
 
             width = self.pola[i].pole_rect.width+przesuniecie*2
-            height = self.pola[i].pole_rect.height+przesuniecie*2            
+            height = self.pola[i].pole_rect.height+przesuniecie*2
             left = self.pola[i].pole_rect.left-przesuniecie
             top = self.pola[i].pole_rect.top-przesuniecie
 
@@ -109,7 +109,7 @@ class Menu:
         x = self.dest_surface.get_rect().centerx - self.menu_width / 2
         y = self.dest_surface.get_rect().centery - self.menu_height / 2
         mx, my = self.pozycja_wklejenia
-        self.pozycja_wklejenia = (x+mx, y+my) 
+        self.pozycja_wklejenia = (x+mx, y+my)
 
 
 if __name__ == "__main__":
@@ -122,12 +122,12 @@ if __name__ == "__main__":
     *set_colors will set colors of menu (text, selection, background)
     *set_fontsize will set size of font.
     *set_font take a path to font you choose.
-    *move_menu is quite interseting. It is only option which you can use before 
-    and after *init statement. When you use it before you will move menu from 
-    center of your surface. When you use it after it will set constant coordinates. 
+    *move_menu is quite interseting. It is only option which you can use before
+    and after *init statement. When you use it before you will move menu from
+    center of your surface. When you use it after it will set constant coordinates.
     Uncomment every one and check what is result!
-    *draw will blit menu on the surface. Be carefull better set only -1 and 1 
-    arguments to move selection or nothing. This function will return actual 
+    *draw will blit menu on the surface. Be carefull better set only -1 and 1
+    arguments to move selection or nothing. This function will return actual
     position of selection.
     *get_postion will return actual position of seletion. '''
     menu = Menu()#necessary
@@ -135,10 +135,10 @@ if __name__ == "__main__":
     #menu.set_fontsize(64)#optional
     #menu.set_font('data/couree.fon')#optional
     #menu.move_menu(100, 99)#optional
-    menu.init(['Start','Options','Quit'], surface)#necessary
+    menu.init(['Start','Options','Quit',"DOOODLLEO"], surface)#necessary
     #menu.move_menu(0, 0)#optional
     menu.draw()#necessary
-    
+
     pygame.key.set_repeat(199,69)#(delay,interval)
     pygame.display.update()
     while 1:
@@ -151,7 +151,7 @@ if __name__ == "__main__":
                 if event.key == K_RETURN:
                     if menu.get_position() == 2:#here is the Menu class function
                         pygame.display.quit()
-                        sys.exit()                        
+                        sys.exit()
                 if event.key == K_ESCAPE:
                     pygame.display.quit()
                     sys.exit()
@@ -160,4 +160,3 @@ if __name__ == "__main__":
                 pygame.display.quit()
                 sys.exit()
         pygame.time.wait(8)
-        
