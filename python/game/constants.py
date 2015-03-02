@@ -15,3 +15,6 @@ SCREEN_HEIGHT = 600
 MOVING_FRAME = 0
 FRAME_INC = 0
 STEP_SPEED = 3
+
+#Loop constant for menu-level-...
+GAME_STATUS = "menu" #menu, char_select, level_selct, level, exit

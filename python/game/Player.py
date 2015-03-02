@@ -180,11 +180,11 @@ class Player(pygame.sprite.Sprite):
     # Player-controlled movement:
     def go_left(self):
         """ Called when the user hits the left arrow. """
-        self.change_x += -6
+        self.change_x = -6
         self.status = 'move_l'
     def go_right(self):
         """ Called when the user hits the right arrow. """
-        self.change_x += 6
+        self.change_x = 6
         self.status = 'move_r'
     def stop(self):
         """ Called when the user lets off the keyboard. """
