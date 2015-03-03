@@ -183,7 +183,12 @@ class Player(pygame.sprite.Sprite):
         self.rect.y -= 2
 
         # If it is ok to jump, set our speed upwards
+        # If we're on a moving plateform and we jump, we don't keep the speed of the plateform
+        # (it only works if we don't set the speed of the plateform same speed than the character)
+        
         if len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT:
+            if not (self.change_x == 6 or self.change_x == -6):
+                self.change_x = 0
             self.change_y = -10
             self.location = 'air'
     # Player-controlled movement:
