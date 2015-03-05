@@ -55,6 +55,7 @@ class Menu:
         menu = pygame.Surface((self.menu_width, self.menu_height))
         #no back color at the moment. Transparent stuff !
         menu.fill(self.back_color)
+
         select_rect = self.position[self.pos_selection].select_rect
         pygame.draw.rect(menu,self.select_color,select_rect)
 

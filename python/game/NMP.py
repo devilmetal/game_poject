@@ -57,7 +57,7 @@ def main():
             active_sprite_list = pygame.sprite.Group()
             player.level = current_level
 
-            player.rect.x = 340
+            player.rect.x = 450
             player.rect.y = constants.SCREEN_HEIGHT - player.rect.height
             active_sprite_list.add(player)
 
@@ -66,7 +66,9 @@ def main():
 
             # Used to manage how fast the screen updates
             clock = pygame.time.Clock()
-
+            #Play audio stuff
+            pygame.mixer.music.load('data/sound/test.mp3')
+            pygame.mixer.music.play(-1)
             # -------- Main Program Loop -----------
             while not done:
 
