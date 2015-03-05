@@ -37,6 +37,10 @@ class Player(pygame.sprite.Sprite):
         self.move_2_r_image, self.move_2_r_image_rect = load_png('hero/move_2_r.png')
         self.move_2_l_image, self.move_2_l_image_rect = load_png('hero/move_2_l.png')
 
+        #load sounds
+        self.sounds={}
+        self.sounds['jump']=pygame.mixer.Sound('data/sound/jump.wav')
+
 
         self.image = self.idle_l_image
         self.rect = self.idle_l_image_rect
@@ -52,6 +56,7 @@ class Player(pygame.sprite.Sprite):
 
         self.status = 'idle_r' #idle,move,jump,
         self.location = 'ground' #ground,air,block
+
 
     def update(self):
         """ Move the player. """
@@ -175,6 +180,8 @@ class Player(pygame.sprite.Sprite):
 
         # If it is ok to jump, set our speed upwards
         if len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT:
+            #Play sound jump
+            self.sounds['jump'].play()
             self.change_y = -10
             self.location = 'air'
     # Player-controlled movement:
