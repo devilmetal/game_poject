@@ -196,8 +196,8 @@ class Player(pygame.sprite.Sprite):
             self.sounds['jump'].play()
             if not (self.change_x == 6 or self.change_x == -6):
                 self.change_x = 0
-                self.change_y = -10
-                self.location = 'air'
+            self.change_y = -10
+            self.location = 'air'
     # Player-controlled movement:
     def go_left(self):
         """ Called when the user hits the left arrow. """
