@@ -72,7 +72,7 @@ class Menu:
         text = font_title.render(title, 1, constants.WHITE)
         screen = self.dest_surface
         textRect = text.get_rect()
-        textRect.centerx = screen.get_rect().centerx
+        textRect.centerx = 500
         textRect.centery = 100
         screen.blit(text,textRect)
         actual_posiecie = 0
