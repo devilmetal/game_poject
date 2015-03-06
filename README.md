@@ -3,9 +3,9 @@
 ## Abstract
 This project is developed for the course  Design and Graphics Programming for Video-Games. The goal is to develop a video game.
 
-## Topic
+## No More Pixies
 
-**INSERT GREAT IDEA HERE**
+Kick bad guys asses !
 
 ## References and links
 
