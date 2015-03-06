@@ -30,13 +30,24 @@ class Level_01(Level):
             block.player = self.player
             self.platform_list.add(block)
 
-        # Add a custom moving platform
+        # Add an horizontal moving platform
         block = MovingPlatform(70, 40)
         block.rect.x = 1350
         block.rect.y = 380
         block.boundary_left = 1350
         block.boundary_right = 1500
         block.change_x = 1
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        # Add a vertical moving plateform
+        block = MovingPlatform(100,20)
+        block.rect.x = 1600
+        block.rect.y = 300
+        block.boundary_top = 300
+        block.boundary_bottom = 500
+        block.change_y = 1
         block.player = self.player
         block.level = self
         self.platform_list.add(block)

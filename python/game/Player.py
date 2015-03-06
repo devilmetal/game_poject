@@ -156,8 +156,17 @@ class Player(pygame.sprite.Sprite):
 
     def calc_grav(self):
         """ Calculate effect of gravity. """
+        #In order to debug the image of the character that is displayed when he/she is
+        #on en plateform that moves down we need to check whether or not we're on it and
+        #make an special case
+        self.rect.y += 2
+        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        self.rect.y -= 2
+
         if self.change_y == 0:
             self.change_y = 1
+        elif len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT:
+            self.location = 'block'
         else:
             self.location = 'air'
             self.change_y += .35
@@ -179,11 +188,16 @@ class Player(pygame.sprite.Sprite):
         self.rect.y -= 2
 
         # If it is ok to jump, set our speed upwards
+        # If we're on a moving plateform and we jump, we don't keep the speed of the plateform
+        # (it only works if we don't set the speed of the plateform same speed than the character)
+
         if len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT:
             #Play sound jump
             self.sounds['jump'].play()
-            self.change_y = -10
-            self.location = 'air'
+            if not (self.change_x == 6 or self.change_x == -6):
+                self.change_x = 0
+                self.change_y = -10
+                self.location = 'air'
     # Player-controlled movement:
     def go_left(self):
         """ Called when the user hits the left arrow. """
