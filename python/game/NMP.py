@@ -25,6 +25,12 @@ import constants
 import sys
 
 constants.GAME_STATUS = "menu" #menu, char_select, level_selct, level
+pygame.joystick.init()
+joystick=None
+if pygame.joystick.get_count() >0:
+    joystick=pygame.joystick.Joystick(0)
+    joystick.init()
+    print "Joystick "+joystick.get_name()+" ready to use"
 def main():
     """ Main Program """
     pygame.init()
@@ -89,14 +95,12 @@ def main():
                     player.rect.left = 120
                     current_level.shift_world(diff)
 
-                # If the player gets to the end of the level, go to the next level
+                # If the player gets to the end of the level, go to the menu title
                 current_position = player.rect.x + current_level.world_shift
                 if current_position < current_level.level_limit:
-                    player.rect.x = 120
-                    if current_level_no < len(level_list)-1:
-                        current_level_no += 1
-                        current_level = level_list[current_level_no]
-                        player.level = current_level
+                    done = True
+                    constants.GAME_STATUS == "menu"
+
 
                 # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
                 current_level.draw(screen)
@@ -107,6 +111,22 @@ def main():
                 # Limit to 60 frames per second
 
                 for event in pygame.event.get(): # User did something
+
+                    #Joystick stuff
+                    if event.type == pygame.JOYHATMOTION:
+                        hat = str(joystick.get_hat(0))
+                        if "(-1, 0)" in hat:
+                            player.go_left()
+                        if "(1, 0)" in hat:
+                            player.go_right()
+                        if "(0, 0)" in hat and player.change_x != 0:
+                            player.stop()
+
+                    if event.type == pygame.JOYBUTTONDOWN:
+                        if joystick.get_button(0) == 1:
+                            player.jump()
+
+                    #Keyboard stuff
                     if event.type == pygame.QUIT: # If user clicked close
                         done = True # Flag that we are done so we exit this loop
                         main_loop = False #exit main program loop
@@ -146,10 +166,30 @@ def main():
             menu_flag = True
             while menu_flag:
                 for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
+
+                    #Joystick stuff
+                    if event.type == pygame.JOYHATMOTION:
+                        hat = str(joystick.get_hat(0))
+                        if "(0, 1)" in hat:
+                            menu.draw(-1)
+                        if "(0, -1)"in hat:
+                            menu.draw(1)
+                        pygame.display.update()
+                    if event.type == pygame.JOYBUTTONDOWN:
+                        if joystick.get_button(0) == 1:
+                            if menu.get_position() == 1:#here is the Menu class function
+                                constants.GAME_STATUS="exit"
+                                menu_flag = False
+                            if menu.get_position() == 0:#here is the Menu class function
+                                constants.GAME_STATUS="level"
+                                menu_flag = False
+
+
+                    #Keyboard stuff
+                    if event.type == pygame.KEYDOWN: # or event.type == pygame.JOYHATMOTION or event.type == pygame.JOYBUTTONDOWN:
+                        if event.key == pygame.K_UP:# or joystick.get_hat()==(0,1):
                             menu.draw(-1) #here is the Menu class function
-                        if event.key == pygame.K_DOWN:
+                        if event.key == pygame.K_DOWN:# or joystick.get_hat()==(0,-1):
                             menu.draw(1) #here is the Menu class function
                         if event.key == pygame.K_RETURN:
                             if menu.get_position() == 1:#here is the Menu class function
