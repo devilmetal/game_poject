@@ -9,15 +9,19 @@ class PNJ(pygame.sprite.Sprite):
         """ Constructor function """
         super(PNJ, self).__init__()
 
+        self.direction = direction
+        self.speed = speed
         # Set speed vector of PNJ
         self.change_x = direction*speed
         self.change_y = 0
+
+        #Prepare rectangle
+        self.rect = None
 
         # List of sprites PNJ can bump against + player
         self.level = None
         self.player = None
 
-        self.image, self.rect =  routines.load_png('pnj/enemy/pnj1.png')
 
     def update(self):
 
@@ -56,7 +60,6 @@ class PNJ(pygame.sprite.Sprite):
 
             # Stop our vertical movement
             self.change_y = 0
-
 
     def calc_grav(self):
         self.rect.y += 2
