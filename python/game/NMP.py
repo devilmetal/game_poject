@@ -84,15 +84,15 @@ def main():
                 current_level.update()
 
                 # If the player gets near the right side, shift the world left (-x)
-                if player.rect.right >= 500:
-                    diff = player.rect.right - 500
-                    player.rect.right = 500
+                if player.rect.right >= 300:
+                    diff = player.rect.right - 300
+                    player.rect.right = 300
                     current_level.shift_world(-diff)
 
                 # If the player gets near the left side, shift the world right (+x)
-                if player.rect.left <= 120:
-                    diff = 120 - player.rect.left
-                    player.rect.left = 120
+                if player.rect.left <= 300:
+                    diff = 300 - player.rect.left
+                    player.rect.left = 300
                     current_level.shift_world(diff)
 
                 #SHIFT THE WORLD
