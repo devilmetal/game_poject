@@ -2,6 +2,8 @@ from Level import Level
 from Platform import Platform
 from MovingPlatform import MovingPlatform
 from BoostPlatform import BoostPlatform
+from PNJ import PNJ
+
 # Create platforms for the level
 class Level_01(Level):
     """ Definition for level 1. """
@@ -19,8 +21,19 @@ class Level_01(Level):
                  [210, 70, 800, 400],
                  [210, 70, 1000, 500],
                  [210, 70, 1120, 280],
+                 [70, 70, 500, 550],
+                 [70, 70, 100, 550]
                  ]
 
+        # Array with x, y, direction, speed of pnj
+        enemies = [[500, 500, 1, 2]]
+        for pnj in enemies:
+            enemy = PNJ(pnj[2],pnj[3])
+            enemy.rect.x = pnj[0]
+            enemy.rect.y = pnj[1]
+            enemy.player=self.player
+            enemy.level=self
+            self.pnj_list.add(enemy)
 
         # Go through the array above and add platforms
         for platform in level:
