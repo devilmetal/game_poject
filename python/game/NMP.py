@@ -47,7 +47,7 @@ def main():
             from Platform import Platform
             from MovingPlatform import MovingPlatform
             from levels.Level1 import Level_01
-            from levels.Level2 import Level_02
+            #from levels.Level2 import Level_02
             # Create the player
             player = Player()
 
@@ -95,11 +95,15 @@ def main():
                     player.rect.left = 120
                     current_level.shift_world(diff)
 
-                # If the player gets to the end of the level, go to the menu title
+                #SHIFT THE WORLD
                 current_position = player.rect.x + current_level.world_shift
+
+                # If the player gets to the end of the level, go to the menu title
                 if current_position < current_level.level_limit:
+                    constants.GAME_STATUS = "menu"
                     done = True
-                    constants.GAME_STATUS == "menu"
+                    print constants.GAME_STATUS
+
 
 
                 # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
@@ -108,7 +112,6 @@ def main():
 
                 # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 
-                # Limit to 60 frames per second
 
                 for event in pygame.event.get(): # User did something
 
@@ -145,6 +148,7 @@ def main():
                         if event.key == pygame.K_RIGHT and player.change_x > 0:
                             player.stop()
 
+                # Limit to 60 frames per second
                 clock.tick(60)
 
                 # Go ahead and update the screen with what we've drawn.
