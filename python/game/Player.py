@@ -1,21 +1,7 @@
 import pygame
 import os
 import constants
-
-def load_png(name):
-        """ Load image and return image object"""
-        fullname = os.path.join('data', name)
-        try:
-                image = pygame.image.load(fullname)
-                if image.get_alpha is None:
-                        image = image.convert()
-                else:
-                        image = image.convert_alpha()
-        except pygame.error, message:
-                print 'Cannot load image:', fullname
-                raise SystemExit, message
-        return image, image.get_rect()
-
+import routines
 
 class Player(pygame.sprite.Sprite):
     """
@@ -28,14 +14,14 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__()
 
         #Load images and rectangles
-        self.jump_l_image, self.jump_l_image_rect =  load_png('hero/jump_l.png')
-        self.jump_r_image, self.jump_r_image_rect =  load_png('hero/jump_r.png')
-        self.idle_l_image, self.idle_l_image_rect = load_png('hero/idle_l.png')
-        self.idle_r_image, self.idle_r_image_rect = load_png('hero/idle_r.png')
-        self.move_1_r_image, self.move_1_r_image_rect = load_png('hero/move_1_r.png')
-        self.move_1_l_image, self.move_1_l_image_rect = load_png('hero/move_1_l.png')
-        self.move_2_r_image, self.move_2_r_image_rect = load_png('hero/move_2_r.png')
-        self.move_2_l_image, self.move_2_l_image_rect = load_png('hero/move_2_l.png')
+        self.jump_l_image, self.jump_l_image_rect =  routines.load_png('hero/jump_l.png')
+        self.jump_r_image, self.jump_r_image_rect =  routines.load_png('hero/jump_r.png')
+        self.idle_l_image, self.idle_l_image_rect = routines.load_png('hero/idle_l.png')
+        self.idle_r_image, self.idle_r_image_rect = routines.load_png('hero/idle_r.png')
+        self.move_1_r_image, self.move_1_r_image_rect = routines.load_png('hero/move_1_r.png')
+        self.move_1_l_image, self.move_1_l_image_rect = routines.load_png('hero/move_1_l.png')
+        self.move_2_r_image, self.move_2_r_image_rect = routines.load_png('hero/move_2_r.png')
+        self.move_2_l_image, self.move_2_l_image_rect = routines.load_png('hero/move_2_l.png')
 
         #load sounds
         self.sounds={}
@@ -193,7 +179,7 @@ class Player(pygame.sprite.Sprite):
 
         if len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT:
             #Play sound jump
-            self.sounds['jump'].play()
+            #self.sounds['jump'].play()
             if not (self.change_x == 6 or self.change_x == -6):
                 self.change_x = 0
             self.change_y = -10

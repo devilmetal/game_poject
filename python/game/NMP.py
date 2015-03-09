@@ -25,6 +25,12 @@ import constants
 import sys
 
 constants.GAME_STATUS = "menu" #menu, char_select, level_selct, level
+pygame.joystick.init()
+joystick=None
+if pygame.joystick.get_count() >0:
+    joystick=pygame.joystick.Joystick(0)
+    joystick.init()
+    print "Joystick "+joystick.get_name()+" ready to use"
 def main():
     """ Main Program """
     pygame.init()
@@ -40,9 +46,11 @@ def main():
             from Player import Player
             from Platform import Platform
             from MovingPlatform import MovingPlatform
-            from levels.Level1 import Level_01
-            from levels.Level2 import Level_02
+            #from levels.Level1 import Level_01
+
+            #from levels.Level2 import Level_02
             from levels.FirstStage import FirstStage
+
             # Create the player
             player = Player()
 
@@ -68,8 +76,8 @@ def main():
             # Used to manage how fast the screen updates
             clock = pygame.time.Clock()
             #Play audio stuff
-            pygame.mixer.music.load('data/sound/test.mp3')
-            pygame.mixer.music.play(-1)
+            #pygame.mixer.music.load('data/sound/test.mp3')
+            #pygame.mixer.music.play(-1)
             # -------- Main Program Loop -----------
             while not done:
 
@@ -79,25 +87,27 @@ def main():
                 current_level.update()
 
                 # If the player gets near the right side, shift the world left (-x)
-                if player.rect.right >= 500:
-                    diff = player.rect.right - 500
-                    player.rect.right = 500
+                if player.rect.right >= 300:
+                    diff = player.rect.right - 300
+                    player.rect.right = 300
                     current_level.shift_world(-diff)
 
                 # If the player gets near the left side, shift the world right (+x)
-                if player.rect.left <= 120:
-                    diff = 120 - player.rect.left
-                    player.rect.left = 120
+                if player.rect.left <= 300:
+                    diff = 300 - player.rect.left
+                    player.rect.left = 300
                     current_level.shift_world(diff)
 
-                # If the player gets to the end of the level, go to the next level
+                #SHIFT THE WORLD
                 current_position = player.rect.x + current_level.world_shift
+
+                # If the player gets to the end of the level, go to the menu title
                 if current_position < current_level.level_limit:
-                    player.rect.x = 120
-                    if current_level_no < len(level_list)-1:
-                        current_level_no += 1
-                        current_level = level_list[current_level_no]
-                        player.level = current_level
+                    constants.GAME_STATUS = "menu"
+                    done = True
+                    print constants.GAME_STATUS
+
+
 
                 # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
                 current_level.draw(screen)
@@ -105,9 +115,24 @@ def main():
 
                 # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 
-                # Limit to 60 frames per second
 
                 for event in pygame.event.get(): # User did something
+
+                    #Joystick stuff
+                    if event.type == pygame.JOYHATMOTION:
+                        hat = str(joystick.get_hat(0))
+                        if "(-1, 0)" in hat:
+                            player.go_left()
+                        if "(1, 0)" in hat:
+                            player.go_right()
+                        if "(0, 0)" in hat and player.change_x != 0:
+                            player.stop()
+
+                    if event.type == pygame.JOYBUTTONDOWN:
+                        if joystick.get_button(0) == 1:
+                            player.jump()
+
+                    #Keyboard stuff
                     if event.type == pygame.QUIT: # If user clicked close
                         done = True # Flag that we are done so we exit this loop
                         main_loop = False #exit main program loop
@@ -126,6 +151,7 @@ def main():
                         if event.key == pygame.K_RIGHT and player.change_x > 0:
                             player.stop()
 
+                # Limit to 60 frames per second
                 clock.tick(60)
 
                 # Go ahead and update the screen with what we've drawn.
@@ -147,10 +173,30 @@ def main():
             menu_flag = True
             while menu_flag:
                 for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
+
+                    #Joystick stuff
+                    if event.type == pygame.JOYHATMOTION:
+                        hat = str(joystick.get_hat(0))
+                        if "(0, 1)" in hat:
+                            menu.draw(-1)
+                        if "(0, -1)"in hat:
+                            menu.draw(1)
+                        pygame.display.update()
+                    if event.type == pygame.JOYBUTTONDOWN:
+                        if joystick.get_button(0) == 1:
+                            if menu.get_position() == 1:#here is the Menu class function
+                                constants.GAME_STATUS="exit"
+                                menu_flag = False
+                            if menu.get_position() == 0:#here is the Menu class function
+                                constants.GAME_STATUS="level"
+                                menu_flag = False
+
+
+                    #Keyboard stuff
+                    if event.type == pygame.KEYDOWN: # or event.type == pygame.JOYHATMOTION or event.type == pygame.JOYBUTTONDOWN:
+                        if event.key == pygame.K_UP:# or joystick.get_hat()==(0,1):
                             menu.draw(-1) #here is the Menu class function
-                        if event.key == pygame.K_DOWN:
+                        if event.key == pygame.K_DOWN:# or joystick.get_hat()==(0,-1):
                             menu.draw(1) #here is the Menu class function
                         if event.key == pygame.K_RETURN:
                             if menu.get_position() == 1:#here is the Menu class function
