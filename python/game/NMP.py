@@ -66,8 +66,8 @@ def main():
             active_sprite_list = pygame.sprite.Group()
             player.level = current_level
 
-            player.rect.x = 200
-            player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 20
+            player.rect.x = current_level.start_x
+            player.rect.y = current_level.start_y
             active_sprite_list.add(player)
 
             #Loop until the user clicks the close button.
@@ -85,6 +85,10 @@ def main():
                 active_sprite_list.update()
                 # Update items in the level
                 current_level.update()
+
+                #if the player is dead 
+                if player.dead == True:
+                    done = True
 
                 # If the player gets near the right side, shift the world left (-x)
                 if player.rect.right >= 300:

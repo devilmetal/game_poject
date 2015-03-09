@@ -43,7 +43,8 @@ class Player(pygame.sprite.Sprite):
         self.status = 'idle_r' #idle,move,jump,
         self.location = 'ground' #ground,air,block
 
-        self.mov_plat = 'false' #is a moving plateform
+        self.mov_plat = False #is on a moving plateform
+        self.dead = False #is dead
 
 
     def update(self):
@@ -160,10 +161,16 @@ class Player(pygame.sprite.Sprite):
             self.change_y += .35
 
         # See if we are on the ground.
-        if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
-            self.change_y = 0
+        if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height - 20 and self.change_y >= 0:
+            #self.change_y = 0
             self.location = 'ground'
             #self.rect.y = constants.SCREEN_HEIGHT - self.rect.height - 20
+
+        if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
+            self.change_y = 0
+            self.dead = True
+
+
 
     def jump(self):
         """ Called when user hits 'jump' button. """
@@ -183,7 +190,7 @@ class Player(pygame.sprite.Sprite):
             #Play sound jump
             self.sounds['jump'].play()
 
-            if self.mov_plat == 'true':
+            if self.mov_plat == True:
                 self.change_x = 0
             
             self.change_y = -10

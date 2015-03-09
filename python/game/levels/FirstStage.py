@@ -3,6 +3,12 @@ from Platform import Platform
 from MovingPlatform import MovingPlatform
 from BoostPlatform import BoostPlatform
 import constants
+import pygame
+
+
+start_x = 0
+start_y = 0
+
 # Create platforms for the level
 
 class FirstStage(Level):
@@ -16,11 +22,15 @@ class FirstStage(Level):
 
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
+
+		self.start_x = 350
+		self.start_y = HEIGHT - player.rect.height
+
 		#array of platforms 
 		#[width, height, top-left x coordinate, top-left y coordinate]
 		level = [
 				[3200, 20, 0, HEIGHT],
-				[150, HEIGHT, 0, 0],
+				[300, HEIGHT, 0, 0],
 				[100, 120, 1000, HEIGHT-120],
 				[100, 120, 1500, HEIGHT-120],
 				[100, 240, 1600, HEIGHT-240],
@@ -63,8 +73,7 @@ class FirstStage(Level):
 		#array of diag moving plat
 		#[widght, height, top-left x, top-left y, left bound, right bound, top bound, bottom bound, speed]
 		diag = [
-				[100, 20, 7850, HEIGHT-300, 7850, 8130, HEIGHT-300, HEIGHT, 1],
-				#[100, 20, 300, 300, 300, 400, 300, 420, 1]
+				[100, 20, 7850, HEIGHT-300, 7850, 8130, HEIGHT-300, HEIGHT, 1]
 				]
 
 		# Go through the array above and add platforms

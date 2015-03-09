@@ -69,13 +69,13 @@ class MovingPlatform(Platform):
         if hit:
             if self.player.location == 'block' and (self.player.status == 'idle_l' or self.player.status == 'idle_r') :
                 self.player.change_x = self.change_x
-                self.player.mov_plat = 'true'
+                self.player.mov_plat = True
             
             else :
-                self.player.mov_plat = 'false'
+                self.player.mov_plat = False
 
         if self.player.location == 'ground':
-            self.player.mov_plat = 'false'
+            self.player.mov_plat = False
         # Check the boundaries and see if we need to reverse
         # direction.
         if self.rect.bottom > self.boundary_bottom or self.rect.top < self.boundary_top:
