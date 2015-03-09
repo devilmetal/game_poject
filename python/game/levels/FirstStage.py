@@ -63,7 +63,8 @@ class FirstStage(Level):
 		#array of diag moving plat
 		#[widght, height, top-left x, top-left y, left bound, right bound, top bound, bottom bound, speed]
 		diag = [
-				[100, 20, 7850, HEIGHT-300, 7850, 8130, HEIGHT-300, HEIGHT, 1]
+				[100, 20, 7850, HEIGHT-300, 7850, 8130, HEIGHT-300, HEIGHT, 1],
+				#[100, 20, 300, 300, 300, 400, 300, 420, 1]
 				]
 
 		# Go through the array above and add platforms
