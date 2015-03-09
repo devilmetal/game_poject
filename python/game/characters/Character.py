@@ -3,7 +3,7 @@ import os
 import constants
 import routines
 
-class Player(pygame.sprite.Sprite):
+class Character(pygame.sprite.Sprite):
     """
     This class represents the bar at the bottom that the player controls.
     """
@@ -11,25 +11,14 @@ class Player(pygame.sprite.Sprite):
     # -- Methods
     def __init__(self):
         """ Constructor function """
-        super(Player, self).__init__()
+        super(Character, self).__init__()
 
-        #Load images and rectangles
-        self.jump_l_image, self.jump_l_image_rect =  routines.load_png('hero/jump_l.png')
-        self.jump_r_image, self.jump_r_image_rect =  routines.load_png('hero/jump_r.png')
-        self.idle_l_image, self.idle_l_image_rect = routines.load_png('hero/idle_l.png')
-        self.idle_r_image, self.idle_r_image_rect = routines.load_png('hero/idle_r.png')
-        self.move_1_r_image, self.move_1_r_image_rect = routines.load_png('hero/move_1_r.png')
-        self.move_1_l_image, self.move_1_l_image_rect = routines.load_png('hero/move_1_l.png')
-        self.move_2_r_image, self.move_2_r_image_rect = routines.load_png('hero/move_2_r.png')
-        self.move_2_l_image, self.move_2_l_image_rect = routines.load_png('hero/move_2_l.png')
-
-        #load sounds
-        self.sounds={}
-        self.sounds['jump']=pygame.mixer.Sound('data/sound/jump.wav')
+        #Physics stuff
+        self.gravity_a = .35
 
 
-        self.image = self.idle_l_image
-        self.rect = self.idle_l_image_rect
+        self.image = None
+        self.rect = None
         # Set a referance to the image rect.
         #self.rect = self.image.get_rect()
 
@@ -40,8 +29,8 @@ class Player(pygame.sprite.Sprite):
         # List of sprites we can bump against
         self.level = None
 
-        self.status = 'idle_r' #idle,move,jump,
-        self.location = 'ground' #ground,air,block
+        self.status = None #idle,move,jump,
+        self.location = None #ground,air,block
 
 
     def update(self):
@@ -155,7 +144,7 @@ class Player(pygame.sprite.Sprite):
             self.location = 'block'
         else:
             self.location = 'air'
-            self.change_y += .35
+            self.change_y += self.gravity_a
 
         # See if we are on the ground.
         if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
@@ -179,7 +168,7 @@ class Player(pygame.sprite.Sprite):
 
         if len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT:
             #Play sound jump
-            #self.sounds['jump'].play()
+            self.sounds['jump'].play()
             if not (self.change_x == 6 or self.change_x == -6):
                 self.change_x = 0
             self.change_y = -10

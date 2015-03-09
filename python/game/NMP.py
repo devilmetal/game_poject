@@ -43,13 +43,13 @@ def main():
     main_loop = True
     while main_loop:
         if constants.GAME_STATUS == "level":
-            from Player import Player
-            from Platform import Platform
-            from MovingPlatform import MovingPlatform
+            from characters.Bob import Bob
+            from platforms.Platform import Platform
+            from platforms.MovingPlatform import MovingPlatform
             from levels.Level1 import Level_01
             #from levels.Level2 import Level_02
             # Create the player
-            player = Player()
+            player = Bob()
 
             # Create all the levels
             level_list = []
@@ -73,8 +73,8 @@ def main():
             # Used to manage how fast the screen updates
             clock = pygame.time.Clock()
             #Play audio stuff
-            #pygame.mixer.music.load('data/sound/test.mp3')
-            #pygame.mixer.music.play(-1)
+            pygame.mixer.music.load('data/sound/test.mp3')
+            pygame.mixer.music.play(-1)
             # -------- Main Program Loop -----------
             while not done:
 

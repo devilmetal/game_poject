@@ -1,7 +1,7 @@
 from Level import Level
-from Platform import Platform
-from MovingPlatform import MovingPlatform
-from BoostPlatform import BoostPlatform
+from platforms.Platform import Platform
+from platforms.MovingPlatform import MovingPlatform
+from platforms.BoostPlatform import BoostPlatform
 
 # Create platforms for the level
 class Level_02(Level):

@@ -1,7 +1,7 @@
 from Level import Level
-from Platform import Platform
-from MovingPlatform import MovingPlatform
-from BoostPlatform import BoostPlatform
+from platforms.Platform import Platform
+from platforms.MovingPlatform import MovingPlatform
+from platforms.BoostPlatform import BoostPlatform
 from PNJ.Blob import Blob
 
 # Create platforms for the level
@@ -22,11 +22,15 @@ class Level_01(Level):
                  [210, 70, 1000, 500],
                  [210, 70, 1120, 280],
                  [70, 70, 500, 550],
-                 [70, 70, 100, 550]
+                 [70, 70, 100, 550],
+                 [70, 70, 800, 550]
                  ]
 
         # Array with x, y, direction, speed of pnj
-        enemies = [[500, 500, 1, 2]]
+        enemies = [[500, 500, 1, 2],
+                   [510, 540, 1, 2],
+                   [540, 580, -1, 4]
+                  ]
         for pnj in enemies:
             enemy = Blob(pnj[2],pnj[3])
             enemy.rect.x = pnj[0]

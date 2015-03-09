@@ -2,3 +2,9 @@
 /python/game/*~
 /python/game/levels/*~
 /python/game/levels/*.pyc
+/python/game/PNJ/*.pyc
+/python/game/PNJ/*~
+/python/game/characters/*.pyc
+/python/game/characters/*~
+/python/game/platforms/*.pyc
+/python/game/platforms/*~
