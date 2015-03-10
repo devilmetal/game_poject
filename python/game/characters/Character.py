@@ -32,6 +32,9 @@ class Character(pygame.sprite.Sprite):
         self.status = None #idle,move,jump,
         self.location = None #ground,air,block
 
+        self.mov_plat = False #is on a moving plateform
+        self.dead = False #is dead
+
         self.mov_plat = False #is a moving plateform
         self.dead = False
 
@@ -149,14 +152,16 @@ class Character(pygame.sprite.Sprite):
             self.change_y += self.gravity_a
 
         # See if we are on the ground.
-        if self.rect.y >= constants.SCREEN_HEIGHT - 20 - self.rect.height and self.change_y >= 0:
+        if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height - 20 and self.change_y >= 0:
             #self.change_y = 0
             self.location = 'ground'
             #self.rect.y = constants.SCREEN_HEIGHT - self.rect.height - 20
+
         if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
             self.change_y = 0
             self.dead = True
-            
+
+
     def jump(self):
         """ Called when user hits 'jump' button. """
 

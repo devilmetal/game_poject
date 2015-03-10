@@ -70,7 +70,6 @@ class MovingPlatform(Platform):
             if self.player.location == 'block' and (self.player.status == 'idle_l' or self.player.status == 'idle_r') :
                 self.player.change_x = self.change_x
                 self.player.mov_plat = True
-
             else :
                 self.player.mov_plat = False
 
