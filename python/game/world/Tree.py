@@ -12,4 +12,4 @@ class Tree(pygame.sprite.Sprite):
         world_ressources.init_tree_ressources()
         super(Tree, self).__init__()
         self.image = world_ressources.tree_ressources['tree1'][0]
-        self.rect = world_ressources.tree_ressources['tree1'][1]
+        self.rect = world_ressources.tree_ressources['tree1'][1].copy()
