@@ -2,6 +2,9 @@ from Level import Level
 from platforms.Platform import Platform
 from platforms.MovingPlatform import MovingPlatform
 from platforms.BoostPlatform import BoostPlatform
+from platforms.Spike import Spike
+from platforms.MovingSpike import MovingSpike
+
 import constants
 import pygame
 
@@ -76,6 +79,16 @@ class FirstStage(Level):
 				[100, 20, 7850, HEIGHT-300, 7850, 8130, HEIGHT-300, HEIGHT, 1]
 				]
 
+		#spikes list (capable to kill player ! :S)
+		spikes = [
+				[2,400,400]
+		]
+
+		#moving spikes
+		vertical_moving_spikes = [
+				[2,500,400,300,600,1]
+		]
+
 		# Go through the array above and add platforms
 		for plat in level:
 			block = Platform(plat[0], plat[1])
@@ -116,6 +129,24 @@ class FirstStage(Level):
 			block.boundary_bottom = plat[7]
 			block.change_x = plat[8]
 			block.change_y = plat[8]
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
+
+		for spike in spikes:
+			block = Spike(spike[0])
+			block.rect.x = spike[1]
+			block.rect.y = spike[2]
+			block.player = self.player
+			self.platform_list.add(block)
+
+		for spike in vertical_moving_spikes:
+			block = MovingSpike(spike[0])
+			block.rect.x = spike[1]
+			block.rect.y = spike[2]
+			block.boundary_top = spike[3]
+			block.boundary_bottom = spike[4]
+			block.change_y = spike[5]
 			block.player = self.player
 			block.level = self
 			self.platform_list.add(block)
