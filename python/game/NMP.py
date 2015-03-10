@@ -84,16 +84,9 @@ def main():
                 active_sprite_list.update()
                 # Update items in the level
                 current_level.update()
-
-<<<<<<< HEAD
-                if player.dead == True:
-                    done=True
-=======
                 #if the player is dead 
                 if player.dead == True:
                     done = True
-
->>>>>>> FirstStage
                 # If the player gets near the right side, shift the world left (-x)
                 if player.rect.right >= 300:
                     diff = player.rect.right - 300
