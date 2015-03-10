@@ -1,7 +1,7 @@
 import constants
 import routines
 import pygame
-
+import platform_ressources
 
 class Spike(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -11,17 +11,21 @@ class Spike(pygame.sprite.Sprite):
             """
         super(Spike, self).__init__()
         self.orientation = orientation #0,1,2,3
-
+        platform_ressources.init_spikes_ressources()
         self.image = None
         self.rect = None
         if self.orientation == 0:
-            self.image, self.rect = routines.load_png('world/spikes/Spike_up.png')
+            self.image = platform_ressources.spikes_ressources['up'][0]
+            self.rect = platform_ressources.spikes_ressources['up'][1].copy()
         elif self.orientation == 1:
-            self.image, self.rect = routines.load_png('world/spikes/Spike_right.png')
+            self.image = platform_ressources.spikes_ressources['right'][0]
+            self.rect = platform_ressources.spikes_ressources['right'][1].copy()
         elif self.orientation == 2:
-            self.image, self.rect = routines.load_png('world/spikes/Spike_down.png')
+            self.image = platform_ressources.spikes_ressources['down'][0]
+            self.rect = platform_ressources.spikes_ressources['down'][1].copy()
         else:
-            self.image, self.rect = routines.load_png('world/spikes/Spike_left.png')
+            self.image = platform_ressources.spikes_ressources['left'][0]
+            self.rect = platform_ressources.spikes_ressources['left'][1].copy()
 
     def update(self):
         #check if the player is on top of the platform
