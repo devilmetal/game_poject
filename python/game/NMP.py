@@ -48,12 +48,14 @@ def main():
             from platforms.MovingPlatform import MovingPlatform
             from levels.Level1 import Level_01
             #from levels.Level2 import Level_02
+            from levels.FirstStage import FirstStage
+
             # Create the player
             player = Bob()
 
             # Create all the levels
             level_list = []
-            level_list.append(Level_01(player))
+            level_list.append(FirstStage(player))
             #level_list.append(Level_02(player))
 
             # Set the current level
@@ -63,8 +65,8 @@ def main():
             active_sprite_list = pygame.sprite.Group()
             player.level = current_level
 
-            player.rect.x = 450
-            player.rect.y = constants.SCREEN_HEIGHT - player.rect.height
+            player.rect.x = 200
+            player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 20
             active_sprite_list.add(player)
 
             #Loop until the user clicks the close button.
@@ -83,6 +85,8 @@ def main():
                 # Update items in the level
                 current_level.update()
 
+                if player.dead == True:
+                    done=True
                 # If the player gets near the right side, shift the world left (-x)
                 if player.rect.right >= 300:
                     diff = player.rect.right - 300

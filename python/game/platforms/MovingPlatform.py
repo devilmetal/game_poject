@@ -42,6 +42,7 @@ class MovingPlatform(Platform):
                 # Otherwise if we are moving left, do the opposite.
                 self.player.rect.left = self.rect.right
 
+
         # Move up/down
         self.rect.y += self.change_y
 
@@ -61,14 +62,20 @@ class MovingPlatform(Platform):
         #check if the player is on top of the movingplatform and move it with it.
 
         #check if the player is on top of a lateral moving platform and make it move with it.
-        self.player.rect.y += 1
+        self.player.rect.y += 2
         hit = pygame.sprite.collide_rect(self.player, self)
-        self.player.rect.y -= 1
+        self.player.rect.y -= 2
 
         if hit:
             if self.player.location == 'block' and (self.player.status == 'idle_l' or self.player.status == 'idle_r') :
                 self.player.change_x = self.change_x
+                self.player.mov_plat = True
 
+            else :
+                self.player.mov_plat = False
+
+        if self.player.location == 'ground':
+            self.player.mov_plat = False
         # Check the boundaries and see if we need to reverse
         # direction.
         if self.rect.bottom > self.boundary_bottom or self.rect.top < self.boundary_top:

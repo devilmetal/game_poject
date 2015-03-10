@@ -32,6 +32,8 @@ class Character(pygame.sprite.Sprite):
         self.status = None #idle,move,jump,
         self.location = None #ground,air,block
 
+        self.mov_plat = False #is a moving plateform
+        self.dead = False
 
     def update(self):
         """ Move the player. """
@@ -147,11 +149,14 @@ class Character(pygame.sprite.Sprite):
             self.change_y += self.gravity_a
 
         # See if we are on the ground.
+        if self.rect.y >= constants.SCREEN_HEIGHT - 20 - self.rect.height and self.change_y >= 0:
+            #self.change_y = 0
+            self.location = 'ground'
+            #self.rect.y = constants.SCREEN_HEIGHT - self.rect.height - 20
         if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
             self.change_y = 0
-            self.location = 'ground'
-            self.rect.y = constants.SCREEN_HEIGHT - self.rect.height
-
+            self.dead = True
+            
     def jump(self):
         """ Called when user hits 'jump' button. """
 
@@ -169,8 +174,9 @@ class Character(pygame.sprite.Sprite):
         if len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT:
             #Play sound jump
             self.sounds['jump'].play()
-            if not (self.change_x == 6 or self.change_x == -6):
+            if self.mov_plat == True:
                 self.change_x = 0
+
             self.change_y = -10
             self.location = 'air'
     # Player-controlled movement:
