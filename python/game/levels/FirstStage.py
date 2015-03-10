@@ -90,13 +90,13 @@ class FirstStage(Level):
 		]
 		#tree type, x, y
 		front_trees =[
-			[0,500,HEIGHT+200]
+			[0,500,HEIGHT-20]
 		]
-		'''
+
 		back_trees =[
 			[0,100,HEIGHT-30]
 		]
-		'''
+
 		# Go through the array above and add platforms
 		for plat in level:
 			block = Platform(plat[0], plat[1])
@@ -158,13 +158,12 @@ class FirstStage(Level):
 			block.player = self.player
 			block.level = self
 			self.platform_list.add(block)
-		'''
+
 		for tree in back_trees:
 			block = Tree(tree[0])
 			block.rect.x = spike[1]
 			block.rect.y = spike[2]
 			self.back_world_list.add(block)
-		'''
 
 		for tree in front_trees:
 			block = Tree(tree[0])
