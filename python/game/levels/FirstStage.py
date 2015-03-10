@@ -4,7 +4,7 @@ from platforms.MovingPlatform import MovingPlatform
 from platforms.BoostPlatform import BoostPlatform
 from platforms.Spike import Spike
 from platforms.MovingSpike import MovingSpike
-
+from world.Tree import Tree
 import constants
 import pygame
 
@@ -88,7 +88,10 @@ class FirstStage(Level):
 		vertical_moving_spikes = [
 				[2,500,400,300,600,1]
 		]
-
+		#tree type, x, y
+		trees =[
+			[0,200,200]
+		]
 		# Go through the array above and add platforms
 		for plat in level:
 			block = Platform(plat[0], plat[1])
@@ -150,3 +153,9 @@ class FirstStage(Level):
 			block.player = self.player
 			block.level = self
 			self.platform_list.add(block)
+
+		for tree in trees:
+			block = Tree(tree[0])
+			block.rect.x = spike[1]
+			block.rect.y = spike[2]
+			self.world_list.add(block)
