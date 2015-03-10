@@ -89,12 +89,12 @@ class FirstStage(Level):
 				[2,500,400,300,600,1]
 		]
 		#tree type, x, y
-		front_trees =[
-			[0,500,HEIGHT-20]
+		front_trees = [
+			[0,400,400]
 		]
 
-		back_trees =[
-			[0,100,HEIGHT-30]
+		back_trees = [
+			[0,500,400]
 		]
 
 		# Go through the array above and add platforms
@@ -161,12 +161,12 @@ class FirstStage(Level):
 
 		for tree in back_trees:
 			block = Tree(tree[0])
-			block.rect.x = spike[1]
-			block.rect.y = spike[2]
+			block.rect.x = tree[1]
+			block.rect.y = tree[2]
 			self.back_world_list.add(block)
 
 		for tree in front_trees:
 			block = Tree(tree[0])
-			block.rect.x = spike[1]
-			block.rect.y = spike[2]
+			block.rect.x = tree[1]
+			block.rect.y = tree[2]
 			self.front_world_list.add(block)
