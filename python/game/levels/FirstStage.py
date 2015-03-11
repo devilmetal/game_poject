@@ -4,7 +4,7 @@ from platforms.MovingPlatform import MovingPlatform
 from platforms.BoostPlatform import BoostPlatform
 from platforms.Spike import Spike
 from platforms.MovingSpike import MovingSpike
-
+from world.Tree import Tree
 import constants
 import pygame
 
@@ -103,6 +103,14 @@ class FirstStage(Level):
 				[3, 9020, HEIGHT-90]
 				]
 
+		#tree type, x, y
+		front_trees = [
+			[0,400,400]
+		]
+
+		back_trees = [
+			[0,500,400]
+		]
 		#moving vert spikes
 		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
 		ver_mov_spikes = [
@@ -169,3 +177,15 @@ class FirstStage(Level):
 			block.player = self.player
 			block.level = self
 			self.platform_list.add(block)
+
+		for tree in back_trees:
+			block = Tree(tree[0])
+			block.rect.x = tree[1]
+			block.rect.y = tree[2]
+			self.back_world_list.add(block)
+
+		for tree in front_trees:
+			block = Tree(tree[0])
+			block.rect.x = tree[1]
+			block.rect.y = tree[2]
+			self.front_world_list.add(block)

@@ -11,3 +11,5 @@
 /python/game/characters/*~
 /python/game/platforms/*.pyc
 /python/game/platforms/*~
+/python/game/world/*.pyc
+/python/game/world/*~

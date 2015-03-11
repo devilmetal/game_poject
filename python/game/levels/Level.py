@@ -10,7 +10,8 @@ class Level():
     # lists as needed for your game.
     platform_list = None
     pnj_list = None
-
+    back_world_list = None
+    front_world_list = None
     # How far this world has been scrolled left/right
     world_shift = 0
 
@@ -19,13 +20,18 @@ class Level():
             platforms collide with the player. """
         self.platform_list = pygame.sprite.Group()
         self.pnj_list = pygame.sprite.Group()
+        self.front_world_list = pygame.sprite.Group()
+        self.back_world_list = pygame.sprite.Group()
+
         self.player = player
 
     # Update everythign on this level
     def update(self):
         """ Update everything in this level."""
+        self.back_world_list.update()
         self.platform_list.update()
         self.pnj_list.update()
+        self.front_world_list.update()
 
     def draw(self, screen):
         """ Draw everything on this level. """
@@ -34,8 +40,10 @@ class Level():
         screen.fill(constants.BLUE)
 
         # Draw all the sprite lists that we have
+        self.back_world_list.draw(screen)
         self.platform_list.draw(screen)
         self.pnj_list.draw(screen)
+        self.front_world_list.draw(screen)
 
     def shift_world(self, shift_x):
         """ When the user moves left/right and we need to scroll everything: """
@@ -49,3 +57,9 @@ class Level():
 
         for pnj in self.pnj_list:
             pnj.rect.x += shift_x
+
+        for item in self.front_world_list:
+            item.rect.x += shift_x
+
+        for item in self.back_world_list:
+            item.rect.x += shift_x
