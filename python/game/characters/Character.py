@@ -182,6 +182,11 @@ class Character(pygame.sprite.Sprite):
             if self.mov_plat == True:
                 self.change_x = 0
 
+            if self.status == 'move_l':
+                self.change_x = -6
+            if self.status == 'move_r':
+                self.change_x = 6
+
             self.change_y = -10
             self.location = 'air'
     # Player-controlled movement:

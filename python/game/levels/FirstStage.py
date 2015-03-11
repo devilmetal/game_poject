@@ -21,13 +21,13 @@ class FirstStage(Level):
 
 		Level.__init__(self, player)
 
-		self.level_limit = -10000
+		self.level_limit = -20000
 
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
 		#array of platforms
 
-		self.start_x = 350
+		self.start_x = 8400
 		self.start_y = HEIGHT - player.rect.height
 
 		#[width, height, top-left x coordinate, top-left y coordinate]
@@ -52,7 +52,13 @@ class FirstStage(Level):
 				[40, 20, 6400, HEIGHT-300],
 				[100, 20, 6500, HEIGHT-300],
 				#platform between moving plat in the air
-				[50, 20, 7050, HEIGHT-300]
+				[50, 20, 7050, HEIGHT-300],
+				#2nd ground plateform
+				[2000, 20, 8300, HEIGHT],
+				#first plateforms with spikes
+				[30, 90, 8800, HEIGHT-90],
+				[60, 5, 8770, HEIGHT-95],
+				[30, 90, 9065, HEIGHT-90],
 				]
 
 		#array of vertical moving platform
@@ -67,10 +73,11 @@ class FirstStage(Level):
 		horiz = [
 				[60, 20, 5100, HEIGHT-300, 5100, 5600, 2],
 				#chain moving platform in the air
-				[100, 20, 6700, HEIGHT-300, 6700, 6900, 1],
-				[50, 20, 7200, HEIGHT-300, 7200, 7300, 2],
+				[100, 20, 6700, HEIGHT-300, 6700, 6900, 2],
+				[50, 20, 7200, HEIGHT-300, 7200, 7300, 1],
 				[20, 20, 7400, HEIGHT-300, 7400, 7500, 2],
-				[20, 20, 7600, HEIGHT-300, 7550, 7800, 3]
+				[20, 20, 7600, HEIGHT-300, 7550, 7800, 3],
+				[60, 20, 9740, HEIGHT-50, 9100, 9800, 5]
 				]
 
 		#array of diag moving plat
@@ -80,14 +87,22 @@ class FirstStage(Level):
 				]
 
 		#spikes list (capable to kill player ! :S)
+		#[orientation, top-left x, top-left y]
 		spikes = [
-				[2,400,400]
-		]
+				[3, 8755, HEIGHT-30],
+				[3, 8755, HEIGHT-60],
+				[3, 8755, HEIGHT-90],
+				[0, 8770, HEIGHT-140],
+				[0, 8800, HEIGHT-140],
+				[0, 8830, HEIGHT-45],
+				[0, 8860, HEIGHT-45],
+				[0, 8890, HEIGHT-45],
+				[0, 8920, HEIGHT-45],
+				[3, 9020, HEIGHT-30],
+				[3, 9020, HEIGHT-60],
+				[3, 9020, HEIGHT-90]
+				]
 
-		#moving spikes
-		vertical_moving_spikes = [
-				[2,500,400,300,600,1]
-		]
 		#tree type, x, y
 		front_trees = [
 			[0,400,400]
@@ -96,6 +111,10 @@ class FirstStage(Level):
 		back_trees = [
 			[0,500,400]
 		]
+		#moving vert spikes
+		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
+		ver_mov_spikes = [
+				]
 
 		# Go through the array above and add platforms
 		for plat in level:
@@ -148,7 +167,7 @@ class FirstStage(Level):
 			block.player = self.player
 			self.platform_list.add(block)
 
-		for spike in vertical_moving_spikes:
+		for spike in ver_mov_spikes:
 			block = MovingSpike(spike[0])
 			block.rect.x = spike[1]
 			block.rect.y = spike[2]
