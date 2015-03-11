@@ -1,3 +1,4 @@
+*.pyc
 /python/game/*.pyc
 /python/game/*~
 /python/game/levels/*~
