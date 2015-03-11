@@ -1,11 +1,23 @@
 import constants
 import pygame
-from Platform import Platform
+from Spike import Spike
 
-class MovingPlatform(Platform):
+class SpecialSpike(Spike):
     """ This is a fancier platform that can actually move. """
     change_x = 0
     change_y = 0
+
+    change_x_r = 0
+    change_x_l = 0
+    change_y_u = 0
+    change_y_d = 0
+    pause_up = 0
+    pause_down = 0
+    pause_right = 0
+    pause_left = 0
+    
+    pause = False
+    time = 0
 
     boundary_top = 0
     boundary_bottom = 0
@@ -17,6 +29,7 @@ class MovingPlatform(Platform):
     level = None
 
     def update(self):
+        Spike.update(self)
         """ Move the platform.
             If the player is in the way, it will shove the player
             out of the way. This does NOT handle what happens if a
@@ -70,24 +83,52 @@ class MovingPlatform(Platform):
             if self.player.location == 'block' and (self.player.status == 'idle_l' or self.player.status == 'idle_r') :
                 self.player.change_x = self.change_x
                 self.player.mov_plat = True
-            elif self.player.location == 'block' and self.player.status == 'move_r':
-                self.player.change_x = self.change_x + 6
-                self.player.mov_plat = False
-            elif self.player.location == 'block' and self.player.status == 'move_l':
-                self.player.change_x = self.change_x - 6
-                self.player.mov_plat = False
             else :
                 self.player.mov_plat = False
 
         if self.player.location == 'ground':
             self.player.mov_plat = False
+        
+
+        # Check the boundaries and see if we have a pause and if we need to reverse direction.
+
+        """
+        up/down plateforms
+        """
+        #case where we have a pause down
+        if self.rect.bottom > self.boundary_bottom and not self.pause:
+            self.change_y = 0
+            self.pause = True
+            self.time = self.pause_down
+
+        #if we have to wait, i.e. pause == True
+        if self.rect.bottom > self.boundary_bottom and self.pause:
+            if self.time > 0:
+                self.time -= 1
+            else:
+                self.change_y = self.change_y_u #set the speed from bottom to top
+                self.pause = False
+
+
+        #case where we have a pause up
+        if self.rect.top < self.boundary_top and not self.pause:
+            self.change_y = 0
+            self.pause = True
+            self.time = self.pause_up
+
+        #if we have to wait, i.e. pause == True
+        if self.rect.top < self.boundary_top and self.pause:
+            if self.time > 0:
+                self.time -= 1
+            else:
+                self.change_y = self.change_y_d #set the speed from top to bottom
+                self.pause = False
 
 
 
-        # Check the boundaries and see if we need to reverse direction
-        if self.rect.bottom > self.boundary_bottom or self.rect.top < self.boundary_top:
-            self.change_y *= -1
-
+        """
+        left/right plateforms
+        """
         cur_pos = self.rect.x - self.level.world_shift
         if cur_pos < self.boundary_left or cur_pos > self.boundary_right:
             self.change_x *= -1
