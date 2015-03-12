@@ -124,6 +124,7 @@ def main():
                 current_level.update()
                 #if the player is dead
                 if player.dead == True:
+                    player.death_animation()
                     done = True
                 # If the player gets near the right side, shift the world left (-x)
                 if player.rect.right >= 300:

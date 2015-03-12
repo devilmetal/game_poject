@@ -31,7 +31,7 @@ class FirstStage(Level):
 
 		#array of platforms
 
-		self.start_x = 10000
+		self.start_x = 350
 		self.start_y = HEIGHT - player.rect.height
 
 		#[width, height, top-left x coordinate, top-left y coordinate]
