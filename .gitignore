@@ -1,3 +1,6 @@
+*.pyc
+*~
+*.swp
 /python/game/*.pyc
 /python/game/*~
 /python/game/levels/*~
@@ -8,3 +11,5 @@
 /python/game/characters/*~
 /python/game/platforms/*.pyc
 /python/game/platforms/*~
+/python/game/world/*.pyc
+/python/game/world/*~

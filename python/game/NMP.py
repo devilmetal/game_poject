@@ -31,6 +31,44 @@ if pygame.joystick.get_count() >0:
     joystick=pygame.joystick.Joystick(0)
     joystick.init()
     print "Joystick "+joystick.get_name()+" ready to use"
+
+
+def pause(clock,screen):
+    """ Pausing the game """
+    pause_flag = True
+
+    while pause_flag:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    pause_flag = False
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
+                    
+        font_path_title = 'data/coders_crux/coders_crux.ttf'
+        font1 = pygame.font.Font(font_path_title, 52)
+        font2 = pygame.font.Font(font_path_title, 42)
+        text1 = font1.render("Paused", 1, constants.WHITE)
+        text2 = font2.render("Continue (c) or Quit (q) ?", 1, constants.WHITE)
+        text1pos = text1.get_rect()
+        text2pos = text2.get_rect()
+        text1pos.centerx = constants.SCREEN_WIDTH/2
+        text1pos.centery = constants.SCREEN_HEIGHT/2 - 20
+        text2pos.centerx = constants.SCREEN_WIDTH/2
+        text2pos.centery = constants.SCREEN_HEIGHT/2 + 20
+
+        screen.blit(text1, text1pos)
+        screen.blit(text2, text2pos)
+
+        screen.blit(screen, (0,0))
+        pygame.display.update()
+        clock.tick(5)
+
+
 def main():
     """ Main Program """
     pygame.init()
@@ -75,8 +113,8 @@ def main():
             # Used to manage how fast the screen updates
             clock = pygame.time.Clock()
             #Play audio stuff
-            #pygame.mixer.music.load('data/sound/test.mp3')
-            #pygame.mixer.music.play(-1)
+            pygame.mixer.music.load('data/sound/test.wav')
+            pygame.mixer.music.play(-1)
             # -------- Main Program Loop -----------
             while not done:
 
@@ -84,7 +122,7 @@ def main():
                 active_sprite_list.update()
                 # Update items in the level
                 current_level.update()
-                #if the player is dead 
+                #if the player is dead
                 if player.dead == True:
                     done = True
                 # If the player gets near the right side, shift the world left (-x)
@@ -145,6 +183,8 @@ def main():
                             player.go_right()
                         if event.key == pygame.K_UP:
                             player.jump()
+                        if event.key == pygame.K_p:
+                            pause(clock,screen)
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_LEFT and player.change_x < 0:
