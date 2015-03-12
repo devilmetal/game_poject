@@ -40,7 +40,7 @@ def pause(clock,screen):
     font1 = pygame.font.Font(font_path_title, 52)
     font2 = pygame.font.Font(font_path_title, 42)
     text1 = font1.render("Paused", 1, constants.WHITE)
-    text2 = font2.render("Continue (c) or Quit (q) ?", 1, constants.WHITE)
+    text2 = font2.render("Continue (c) or A or Quit (q) ?", 1, constants.WHITE)
     text1pos = text1.get_rect()
     text2pos = text2.get_rect()
     text1pos.centerx = constants.SCREEN_WIDTH/2
@@ -55,6 +55,11 @@ def pause(clock,screen):
     pygame.display.update()
     while pause_flag:
         for event in pygame.event.get():
+
+            if event.type == pygame.JOYBUTTONDOWN:
+                if joystick.get_button(0) == 1:
+                    pause_flag = False
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -64,7 +69,7 @@ def pause(clock,screen):
                 elif event.key == pygame.K_q:
                     pygame.quit()
                     quit()
-        clock.tick(60)
+        #clock.tick(60)
 
 
 def main():
@@ -168,6 +173,8 @@ def main():
                     if event.type == pygame.JOYBUTTONDOWN:
                         if joystick.get_button(0) == 1:
                             player.jump()
+                        if joystick.get_button(9) == 1:
+                            pause(clock,screen)
 
                     #Keyboard stuff
                     if event.type == pygame.QUIT: # If user clicked close
