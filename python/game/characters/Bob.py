@@ -27,6 +27,7 @@ class Bob(Character):
         self.move_1_l_image, self.move_1_l_image_rect = routines.load_png('hero/move_1_l.png')
         self.move_2_r_image, self.move_2_r_image_rect = routines.load_png('hero/move_2_r.png')
         self.move_2_l_image, self.move_2_l_image_rect = routines.load_png('hero/move_2_l.png')
+        self.dead_image, self.dead_image_rect = routines.load_png('hero/death.png')
 
         #load sounds
         self.sounds={}

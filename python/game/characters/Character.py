@@ -67,12 +67,6 @@ class Character(pygame.sprite.Sprite):
             # Reset our position based on the top/bottom of the object.
             if self.change_y > 0:
                 self.rect.bottom = block.rect.top
-                self.location = 'block'
-                if self.status == 'air':
-                    if self.status == 'move_r':
-                        self.status = 'idle_r'
-                    else:
-                        self.status = 'idle_l'
             elif self.change_y < 0:
                 self.rect.top = block.rect.bottom
 
@@ -83,7 +77,9 @@ class Character(pygame.sprite.Sprite):
         self.calc_image()
 
     def calc_image(self):
-        if self.location == 'air':
+        if self.dead == True:
+            self.image = self.dead_image
+        elif self.location == 'air':
             if self.status == 'move_r' or self.status == 'idle_r' :
                 self.image = self.jump_r_image
             else:
@@ -143,9 +139,8 @@ class Character(pygame.sprite.Sprite):
         platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         self.rect.y -= 2
 
-        if self.change_y == 0:
-            self.change_y = 1
-        elif len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT:
+
+        if len(platform_hit_list) > 0 and self.rect.bottom < constants.SCREEN_HEIGHT - 20:
             self.location = 'block'
         else:
             self.location = 'air'
@@ -153,11 +148,9 @@ class Character(pygame.sprite.Sprite):
 
         # See if we are on the ground.
         if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height - 20 and self.change_y >= 0:
-            #self.change_y = 0
             self.location = 'ground'
-            #self.rect.y = constants.SCREEN_HEIGHT - self.rect.height - 20
 
-        if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
+        if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height + 100 and self.change_y >= 0:
             self.change_y = 0
             self.dead = True
 
