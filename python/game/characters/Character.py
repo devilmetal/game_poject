@@ -37,47 +37,55 @@ class Character(pygame.sprite.Sprite):
 
         self.mov_plat = False #is a moving plateform
         self.dead = False
+        self.hit = False
 
     def update(self):
         """ Move the player. """
+
         # Gravity
         self.calc_grav()
+    
+        if not self.hit:
 
-        # Move left/right
-        self.rect.x += self.change_x
+            # Move left/right
+            self.rect.x += self.change_x
 
-        # See if we hit anything
-        block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        for block in block_hit_list:
-            # If we are moving right,
-            # set our right side to the left side of the item we hit
-            if self.change_x > 0:
-                self.rect.right = block.rect.left
-            elif self.change_x < 0:
-                # Otherwise if we are moving left, do the opposite.
-                self.rect.left = block.rect.right
+            # See if we hit anything
+            block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+            for block in block_hit_list:
+                # If we are moving right,
+                # set our right side to the left side of the item we hit
+                if self.change_x > 0:
+                    self.rect.right = block.rect.left
+                elif self.change_x < 0:
+                    # Otherwise if we are moving left, do the opposite.
+                    self.rect.left = block.rect.right
 
-        # Move up/down
-        self.rect.y += self.change_y
+            # Move up/down
+            self.rect.y += self.change_y
 
-        # Check and see if we hit anything
-        block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        for block in block_hit_list:
+        
+            # Check and see if we hit anything
+            block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+            for block in block_hit_list:
 
-            # Reset our position based on the top/bottom of the object.
-            if self.change_y > 0:
-                self.rect.bottom = block.rect.top
-            elif self.change_y < 0:
-                self.rect.top = block.rect.bottom
+                # Reset our position based on the top/bottom of the object.
+                if self.change_y > 0:
+                    self.rect.bottom = block.rect.top
+                elif self.change_y < 0:
+                    self.rect.top = block.rect.bottom
 
-            # Stop our vertical movement
-            self.change_y = 0
+                # Stop our vertical movement
+                self.change_y = 0
+        else:
+            self.rect.y += self.change_y
+
 
         #Finally calculate the image to display
         self.calc_image()
 
     def calc_image(self):
-        if self.dead == True:
+        if self.hit == True:
             self.image = self.dead_image
         elif self.location == 'air':
             if self.status == 'move_r' or self.status == 'idle_r' :
@@ -140,7 +148,7 @@ class Character(pygame.sprite.Sprite):
         self.rect.y -= 2
 
 
-        if len(platform_hit_list) > 0 and self.rect.bottom < constants.SCREEN_HEIGHT - 20:
+        if len(platform_hit_list) > 0 and self.rect.bottom < constants.SCREEN_HEIGHT - 20 and not self.hit:
             self.location = 'block'
         else:
             self.location = 'air'
@@ -169,7 +177,7 @@ class Character(pygame.sprite.Sprite):
         # If we're on a moving plateform and we jump, we don't keep the speed of the plateform
         # (it only works if we don't set the speed of the plateform same speed than the character)
 
-        if len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT:
+        if (len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT) and not self.hit:
             #Play sound jump
             self.sounds['jump'].play()
             if self.mov_plat == True:
@@ -182,6 +190,7 @@ class Character(pygame.sprite.Sprite):
 
             self.change_y = -10
             self.location = 'air'
+
     # Player-controlled movement:
     def go_left(self):
         """ Called when the user hits the left arrow. """

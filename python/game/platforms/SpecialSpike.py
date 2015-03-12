@@ -41,7 +41,7 @@ class SpecialSpike(Spike):
         self.rect.x += self.change_x
 
         # See if we hit the player
-        hit = pygame.sprite.collide_rect(self, self.player)
+        hit = pygame.sprite.collide_rect(self, self.player) and not self.player.hit
 
         if hit:
             # We did hit the player. Shove the player around and
@@ -60,7 +60,7 @@ class SpecialSpike(Spike):
         self.rect.y += self.change_y
 
         # Check and see if we hit the player
-        hit = pygame.sprite.collide_rect(self, self.player)
+        hit = pygame.sprite.collide_rect(self, self.player) and not self.player.hit
 
         if hit:
             # We did hit the player. Shove the player around and
@@ -76,7 +76,7 @@ class SpecialSpike(Spike):
 
         #check if the player is on top of a lateral moving platform and make it move with it.
         self.player.rect.y += 2
-        hit = pygame.sprite.collide_rect(self.player, self)
+        hit = pygame.sprite.collide_rect(self.player, self) and not self.player.hit
         self.player.rect.y -= 2
 
         if hit:
