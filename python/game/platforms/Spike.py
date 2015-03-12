@@ -46,5 +46,6 @@ class Spike(pygame.sprite.Sprite):
             self.player.rect.x += 1
             hit = pygame.sprite.collide_rect(self.player, self)
             self.player.rect.x -= 1
-        if hit:
-            self.player.dead = True
+        if hit and not self.player.hit:
+            self.player.hit = True
+            self.player.change_y = -10
