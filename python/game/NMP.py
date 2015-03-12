@@ -33,7 +33,7 @@ if pygame.joystick.get_count() >0:
     print "Joystick "+joystick.get_name()+" ready to use"
 
 
-def pause():
+def pause(clock,screen):
     """ Pausing the game """
     pause_flag = True
 
@@ -48,15 +48,12 @@ def pause():
                 elif event.key == pygame.K_q:
                     pygame.quit()
                     quit()
-
-        pauseScreen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
-        pauseBg = pygame.Surface(pauseScreen.get_size())
-        pauseBg = pauseBg.convert()
-        pauseBg.fill(constants.WHITE)
-        font1 = pygame.font.SysFont("arial", 42)
-        font2 = pygame.font.SysFont("arial", 30)
-        text1 = font1.render("Paused", 1, (10,10,10))
-        text2 = font2.render("Continue (c) or Quit (q) ?", 1, (10,10,10))
+                    
+        font_path_title = 'data/coders_crux/coders_crux.ttf'
+        font1 = pygame.font.Font(font_path_title, 52)
+        font2 = pygame.font.Font(font_path_title, 42)
+        text1 = font1.render("Paused", 1, constants.WHITE)
+        text2 = font2.render("Continue (c) or Quit (q) ?", 1, constants.WHITE)
         text1pos = text1.get_rect()
         text2pos = text2.get_rect()
         text1pos.centerx = constants.SCREEN_WIDTH/2
@@ -64,11 +61,12 @@ def pause():
         text2pos.centerx = constants.SCREEN_WIDTH/2
         text2pos.centery = constants.SCREEN_HEIGHT/2 + 20
 
-        pauseBg.blit(text1, text1pos)
-        pauseBg.blit(text2, text2pos)
+        screen.blit(text1, text1pos)
+        screen.blit(text2, text2pos)
 
-        pauseScreen.blit(pauseBg, (0,0))
+        screen.blit(screen, (0,0))
         pygame.display.update()
+        clock.tick(5)
 
 
 def main():
@@ -186,7 +184,7 @@ def main():
                         if event.key == pygame.K_UP:
                             player.jump()
                         if event.key == pygame.K_p:
-                            pause()
+                            pause(clock,screen)
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_LEFT and player.change_x < 0:
