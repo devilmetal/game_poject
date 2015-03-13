@@ -76,6 +76,11 @@ class MovingSpike(Spike):
 
         if self.player.location == 'ground':
             self.player.mov_plat = False
+
+        self.boundaries()
+
+    def boundaries(self):
+
         # Check the boundaries and see if we need to reverse
         # direction.
         if self.rect.bottom > self.boundary_bottom or self.rect.top < self.boundary_top:
