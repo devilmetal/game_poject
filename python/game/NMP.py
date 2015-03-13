@@ -98,7 +98,7 @@ def death_menu(clock):
     screen.blit(bg, (0,0))
     pygame.display.update()
 
-    pygame.time.delay(4000)
+    pygame.time.delay(2000)
 
 
 def main():
@@ -109,11 +109,12 @@ def main():
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption("Animated Platformer")
+    pygame.display.set_caption("(Alpha) No More Pixies")
     main_loop = True
     while main_loop:
         if constants.GAME_STATUS == "level":
             from characters.Bob import Bob
+            from characters.Hulk import Hulk
             from platforms.Platform import Platform
             from platforms.MovingPlatform import MovingPlatform
             from levels.Level1 import Level_01
@@ -121,8 +122,8 @@ def main():
             from levels.FirstStage import FirstStage
 
             # Create the player
-            player = Bob()
-
+            #player = Bob()
+            player = Hulk()
             # Create all the levels
             level_list = []
             level_list.append(FirstStage(player))
