@@ -72,6 +72,35 @@ def pause(clock,screen):
         #clock.tick(60)
 
 
+def death_menu(clock):
+    """ Screen appearing after death """
+    font_path_title = 'data/coders_crux/coders_crux.ttf'
+
+    screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
+    bg = pygame.Surface(screen.get_size())
+    bg = bg.convert()
+    bg.fill(constants.BLACK)
+
+    font1 = pygame.font.Font(font_path_title, 52)
+    font2 = pygame.font.Font(font_path_title, 42)
+    text1 = font1.render("You died.", 1, constants.WHITE)
+    text2 = font2.render("Let's try again!", 1, constants.WHITE)
+    text1pos = text1.get_rect()
+    text2pos = text2.get_rect()
+    text1pos.centerx = constants.SCREEN_WIDTH/2
+    text1pos.centery = constants.SCREEN_HEIGHT/2 - 20
+    text2pos.centerx = constants.SCREEN_WIDTH/2
+    text2pos.centery = constants.SCREEN_HEIGHT/2 + 20
+
+    bg.blit(text1, text1pos)
+    bg.blit(text2, text2pos)
+
+    screen.blit(bg, (0,0))
+    pygame.display.update()
+
+    pygame.time.delay(4000)
+
+
 def main():
     """ Main Program """
     pygame.init()
@@ -128,6 +157,7 @@ def main():
                 #if the player is dead
                 if player.dead == True:
                     done = True
+                    death_menu(clock)
                 # If the player gets near the right side, shift the world left (-x)
                 if player.rect.right >= 300:
                     diff = player.rect.right - 300
