@@ -158,7 +158,7 @@ class Character(pygame.sprite.Sprite):
             self.location = 'block'
         else:
             self.location = 'air'
-            self.change_y += self.gravity_a
+            self.change_y += self.gravity_a * self.weight
 
         # See if we are on the ground.
         if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height - 20 and self.change_y >= 0:

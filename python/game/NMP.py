@@ -44,6 +44,8 @@ def main():
 
     pygame.display.set_caption("(Alpha) No More Pixies")
     main_loop = True
+    first = True
+
     while main_loop:
         if constants.GAME_STATUS == "level":
             import routines
@@ -61,12 +63,16 @@ def main():
             player = Hulk()
 
             # Create all the levels
-            level_list = []
-            level_list.append(FirstStage(player)) #add first stage
-            level_list.append(SecondStage(player)) #add second stage
+            if first:
+                level_list = []
+                level_list.append(FirstStage(player)) #add first stage
+                level_list.append(SecondStage(player)) #add second stage
+                first = False
+                current_level_no = 0
+            else:
+                current_level_no = current_level.next_level
 
             # Set the current level
-            current_level_no = 0
             current_level = level_list[current_level_no]
 
             active_sprite_list = pygame.sprite.Group()
@@ -83,8 +89,8 @@ def main():
             clock = pygame.time.Clock()
 
             #Play audio stuff
-            pygame.mixer.music.load('data/sound/test.wav')
-            pygame.mixer.music.play(-1)
+            #pygame.mixer.music.load('data/sound/test.wav')
+            #pygame.mixer.music.play(-1)
 
             # -------- Main Program Loop -----------
             while not done:
@@ -93,6 +99,10 @@ def main():
                 active_sprite_list.update()
                 # Update items in the level
                 current_level.update()
+
+                #if the player reach the end
+                if current_level.end_level:
+                    done = True
 
                 #if the player is dead
                 if player.dead == True:

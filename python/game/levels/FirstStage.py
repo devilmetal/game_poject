@@ -7,6 +7,7 @@ from platforms.MovingSpike import MovingSpike
 from world.Tree import Tree
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
+from platforms.EndPlatform import EndPlatform
 from PNJ.Blob import Blob
 
 import constants
@@ -15,7 +16,6 @@ import pygame
 
 start_x = 0
 start_y = 0
-end = 1
 
 # Create platforms for the level
 
@@ -32,7 +32,7 @@ class FirstStage(Level):
 
 		#array of platforms
 
-		self.start_x = 4700
+		self.start_x = 14400
 		self.start_y = HEIGHT - player.rect.height
 
 
@@ -82,9 +82,16 @@ class FirstStage(Level):
 				[130, 20, 10580, HEIGHT-200],
 				[130, 20, 10740, HEIGHT-320],
 				#last ground part
-				[2900, 20, 12100, HEIGHT]
+				[2900, 20, 12100, HEIGHT],
+				#first end platform
+				[120, 20, 14500, HEIGHT-100],
 				]
 
+		#if we are on a platform that should make us go to the next level
+		#[width, height, top-left x, top-left y, next level]
+		end_plat = [
+					[120, 20, 14380, HEIGHT-350, 1]
+					]
 
 		"""Special moving platform and spikes"""
 		#falling roof at the end of the level
@@ -215,6 +222,7 @@ class FirstStage(Level):
 			block.rect.x = plat[2]
 			block.rect.y = plat[3]
 			block.player = self.player
+			block.level = self
 			self.platform_list.add(block)
 
 		for plat in vert:
@@ -258,6 +266,7 @@ class FirstStage(Level):
 			block.rect.x = spike[1]
 			block.rect.y = spike[2]
 			block.player = self.player
+			block.level = self
 			self.platform_list.add(block)
 
 		for spike in ver_mov_spikes:
@@ -325,4 +334,14 @@ class FirstStage(Level):
 			block.pause_up = 0
 			block.player = self.player
 			block.level = self
+			self.platform_list.add(block)
+
+		#end platforms
+		for plat in end_plat:
+			block = EndPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.player = self.player
+			block.level = self
+			block.level_pointer = plat[4]
 			self.platform_list.add(block)

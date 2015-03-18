@@ -14,6 +14,9 @@ class Level():
     # How far this world has been scrolled left/right
     world_shift = 0
 
+    next_level = 0
+    end_level = False
+    
     def __init__(self, player):
         """ Constructor. Pass in a handle to player. Needed for when moving
             platforms collide with the player. """
