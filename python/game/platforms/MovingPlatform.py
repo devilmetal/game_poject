@@ -60,13 +60,16 @@ class MovingPlatform(Platform):
                 self.player.rect.top = self.rect.bottom
 
         #check if the player is on top of the movingplatform and move it with it.
+        
 
         #check if the player is on top of a lateral moving platform and make it move with it.
-        self.player.rect.y += 2
+        self.player.rect.y += 2 + self.change_y
         hit = pygame.sprite.collide_rect(self.player, self) and not self.player.hit
-        self.player.rect.y -= 2
+        self.player.rect.y -= 2 + self.change_y
 
         if hit:
+
+            self.player.change_y = self.change_y
             if self.player.location == 'block' and (self.player.status == 'idle_l' or self.player.status == 'idle_r') :
                 self.player.change_x = self.change_x
                 self.player.mov_plat = True
@@ -78,6 +81,9 @@ class MovingPlatform(Platform):
                 self.player.mov_plat = False
             else :
                 self.player.mov_plat = False
+
+            if self.player.location == 'block':
+                self.player.rect.bottom = self.rect.top
 
         if self.player.location == 'ground':
             self.player.mov_plat = False

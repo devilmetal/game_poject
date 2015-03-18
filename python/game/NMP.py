@@ -54,14 +54,16 @@ def main():
             from levels.Level1 import Level_01
             #from levels.Level2 import Level_02
             from levels.FirstStage import FirstStage
+            from levels.SecondStage import SecondStage
 
             # Create the player
             #player = Bob()
             player = Hulk()
+
             # Create all the levels
             level_list = []
-            level_list.append(FirstStage(player))
-            #level_list.append(Level_02(player))
+            level_list.append(FirstStage(player)) #add first stage
+            level_list.append(SecondStage(player)) #add second stage
 
             # Set the current level
             current_level_no = 0
@@ -79,9 +81,11 @@ def main():
 
             # Used to manage how fast the screen updates
             clock = pygame.time.Clock()
+
             #Play audio stuff
             pygame.mixer.music.load('data/sound/test.wav')
             pygame.mixer.music.play(-1)
+
             # -------- Main Program Loop -----------
             while not done:
 
@@ -89,10 +93,12 @@ def main():
                 active_sprite_list.update()
                 # Update items in the level
                 current_level.update()
+
                 #if the player is dead
                 if player.dead == True:
                     done = True
                     routines.death_menu(clock)
+
                 # If the player gets near the right side, shift the world left (-x)
                 if player.rect.right >= 300:
                     diff = player.rect.right - 300
