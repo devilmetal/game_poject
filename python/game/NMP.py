@@ -64,16 +64,19 @@ def main():
 
             # Create all the levels
             if first:
-                level_list = []
-                level_list.append(FirstStage(player)) #add first stage
-                level_list.append(SecondStage(player)) #add second stage
                 first = False
                 current_level_no = 0
-            else:
+            elif current_level.end_level:
                 current_level_no = current_level.next_level
+                current_level.end_level = False
+
 
             # Set the current level
-            current_level = level_list[current_level_no]
+            if current_level_no == 0:
+                current_level = FirstStage(player)
+            elif current_level_no == 1:
+                current_level = SecondStage(player)
+
 
             active_sprite_list = pygame.sprite.Group()
             player.level = current_level
@@ -103,6 +106,7 @@ def main():
                 #if the player reach the end
                 if current_level.end_level:
                     done = True
+                    #current_level.world_shift = 0
 
                 #if the player is dead
                 if player.dead == True:

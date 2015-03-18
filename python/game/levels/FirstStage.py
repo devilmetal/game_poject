@@ -30,13 +30,12 @@ class FirstStage(Level):
 
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
-		#array of platforms
-
 		self.start_x = 14400
 		self.start_y = HEIGHT - player.rect.height
 
 
 		"""Static platforms"""
+		#array of platforms
 		#[width, height, top-left x coordinate, top-left y coordinate]
 		level = [
 				#just two little thingy to add a monster TODO:Remove

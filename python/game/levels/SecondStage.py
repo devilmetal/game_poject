@@ -29,5 +29,21 @@ class SecondStage(Level):
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
 		#starting positions
-		self.start_x = 12100
+		self.start_x = 350
 		self.start_y = HEIGHT - player.rect.height
+
+		#array of platforms
+		level = [
+				#just two little thingy to add a monster TODO:Remove
+				[300, HEIGHT, 0, 0],
+				[500, 20, 0, HEIGHT]
+				]
+
+
+		for plat in level:
+			block = Platform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
