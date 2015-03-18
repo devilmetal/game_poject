@@ -31,7 +31,7 @@ class FirstStage(Level):
 
 		#array of platforms
 
-		self.start_x = 10000
+		self.start_x = 350
 		self.start_y = HEIGHT - player.rect.height
 
 		#[width, height, top-left x coordinate, top-left y coordinate]
@@ -178,9 +178,8 @@ class FirstStage(Level):
 
 		#TODO: REMOVE
 		#Blobs dummies
-		blobs = [[500, 500, 1, 2],
-				[510, 540, 1, 2],
-				[540, 580, -1, 4]
+		blobs = [[500, HEIGHT-100, 1, 2],
+				[510, HEIGHT-100, -1, 2],
 				]
 
 		#TODO REMOVE THIS
