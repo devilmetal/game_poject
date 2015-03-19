@@ -39,3 +39,5 @@ class Hulk(Character):
         #Setup status
         self.status = 'idle_r' #idle,move,jump,
         self.location = 'ground' #ground,air,block
+
+        Character.set_options(self, 13, False, 1)

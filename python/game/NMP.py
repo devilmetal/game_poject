@@ -44,129 +44,23 @@ def main():
 
     pygame.display.set_caption("(Alpha) No More Pixies")
     main_loop = True
+    first = True
+
     while main_loop:
         if constants.GAME_STATUS == "level":
-            import routines
+            from Game import Game
             from characters.Bob import Bob
             from characters.Hulk import Hulk
-            from platforms.Platform import Platform
-            from platforms.MovingPlatform import MovingPlatform
-            from levels.Level1 import Level_01
-            #from levels.Level2 import Level_02
-            from levels.FirstStage import FirstStage
 
             # Create the player
             #player = Bob()
             player = Hulk()
+            level_nbr = 0
             # Create all the levels
-            level_list = []
-            level_list.append(FirstStage(player))
-            #level_list.append(Level_02(player))
-
-            # Set the current level
-            current_level_no = 0
-            current_level = level_list[current_level_no]
-
-            active_sprite_list = pygame.sprite.Group()
-            player.level = current_level
-
-            player.rect.x = current_level.start_x
-            player.rect.y = current_level.start_y
-            active_sprite_list.add(player)
-
-            #Loop until the user clicks the close button.
-            done = False
-
-            # Used to manage how fast the screen updates
-            clock = pygame.time.Clock()
-            #Play audio stuff
-            pygame.mixer.music.load('data/sound/test.wav')
-            pygame.mixer.music.play(-1)
-            # -------- Main Program Loop -----------
-            while not done:
-
-                # Update the player.
-                active_sprite_list.update()
-                # Update items in the level
-                current_level.update()
-                #if the player is dead
-                if player.dead == True:
-                    done = True
-                    routines.death_menu(clock)
-                # If the player gets near the right side, shift the world left (-x)
-                if player.rect.right >= 300:
-                    diff = player.rect.right - 300
-                    player.rect.right = 300
-                    current_level.shift_world(-diff)
-
-                # If the player gets near the left side, shift the world right (+x)
-                if player.rect.left <= 300:
-                    diff = 300 - player.rect.left
-                    player.rect.left = 300
-                    current_level.shift_world(diff)
-
-                #SHIFT THE WORLD
-                current_position = player.rect.x + current_level.world_shift
-
-                # If the player gets to the end of the level, go to the menu title
-                if current_position < current_level.level_limit:
-                    constants.GAME_STATUS = "menu"
-                    done = True
-                    print constants.GAME_STATUS
+            game = Game(player,level_nbr,screen)
+            game.run()
 
 
-
-                # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
-                current_level.draw(screen)
-                active_sprite_list.draw(screen)
-
-                # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
-
-
-                for event in pygame.event.get(): # User did something
-
-                    #Joystick stuff
-                    if event.type == pygame.JOYHATMOTION:
-                        hat = str(joystick.get_hat(0))
-                        if "(-1, 0)" in hat:
-                            player.go_left()
-                        if "(1, 0)" in hat:
-                            player.go_right()
-                        if "(0, 0)" in hat and player.change_x != 0:
-                            player.stop()
-
-                    if event.type == pygame.JOYBUTTONDOWN:
-                        if joystick.get_button(0) == 1:
-                            player.jump()
-                        if joystick.get_button(9) == 1:
-                            routines.pause(clock,screen)
-
-                    #Keyboard stuff
-                    if event.type == pygame.QUIT: # If user clicked close
-                        done = True # Flag that we are done so we exit this loop
-                        main_loop = False #exit main program loop
-
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_LEFT:
-                            player.go_left()
-                        if event.key == pygame.K_RIGHT:
-                            player.go_right()
-                        if event.key == pygame.K_UP:
-                            player.jump()
-                        if event.key == pygame.K_p:
-                            routines.pause(clock,screen)
-
-                    if event.type == pygame.KEYUP:
-                        if event.key == pygame.K_LEFT and player.change_x < 0:
-                            player.stop()
-                        if event.key == pygame.K_RIGHT and player.change_x > 0:
-                            player.stop()
-
-                # Limit to 60 frames per second
-                clock.tick(60)
-
-                # Go ahead and update the screen with what we've drawn.
-                pygame.display.flip()
         elif constants.GAME_STATUS == "menu":
             from Menu import Menu
             background_image = pygame.image.load("data/back.jpg").convert()

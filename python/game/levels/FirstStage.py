@@ -7,14 +7,13 @@ from platforms.MovingSpike import MovingSpike
 from world.Tree import Tree
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
+from platforms.EndPlatform import EndPlatform
 from PNJ.Blob import Blob
 
 import constants
 import pygame
 
 
-start_x = 0
-start_y = 0
 
 # Create platforms for the level
 
@@ -24,16 +23,14 @@ class FirstStage(Level):
 	def __init__(self, player):
 
 		Level.__init__(self, player)
-
+		next_level = 0
 		self.level_limit = -14300
 
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
+
+		"""Static platforms"""
 		#array of platforms
-
-		self.start_x = 350
-		self.start_y = HEIGHT - player.rect.height
-
 		#[width, height, top-left x coordinate, top-left y coordinate]
 		level = [
 				#just two little thingy to add a monster TODO:Remove
@@ -79,34 +76,28 @@ class FirstStage(Level):
 				[130, 20, 10580, HEIGHT-200],
 				[130, 20, 10740, HEIGHT-320],
 				#last ground part
-				[2900, 20, 12100, HEIGHT]
+				[2900, 20, 12100, HEIGHT],
+				#first end platform
+				[120, 20, 14500, HEIGHT-100],
 				]
 
+		#if we are on a platform that should make us go to the next level
+		#[width, height, top-left x, top-left y, next level]
+		end_plat = [
+					[120, 20, 14380, HEIGHT-350, 1]
+					]
+
+		"""Special moving platform and spikes"""
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		roofs = [
 				[2100, HEIGHT-60, 12200, -HEIGHT+85, -HEIGHT+85, HEIGHT-60, 1, 4, 120, 0]
 				]
 
-		number_spikes = range(70) #create a list of number from 0 to 699
-
-		#create special moving spikes for the roof
-		for i in number_spikes:
-			block = SpecialSpike(2)
-			block.rect.x = 12200 + (i*30)
-			block.rect.y = 23
-			block.boundary_top = 23
-			block.boundary_bottom = HEIGHT-16
-			block.change_y = 1
-			block.change_y_d = 1
-			block.change_y_u = -4
-			block.pause_down = 120
-			block.pause_up = 0
-			block.player = self.player
-			block.level = self
-			self.platform_list.add(block)
+		number_spikes = range(70) #create a list of number from 0 to 69
 
 
+		"""Simple moving platforms"""
 		#array of vertical moving platform
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed]
 		vert = [
@@ -137,6 +128,8 @@ class FirstStage(Level):
 				[100, 20, 7850, HEIGHT-300, 7850, 8130, HEIGHT-300, HEIGHT, 1]
 				]
 
+
+		"""Static spikes"""
 		#spikes list (capable to kill player ! :S)
 		#[orientation, top-left x, top-left y]
 		spikes = [
@@ -176,6 +169,7 @@ class FirstStage(Level):
 				[2, 10400, HEIGHT-265],
 				]
 
+<<<<<<< HEAD
 		#TODO: REMOVE
 		#Blobs dummies
 		blobs = [[500, HEIGHT-100, 1, 2],
@@ -189,7 +183,10 @@ class FirstStage(Level):
 		while x_trees < -self.level_limit:
 			back_trees.append([0,x_trees,HEIGHT - 150])
 			x_trees+=200
+=======
+>>>>>>> SecondStage
 
+		"""Simple moving spikes"""
 		#moving vert spikes
 		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
 		ver_mov_spikes = [
@@ -206,12 +203,36 @@ class FirstStage(Level):
 						[1, 10945, HEIGHT-230, 10945, 12100, 10]
 						]
 
+
+
+		"""Some foes"""
+		#TODO: REMOVE
+		#Blobs dummies
+		blobs = [[500, 500, 1, 2],
+				[510, 540, 1, 2],
+				[540, 580, -1, 4]
+				]
+
+
+		"""Some background"""
+		#TODO REMOVE THIS
+		#adding tree to background along the level
+		x_trees=0
+		back_trees=[]
+		while x_trees < -self.level_limit:
+			back_trees.append([0,x_trees,HEIGHT - 150])
+			x_trees+=200
+
+
+
+		"""Generation of the differents platforms/spikes"""
 		# Go through the array above and add platforms
 		for plat in level:
 			block = Platform(plat[0], plat[1])
 			block.rect.x = plat[2]
 			block.rect.y = plat[3]
 			block.player = self.player
+			block.level = self
 			self.platform_list.add(block)
 
 		for plat in vert:
@@ -255,6 +276,7 @@ class FirstStage(Level):
 			block.rect.x = spike[1]
 			block.rect.y = spike[2]
 			block.player = self.player
+			block.level = self
 			self.platform_list.add(block)
 
 		for spike in ver_mov_spikes:
@@ -307,3 +329,29 @@ class FirstStage(Level):
 			enemy.player=self.player
 			enemy.level=self
 			self.pnj_list.add(enemy)
+
+		#create special moving spikes for the roof
+		for i in number_spikes:
+			block = SpecialSpike(2)
+			block.rect.x = 12200 + (i*30)
+			block.rect.y = 23
+			block.boundary_top = 23
+			block.boundary_bottom = HEIGHT-16
+			block.change_y = 1
+			block.change_y_d = 1
+			block.change_y_u = -4
+			block.pause_down = 120
+			block.pause_up = 0
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
+
+		#end platforms
+		for plat in end_plat:
+			block = EndPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.player = self.player
+			block.level = self
+			block.level_pointer = plat[4]
+			self.platform_list.add(block)

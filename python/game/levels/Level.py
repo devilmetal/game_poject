@@ -11,8 +11,15 @@ class Level():
     platform_list = None
     pnj_list = None
     back_world_list = None
+    game = None
     # How far this world has been scrolled left/right
     world_shift = 0
+
+    start_x = 0
+    start_y = 0
+
+    next_level = 0
+    end_level = False
 
     def __init__(self, player):
         """ Constructor. Pass in a handle to player. Needed for when moving
@@ -43,7 +50,6 @@ class Level():
 
     def shift_world(self, shift_x):
         """ When the user moves left/right and we need to scroll everything: """
-
         # Keep track of the shift amount
         self.world_shift += shift_x
 
