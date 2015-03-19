@@ -169,7 +169,6 @@ class FirstStage(Level):
 				[2, 10400, HEIGHT-265],
 				]
 
-<<<<<<< HEAD
 		#TODO: REMOVE
 		#Blobs dummies
 		blobs = [[500, HEIGHT-100, 1, 2],
@@ -183,8 +182,6 @@ class FirstStage(Level):
 		while x_trees < -self.level_limit:
 			back_trees.append([0,x_trees,HEIGHT - 150])
 			x_trees+=200
-=======
->>>>>>> SecondStage
 
 		"""Simple moving spikes"""
 		#moving vert spikes

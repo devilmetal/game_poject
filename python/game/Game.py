@@ -59,8 +59,8 @@ class Game():
         # Used to manage how fast the screen updates
         clock = pygame.time.Clock()
         #Play audio stuff
-        #pygame.mixer.music.load('data/sound/test.wav')
-        #pygame.mixer.music.play(-1)
+        pygame.mixer.music.load('data/sound/test.wav')
+        pygame.mixer.music.play(-1)
         # -------- Main Program Loop -----------
         while not self.done:
 
