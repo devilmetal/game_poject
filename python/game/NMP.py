@@ -57,7 +57,7 @@ def main():
             player = Hulk()
             level_nbr = 0
             # Create all the levels
-            game = Game(player,level_nbr,screen)
+            game = Game(player,level_nbr,screen,joystick)
             game.run()
 
 

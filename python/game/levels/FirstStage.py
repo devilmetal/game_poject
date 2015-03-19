@@ -8,6 +8,8 @@ from world.Tree import Tree
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
 from platforms.EndPlatform import EndPlatform
+from platforms.CheckPoint import CheckPoint
+
 from PNJ.Blob import Blob
 
 import constants
@@ -50,7 +52,6 @@ class FirstStage(Level):
 				[30, 20, 4300, HEIGHT],
 				[30, 20, 4700, HEIGHT],
 				#small platform in the air right after the first horiz. mov. plat.
-				[60, 20, 5750, HEIGHT-300],
 				[60, 20, 6000, HEIGHT-300],
 				[40, 20, 6400, HEIGHT-300],
 				[100, 20, 6500, HEIGHT-300],
@@ -85,6 +86,13 @@ class FirstStage(Level):
 		#[width, height, top-left x, top-left y, next level]
 		end_plat = [
 					[120, 20, 14380, HEIGHT-350, 1]
+					]
+		# checkpoints
+		#[top-left x, top-left , width, height]
+		checkpoints = [
+					[50, 20, 2600, HEIGHT-240],
+					[60, 20, 5750, HEIGHT-300],
+					[50, 20, 8400, HEIGHT-20]
 					]
 
 		"""Special moving platform and spikes"""
@@ -136,8 +144,8 @@ class FirstStage(Level):
 				[3, 8755, HEIGHT-30],
 				[3, 8755, HEIGHT-60],
 				[3, 8755, HEIGHT-90],
-				[0, 8770, HEIGHT-140],
-				[0, 8800, HEIGHT-140],
+				[0, 8770, HEIGHT-135],
+				[0, 8800, HEIGHT-135],
 				[0, 8830, HEIGHT-45],
 				[0, 8860, HEIGHT-45],
 				[0, 8890, HEIGHT-45],
@@ -167,12 +175,6 @@ class FirstStage(Level):
 				#last air part of the level
 				[0, 10400, HEIGHT-120],
 				[2, 10400, HEIGHT-265],
-				]
-
-		#TODO: REMOVE
-		#Blobs dummies
-		blobs = [[500, HEIGHT-100, 1, 2],
-				[510, HEIGHT-100, -1, 2],
 				]
 
 		#TODO REMOVE THIS
@@ -205,9 +207,9 @@ class FirstStage(Level):
 		"""Some foes"""
 		#TODO: REMOVE
 		#Blobs dummies
-		blobs = [[500, 500, 1, 2],
-				[510, 540, 1, 2],
-				[540, 580, -1, 4]
+
+		blobs = [[500, HEIGHT-100, 1, 2],
+				[500, HEIGHT-100, -1, 2],
 				]
 
 
@@ -351,4 +353,15 @@ class FirstStage(Level):
 			block.player = self.player
 			block.level = self
 			block.level_pointer = plat[4]
+			self.platform_list.add(block)
+
+		#checkpoints platforms
+		for plat in checkpoints:
+			block = CheckPoint(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.player = self.player
+			block.level = self
+			#CheckPoint is red!
+			block.image.fill(constants.RED)
 			self.platform_list.add(block)

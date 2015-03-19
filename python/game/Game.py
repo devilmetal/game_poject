@@ -23,13 +23,13 @@ class Game():
     current_level_nbr = 0
     done = False
     checkpoint = False
-
-    def __init__(self, character, level_nbr,screen):
+    joystick=None
+    def __init__(self, character, level_nbr,screen,joystick):
         self.screen = screen
         self.character = character
         self.init_level(level_nbr)
         self.current_level_nbr = level_nbr
-
+        self.joystick = joystick
     def init_level(self,level_nbr):
         if level_nbr == 0:
             if not self.checkpoint:
@@ -114,19 +114,21 @@ class Game():
 
                 #Joystick stuff
                 if event.type == pygame.JOYHATMOTION:
-                    hat = str(joystick.get_hat(0))
+                    hat = str(self.joystick.get_hat(0))
                     if "(-1, 0)" in hat:
+                        self.character.stop()
                         self.character.go_left()
                     if "(1, 0)" in hat:
+                        self.character.stop()
                         self.character.go_right()
                     if "(0, 0)" in hat and self.character.change_x != 0:
                         self.character.stop()
 
                 if event.type == pygame.JOYBUTTONDOWN:
-                    if joystick.get_button(0) == 1:
+                    if self.joystick.get_button(0) == 1:
                         self.character.jump()
-                    if joystick.get_button(9) == 1:
-                        routines.pause(clock,self.screen)
+                    if self.joystick.get_button(9) == 1:
+                        routines.pause(clock,self.screen,self.joystick)
 
                 #Keyboard stuff
                 if event.type == pygame.QUIT: # If user clicked close
@@ -134,13 +136,15 @@ class Game():
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
+                        self.character.stop()
                         self.character.go_left()
                     if event.key == pygame.K_RIGHT:
+                        self.character.stop()
                         self.character.go_right()
                     if event.key == pygame.K_UP:
                         self.character.jump()
                     if event.key == pygame.K_p:
-                        routines.pause(clock,self.screen)
+                        routines.pause(clock,self.screen,self.joystick)
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT and self.character.change_x < 0:

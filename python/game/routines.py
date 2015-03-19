@@ -45,7 +45,7 @@ def death_menu(clock):
     pygame.time.delay(2000)
 
 
-def pause(clock,screen):
+def pause(clock,screen,joystick):
     """ Pausing the game """
     pause_flag = True
     font_path_title = 'data/coders_crux/coders_crux.ttf'

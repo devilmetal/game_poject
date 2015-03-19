@@ -182,7 +182,7 @@ class Character(pygame.sprite.Sprite):
         # If we're on a moving plateform and we jump, we don't keep the speed of the plateform
         # (it only works if we don't set the speed of the plateform same speed than the character)
 
-        if (len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT) and not self.hit:
+        if len(platform_hit_list) > 0 and not self.hit:
             #Play sound jump
             self.sounds['jump'].play()
             if self.mov_plat == True:
