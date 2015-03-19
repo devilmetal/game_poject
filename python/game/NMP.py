@@ -51,17 +51,23 @@ def main():
             from Game import Game
             from characters.Bob import Bob
             from characters.Hulk import Hulk
+            from CharacterMenu import CharacterMenu
 
-            # Create the player
-            #player = Bob()
-            player = Hulk()
+            #CHARACTER SELECTION MENU
+            menu = CharacterMenu(screen)
+            selected = menu.run(joystick)
+            player = None
+            if selected == 0:
+                player = Bob()
+            elif selected == 1:
+                player = Hulk()
+
             level_nbr = 0
             # Create all the levels
             game = Game(player,level_nbr,screen,joystick)
             game.run()
-
-
         elif constants.GAME_STATUS == "menu":
+
             from Menu import Menu
             background_image = pygame.image.load("data/back.jpg").convert()
             screen.blit(background_image, [0, 0])
@@ -75,49 +81,7 @@ def main():
             menu.draw()#necessary
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
-            menu_flag = True
-            while menu_flag:
-                for event in pygame.event.get():
-
-                    #Joystick stuff
-                    if event.type == pygame.JOYHATMOTION:
-                        hat = joystick.get_hat(0)
-                        if (0, 1) == hat:
-                            menu.draw(-1)
-                        if (0, -1) == hat:
-                            menu.draw(1)
-                        pygame.display.update()
-                    if event.type == pygame.JOYBUTTONDOWN:
-                        if joystick.get_button(1) == 1:
-                            if menu.get_position() == 1:#here is the Menu class function
-                                constants.GAME_STATUS="exit"
-                                menu_flag = False
-                            if menu.get_position() == 0:#here is the Menu class function
-                                constants.GAME_STATUS="level"
-                                menu_flag = False
-
-
-                    #Keyboard stuff
-                    if event.type == pygame.KEYDOWN: # or event.type == pygame.JOYHATMOTION or event.type == pygame.JOYBUTTONDOWN:
-                        if event.key == pygame.K_UP:# or joystick.get_hat()==(0,1):
-                            menu.draw(-1) #here is the Menu class function
-                        if event.key == pygame.K_DOWN:# or joystick.get_hat()==(0,-1):
-                            menu.draw(1) #here is the Menu class function
-                        if event.key == pygame.K_RETURN:
-                            if menu.get_position() == 1:#here is the Menu class function
-                                constants.GAME_STATUS="exit"
-                                menu_flag = False
-                            if menu.get_position() == 0:#here is the Menu class function
-                                constants.GAME_STATUS="level"
-                                menu_flag = False
-                        if event.key == pygame.K_ESCAPE:
-                            menu_flag = False
-                            main_loop = False
-                        pygame.display.update()
-                    elif event.type == pygame.QUIT:
-                        constants.GAME_STATUS="exit"
-                        menu_flag = False
-                pygame.time.wait(8)
+            menu.run(joystick)
         # Be IDLE friendly. If you forget this line, the program will 'hang'
         # on exit.
         #can pass when GAME_STATUS is f.e set to "exit"
