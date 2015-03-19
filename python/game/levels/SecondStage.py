@@ -13,9 +13,6 @@ import constants
 import pygame
 
 
-start_x = 0
-start_y = 0
-
 
 class SecondStage(Level):
 	"""Overview of the standard/easy way of the second stage"""
@@ -25,12 +22,9 @@ class SecondStage(Level):
 		Level.__init__(self, player)
 
 		self.level_limit = -14300
-
+		next_level = 1
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
-		#starting positions
-		self.start_x = 350
-		self.start_y = HEIGHT - player.rect.height
 
 		#array of platforms
 		level = [

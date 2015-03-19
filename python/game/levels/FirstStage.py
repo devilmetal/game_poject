@@ -14,8 +14,6 @@ import constants
 import pygame
 
 
-start_x = 0
-start_y = 0
 
 # Create platforms for the level
 
@@ -25,13 +23,11 @@ class FirstStage(Level):
 	def __init__(self, player):
 
 		Level.__init__(self, player)
-
+		next_level = 0
 		self.level_limit = -14300
 
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
-		self.start_x = 14400
-		self.start_y = HEIGHT - player.rect.height
 
 
 		"""Static platforms"""

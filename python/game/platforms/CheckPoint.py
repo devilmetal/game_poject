@@ -2,14 +2,12 @@ import constants
 import pygame
 from Platform import Platform
 
-class EndPlatform(Platform):
+class CheckPoint(Platform):
     """ This is a fancier platform that can actually move. """
 
     player = None
 
     level = None
-
-    level_pointer = 0
 
     def update(self):
         """ Move the platform.
@@ -26,6 +24,6 @@ class EndPlatform(Platform):
         self.player.rect.y -= 2
 
         if hit:
-            self.level.game.current_level_nbr = self.level_pointer
-            self.level.game.checkpoint=False
-            self.level.game.load_level(self.level_pointer)
+            self.level.game.start_x = self.rect.x+int(self.rect.width/2)-self.level.world_shift
+            self.level.game.start_y = self.rect.y-self.player.rect.height
+            self.level.game.checkpoint = True
