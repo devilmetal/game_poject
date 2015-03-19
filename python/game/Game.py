@@ -1,14 +1,9 @@
 import pygame
 import constants
 import routines
-from platforms.Platform import Platform
-from platforms.MovingPlatform import MovingPlatform
-from levels.Level1 import Level_01
-#from levels.Level2 import Level_02
 from levels.FirstStage import FirstStage
 from levels.SecondStage import SecondStage
-from characters.Bob import Bob
-from characters.Hulk import Hulk
+
 HEIGHT = constants.SCREEN_HEIGHT-20
 
 class Game():
