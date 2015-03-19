@@ -113,22 +113,25 @@ class Game():
             for event in pygame.event.get(): # User did something
 
                 #Joystick stuff
-                if event.type == pygame.JOYHATMOTION:
-                    hat = str(self.joystick.get_hat(0))
-                    if "(-1, 0)" in hat:
-                        self.character.stop()
-                        self.character.go_left()
-                    if "(1, 0)" in hat:
-                        self.character.stop()
-                        self.character.go_right()
-                    if "(0, 0)" in hat and self.character.change_x != 0:
-                        self.character.stop()
 
                 if event.type == pygame.JOYBUTTONDOWN:
-                    if self.joystick.get_button(0) == 1:
+                    if self.joystick.get_button(1) == 1:
                         self.character.jump()
                     if self.joystick.get_button(9) == 1:
                         routines.pause(clock,self.screen,self.joystick)
+
+                if event.type == pygame.JOYHATMOTION:
+                    hat = self.joystick.get_hat(0)
+                    if (-1, 0) ==  hat:
+                        self.character.stop()
+                        self.character.go_left()
+                    if (1, 0) == hat:
+                        self.character.stop()
+                        self.character.go_right()
+                    if (0, 0) == hat and self.character.change_x != 0:
+                        self.character.stop()
+
+
 
                 #Keyboard stuff
                 if event.type == pygame.QUIT: # If user clicked close

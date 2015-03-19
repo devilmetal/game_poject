@@ -81,14 +81,14 @@ def main():
 
                     #Joystick stuff
                     if event.type == pygame.JOYHATMOTION:
-                        hat = str(joystick.get_hat(0))
-                        if "(0, 1)" in hat:
+                        hat = joystick.get_hat(0)
+                        if (0, 1) == hat:
                             menu.draw(-1)
-                        if "(0, -1)"in hat:
+                        if (0, -1) == hat:
                             menu.draw(1)
                         pygame.display.update()
                     if event.type == pygame.JOYBUTTONDOWN:
-                        if joystick.get_button(0) == 1:
+                        if joystick.get_button(1) == 1:
                             if menu.get_position() == 1:#here is the Menu class function
                                 constants.GAME_STATUS="exit"
                                 menu_flag = False

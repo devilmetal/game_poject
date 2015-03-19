@@ -69,7 +69,7 @@ def pause(clock,screen,joystick):
         for event in pygame.event.get():
 
             if event.type == pygame.JOYBUTTONDOWN:
-                if joystick.get_button(0) == 1:
+                if joystick.get_button(1) == 1:
                     pause_flag = False
 
             if event.type == pygame.QUIT:
