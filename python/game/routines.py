@@ -26,9 +26,9 @@ def death_menu(clock):
     bg.fill(constants.BLACK)
 
     font1 = pygame.font.Font(font_path_title, 52)
-    font2 = pygame.font.Font(font_path_title, 42)
+    font2 = pygame.font.Font(font_path_title, 38)
     text1 = font1.render("You died.", 1, constants.WHITE)
-    text2 = font2.render("Let's try again!", 1, constants.WHITE)
+    text2 = font2.render("You're still not skilled enough...", 1, constants.WHITE)
     text1pos = text1.get_rect()
     text2pos = text2.get_rect()
     text1pos.centerx = constants.SCREEN_WIDTH/2

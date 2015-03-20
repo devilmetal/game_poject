@@ -41,9 +41,9 @@ class CharacterMenu:
         self.screen.blit(bg, (0,0))
         #Draw funky text
         font1 = pygame.font.Font(self.font_path, 52)
-        font2 = pygame.font.Font(self.font_path, 42)
+        font2 = pygame.font.Font(self.font_path, 38)
         text1 = font1.render("Select your Badass", 1, constants.WHITE)
-        text2 = font2.render('"And come give some !"', 1, constants.WHITE)
+        text2 = font2.render('and go kick some asses !', 1, constants.WHITE)
         text1pos = text1.get_rect()
         text2pos = text2.get_rect()
         text1pos.centerx = constants.SCREEN_WIDTH/2
