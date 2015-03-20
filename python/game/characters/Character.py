@@ -44,7 +44,7 @@ class Character(pygame.sprite.Sprite):
 
         # Gravity
         self.calc_grav()
-    
+
         if not self.hit:
 
             # Move left/right
@@ -64,7 +64,7 @@ class Character(pygame.sprite.Sprite):
             # Move up/down
             self.rect.y += self.change_y
 
-        
+
             # Check and see if we hit anything
             block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
             for block in block_hit_list:
