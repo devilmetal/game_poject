@@ -13,6 +13,11 @@ class Character(pygame.sprite.Sprite):
         """ Constructor function """
         super(Character, self).__init__()
 
+        #personnal aptitudes
+        self.jump_height = 10
+        self.weight = 1
+        self.invisible = False
+
         #Physics stuff
         self.gravity_a = .35
 
@@ -143,16 +148,16 @@ class Character(pygame.sprite.Sprite):
         #In order to debug the image of the character that is displayed when he/she is
         #on en plateform that moves down we need to check whether or not we're on it and
         #make an special case
-        self.rect.y += 2
+        self.rect.y += 4
         platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        self.rect.y -= 2
+        self.rect.y -= 4
 
 
         if len(platform_hit_list) > 0 and self.rect.bottom < constants.SCREEN_HEIGHT - 20 and not self.hit:
             self.location = 'block'
         else:
             self.location = 'air'
-            self.change_y += self.gravity_a
+            self.change_y += self.gravity_a * self.weight
 
         # See if we are on the ground.
         if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height - 20 and self.change_y >= 0:
@@ -177,7 +182,7 @@ class Character(pygame.sprite.Sprite):
         # If we're on a moving plateform and we jump, we don't keep the speed of the plateform
         # (it only works if we don't set the speed of the plateform same speed than the character)
 
-        if (len(platform_hit_list) > 0 or self.rect.bottom >= constants.SCREEN_HEIGHT) and not self.hit:
+        if len(platform_hit_list) > 0 and not self.hit:
             #Play sound jump
             self.sounds['jump'].play()
             if self.mov_plat == True:
@@ -188,7 +193,7 @@ class Character(pygame.sprite.Sprite):
             if self.status == 'move_r':
                 self.change_x = 6
 
-            self.change_y = -10
+            self.change_y = -self.jump_height
             self.location = 'air'
 
     # Player-controlled movement:
@@ -207,3 +212,9 @@ class Character(pygame.sprite.Sprite):
             self.status = 'idle_r'
         else:
             self.status = 'idle_l'
+
+
+    def set_options(self, jump_height, invisible, weight):
+        self.jump_height = jump_height
+        self.invisible = invisible
+        self.weight = weight

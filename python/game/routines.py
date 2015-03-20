@@ -45,7 +45,7 @@ def death_menu(clock):
     pygame.time.delay(2000)
 
 
-def pause(clock,screen):
+def pause(clock,screen,joystick):
     """ Pausing the game """
     pause_flag = True
     font_path_title = 'data/coders_crux/coders_crux.ttf'
@@ -69,7 +69,7 @@ def pause(clock,screen):
         for event in pygame.event.get():
 
             if event.type == pygame.JOYBUTTONDOWN:
-                if joystick.get_button(0) == 1:
+                if joystick.get_button(1) == 1:
                     pause_flag = False
 
             if event.type == pygame.QUIT:
