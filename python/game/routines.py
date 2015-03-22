@@ -16,28 +16,38 @@ def load_png(name):
                 raise SystemExit, message
         return image, image.get_rect()
 
-def death_menu(clock):
-    """ Screen appearing after death """
-    font_path_title = 'data/coders_crux/coders_crux.ttf'
 
-    screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
-    bg = pygame.Surface(screen.get_size())
+def draw_rectangle(width, height, bg_color):
+    bg = pygame.Surface((width, height))
+    bg.fill(bg_color)
     bg = bg.convert()
-    bg.fill(constants.BLACK)
 
-    font1 = pygame.font.Font(font_path_title, 52)
-    font2 = pygame.font.Font(font_path_title, 42)
-    text1 = font1.render("You died.", 1, constants.WHITE)
-    text2 = font2.render("Let's try again!", 1, constants.WHITE)
-    text1pos = text1.get_rect()
-    text2pos = text2.get_rect()
-    text1pos.centerx = constants.SCREEN_WIDTH/2
-    text1pos.centery = constants.SCREEN_HEIGHT/2 - 20
-    text2pos.centerx = constants.SCREEN_WIDTH/2
-    text2pos.centery = constants.SCREEN_HEIGHT/2 + 20
+    return bg
 
-    bg.blit(text1, text1pos)
-    bg.blit(text2, text2pos)
+def draw_text(text, posx, posy, fsize, font_path, color):
+    txt = []
+    font = pygame.font.Font(font_path, fsize)
+    t = font.render(text, 1, color)
+    tpos = t.get_rect()
+    tpos.centerx = posx
+    tpos.centery = posy
+
+    txt.append(t)
+    txt.append(tpos)
+
+    return txt
+
+
+def death_menu(clock, screen):
+    """ Screen appearing after death """
+    
+    bg = draw_rectangle(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.BLACK)
+
+    txt1 = draw_text("You died.", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 - 20, 52, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+    txt2 = draw_text("Let's try again!", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 42, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+
+    bg.blit(txt1[0], txt1[1])
+    bg.blit(txt2[0], txt2[1])
 
     screen.blit(bg, (0,0))
     pygame.display.update()
@@ -48,23 +58,16 @@ def death_menu(clock):
 def pause(clock,screen,joystick):
     """ Pausing the game """
     pause_flag = True
-    font_path_title = 'data/coders_crux/coders_crux.ttf'
-    font1 = pygame.font.Font(font_path_title, 52)
-    font2 = pygame.font.Font(font_path_title, 42)
-    text1 = font1.render("Paused", 1, constants.WHITE)
-    text2 = font2.render("Continue (c) or A or Quit (q) ?", 1, constants.WHITE)
-    text1pos = text1.get_rect()
-    text2pos = text2.get_rect()
-    text1pos.centerx = constants.SCREEN_WIDTH/2
-    text1pos.centery = constants.SCREEN_HEIGHT/2 - 20
-    text2pos.centerx = constants.SCREEN_WIDTH/2
-    text2pos.centery = constants.SCREEN_HEIGHT/2 + 20
 
-    screen.blit(text1, text1pos)
-    screen.blit(text2, text2pos)
+    txt1 = draw_text("Paused", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 - 20, 52, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+    txt2 = draw_text("Continue (c) or A or Quit (q) ?", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 42, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+
+    screen.blit(txt1[0], txt1[1])
+    screen.blit(txt2[0], txt2[1])
 
     screen.blit(screen, (0,0))
     pygame.display.update()
+
     while pause_flag:
         for event in pygame.event.get():
 

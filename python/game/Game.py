@@ -73,7 +73,7 @@ class Game():
                 self.character.dead = False
                 self.character.hit = False
                 self.load_level(self.current_level_nbr)
-                routines.death_menu(clock)
+                routines.death_menu(clock, self.screen)
 
             # If the self.character gets near the right side, shift the world left (-x)
             if self.character.rect.right >= 300:
