@@ -47,23 +47,14 @@ class CharacterMenu:
         self.selected = position
         #Draw the next position of menu
         #Draw background
-        bg = pygame.Surface(self.screen.get_size())
-        bg = bg.convert()
-        bg.fill(constants.BLACK)
-        self.screen.blit(bg, (0,0))
+        bg = routines.draw_rectangle(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.BLACK)
         #Draw funky text
-        font1 = pygame.font.Font(self.font_path, 52)
-        font2 = pygame.font.Font(self.font_path, 38)
-        text1 = font1.render("Select your Badass", 1, constants.WHITE)
-        text2 = font2.render('and go kick some asses !', 1, constants.WHITE)
-        text1pos = text1.get_rect()
-        text2pos = text2.get_rect()
-        text1pos.centerx = constants.SCREEN_WIDTH/2
-        text1pos.centery = constants.SCREEN_HEIGHT/5 - 20
-        text2pos.centerx = constants.SCREEN_WIDTH/2
-        text2pos.centery = constants.SCREEN_HEIGHT/5 + 20
-        self.screen.blit(text1, text1pos)
-        self.screen.blit(text2, text2pos)
+        txt1 = routines.draw_text("Select your Badass", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/5 - 20, 52, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+        txt2 = routines.draw_text("and go kick some asses !", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/5 + 20, 38, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+        bg.blit(txt1[0], txt1[1])
+        bg.blit(txt2[0], txt2[1])
+        self.screen.blit(bg, (0,0))
+
         #Create layout of character display according to lenght of self.char_list
         #standard width of character frame
         image_width=40
