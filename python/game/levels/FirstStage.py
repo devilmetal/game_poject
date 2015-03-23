@@ -114,7 +114,7 @@ class FirstStage(Level):
 				#see diff part
 
 				#last moving platform
-				[120, 20, 10900, HEIGHT-200, 10900, 11700, 2]
+				[120, 20, 10900, HEIGHT-350, 10900, 11700, 2]
 				]
 
 		#array of diag moving plat
@@ -292,19 +292,7 @@ class FirstStage(Level):
 			block.level_pointer = plat[4]
 			self.platform_list.add(block)
 
-		#checkpoints platforms
-		for plat in checkpoints:
-			block = CheckPoint(plat[0], plat[1])
-			block.rect.x = plat[2]
-			block.rect.y = plat[3]
-			block.player = self.player
-			block.level = self
-			#CheckPoint is red!
-			block.image.fill(constants.RED)
-			self.platform_list.add(block)
-
-
-
+		
 
 		"""here will stands specific platform for the different levels of difficulty"""
 
@@ -341,6 +329,7 @@ class FirstStage(Level):
 
 
 		#medium
+		#[width, height, top-left x, top-left y]
 		medium_plat = [
 					[100, 20, 3400, HEIGHT],
 					[80, 20, 3700, HEIGHT],
@@ -353,6 +342,7 @@ class FirstStage(Level):
 					[50, 20, 6500, HEIGHT-300]
 					]
 
+		#[width, height, top-left x, top-left y, left bound, right bound, speed]
 		medium_horiz = [
 				[100, 20, 6700, HEIGHT-300, 6700, 6900, 2],
 				[70, 20, 7200, HEIGHT-300, 7150, 7250, 1],
@@ -363,17 +353,19 @@ class FirstStage(Level):
 				[23, 30, 9795, HEIGHT-30, 9185, 9885, 5]
 				]
 
+		#[orientation, top-left x, top-left y]
 		medium_spikes = [
 				[0, 8770, HEIGHT-135],
 				[0, 8800, HEIGHT-135],
 				[0, 8890, HEIGHT-45]
 				]
 
+		#[orientation, top-left x, top-left y, left bound, right bound, speed]
 		medium_horiz_spikes = [
 						[3, 9750, HEIGHT-30, 9140, 9840, 5],
 						[1, 9815, HEIGHT-30, 9205, 9905, 5],
-						[3, 10900, HEIGHT-230, 10900, 12055, 10],
-						[1, 10945, HEIGHT-230, 10945, 12100, 10]
+						[3, 10900, HEIGHT-380, 10900, 12055, 10],
+						[1, 10945, HEIGHT-380, 10945, 12100, 10]
 						]
 
 		#falling roof at the end of the level
@@ -381,6 +373,86 @@ class FirstStage(Level):
 		medium_roofs = [
 				[2100, HEIGHT-60, 12200, -HEIGHT+85, -HEIGHT+85, HEIGHT-60, 1, 4, 120, 0]
 				]
+
+
+
+		#hard
+		#[width, height, top-left x, top-left y]
+		hard_plat = [
+					[50, 20, 3400, HEIGHT],
+					[50, 20, 3800, HEIGHT],
+					[50, 20, 4200, HEIGHT],
+					[30, 20, 4600, HEIGHT],
+					#air platforms
+					[50, 20, 6000, HEIGHT-300],
+					[50, 20, 6250, HEIGHT-300],
+					[50, 20, 6500, HEIGHT-300],
+					#final platforms
+					[30, 55, 10870, HEIGHT-320],
+					[20, 300, 10740, HEIGHT-300],
+					[780, 20, 10900, HEIGHT-285],
+					[1050, 20, 10900, HEIGHT-135],
+					[130, 20, 11820, HEIGHT-200],
+					[1400, 20, 10730, HEIGHT],
+					[20, HEIGHT-115, 11950, 0]
+					]
+
+		#[width, height, top-left x, top-left y, left bound, right bound, speed]
+		hard_horiz = [
+				[60, 20, 6700, HEIGHT-300, 6700, 6900, 3],
+				[50, 20, 7200, HEIGHT-300, 7150, 7250, 1],
+				[30, 20, 7400, HEIGHT-300, 7350, 7500, 2],
+				[50, 20, 7700, HEIGHT-300, 7550, 7800, 3],
+				#fast moving plateform with spikes under it
+				[90, 20, 9760, HEIGHT-50, 9150, 9850, 5],
+				[23, 30, 9795, HEIGHT-30, 9185, 9885, 5],
+				#last moving plat
+				[120, 20, 10900, HEIGHT-200, 10900, 11700, 3]
+				]
+
+		#[width, height, top-left x, top-left y, top bound, bottom bound, speed]
+		hard_vert = [
+				#[30, 220, 10550, HEIGHT-200, HEIGHT-200, HEIGHT+200, 2],
+				#[30, 340, 10710, HEIGHT-320, HEIGHT-320, HEIGHT+200, 2],
+				[30, HEIGHT-230, 10550, -180, -180, HEIGHT-230, 2],
+				[30, HEIGHT-350, 10710, -180, -180, HEIGHT-350, 2]
+				]
+		#first range of spikes
+		hard_num_spikes = range(26)
+
+		#second range of spikes
+		hard_num_spikes2 = range(35)
+
+		#[orientation, top-left x, top-left y]
+		hard_spikes = [
+				[0, 8770, HEIGHT-135],
+				[0, 8800, HEIGHT-135],
+				[0, 8890, HEIGHT-45],
+				[0, 10430, HEIGHT-120]
+				]
+
+		#[orientation, top-left x, top-left y, left bound, right bound, speed]
+		hard_horiz_spikes = [
+						[3, 9750, HEIGHT-30, 9140, 9840, 5],
+						[1, 9815, HEIGHT-30, 9205, 9905, 5],
+						[3, 9200, HEIGHT-250, 9200, 9750, 5],
+						[1, 9245, HEIGHT-250, 9245, 9795, 5],
+						[3, 10900, HEIGHT-380, 10900, 11855, 10],
+						[1, 10945, HEIGHT-380, 10945, 11900, 10]
+						]
+
+		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
+		hard_vert_spikes = [
+				#[0, 10550, HEIGHT-245, HEIGHT-245, HEIGHT-19, 2],
+				#[0, 10710, HEIGHT-365, HEIGHT-365, HEIGHT-139, 2],
+				[2, 10550, HEIGHT-412, HEIGHT-412, HEIGHT-186, 2],
+				[2, 10710, HEIGHT-532, HEIGHT-532, HEIGHT-306, 2]
+				]
+
+		#checkpoint
+		hard_checkpoints = [
+					[60, 20, 5750, HEIGHT-300]
+					]
 
 
 		if level_dif == "easy":
@@ -432,6 +504,17 @@ class FirstStage(Level):
 				block.pause_up = 60
 				block.player = self.player
 				block.level = self
+				self.platform_list.add(block)
+
+			#checkpoints platforms
+			for plat in checkpoints:
+				block = CheckPoint(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				#CheckPoint is red!
+				block.image.fill(constants.RED)
 				self.platform_list.add(block)
 
 		elif level_dif == "medium":
@@ -501,4 +584,138 @@ class FirstStage(Level):
 				block.pause_up = 0
 				block.player = self.player
 				block.level = self
+				self.platform_list.add(block)
+
+			#checkpoints platforms
+			for plat in checkpoints:
+				block = CheckPoint(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				#CheckPoint is red!
+				block.image.fill(constants.RED)
+				self.platform_list.add(block)
+
+		elif level_dif == "hard":
+			for plat in hard_plat:
+				block = Platform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for plat in hard_horiz:
+				block = MovingPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_left = plat[4]
+				block.boundary_right = plat[5]
+				block.change_x = plat[6]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for plat in hard_vert:
+				block = MovingPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.change_y = plat[6]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for spike in hard_spikes:
+				block = Spike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for spike in hard_horiz_spikes:
+				block = MovingSpike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.boundary_left = spike[3]
+				block.boundary_right = spike[4]
+				block.change_x = spike[5]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+
+			for spike in hard_vert_spikes:
+				block = MovingSpike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.boundary_top = spike[3]
+				block.boundary_bottom = spike[4]
+				block.change_y = spike[5]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			#first range of spikes
+			for i in hard_num_spikes:
+				block = Spike(0)
+				block.rect.x = 10900 + (i*30)
+				block.rect.y = HEIGHT-330
+				block.boundary_top = 23
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			#second range of spikes
+			for i in hard_num_spikes2:
+				block = Spike(0)
+				block.rect.x = 10900 + (i*30)
+				block.rect.y = HEIGHT-180
+				block.boundary_top = 23
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for roof in medium_roofs:
+				block = SpecialPlatform(roof[0], roof[1])
+				block.rect.x = roof[2]
+				block.rect.y = roof[3]
+				block.boundary_top = roof[4]
+				block.boundary_bottom = roof[5]
+				block.change_y = roof[6]
+				block.change_y_d = roof[6]
+				block.change_y_u = -roof[7]
+				block.pause_down = roof[8]
+				block.pause_up = roof[9]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for i in number_spikes:
+				block = SpecialSpike(2)
+				block.rect.x = 12200 + (i*30)
+				block.rect.y = 23
+				block.boundary_top = 23
+				block.boundary_bottom = HEIGHT-16
+				block.change_y = 1
+				block.change_y_d = 1
+				block.change_y_u = -4
+				block.pause_down = 120
+				block.pause_up = 0
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			#checkpoints platforms	
+			for plat in hard_checkpoints:
+				block = CheckPoint(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				#CheckPoint is red!
+				block.image.fill(constants.RED)
 				self.platform_list.add(block)

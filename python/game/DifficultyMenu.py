@@ -4,8 +4,22 @@ from Menu import Menu
 
 class DifficultyMenu(Menu):
 
-    def run(self,joystick):
+    def create_structure(self):
+        Menu.create_structure(self)
 
+        font_size_title = 50
+        font_path_title = 'data/coders_crux/coders_crux.ttf'
+        font_title = pygame.font.Font(font_path_title, font_size_title)
+        title = "Choose your skill level"
+        text = font_title.render(title, 1, constants.RED)
+        screen = self.dest_surface
+        textRect = text.get_rect()
+        textRect.centerx = 420
+        textRect.centery = 280
+        screen.blit(text,textRect)
+
+
+    def run(self,joystick):
         menu_flag = True
         while menu_flag:
             for event in pygame.event.get():

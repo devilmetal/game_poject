@@ -30,7 +30,7 @@ class Game():
     def init_level(self,level_nbr, level_dif):
         if level_nbr == 0:
             if not self.checkpoint:
-                self.start_x = 12300
+                self.start_x = 12100
                 self.start_y = HEIGHT - 20
             self.level = FirstStage(self.character, level_dif)
         elif level_nbr == 1:

@@ -56,7 +56,7 @@ def main():
 
             #DIFFICULTY SELECTION MENU
             menu = DifficultyMenu()
-            menu.init(['Easy', 'Medium', 'Hard'], screen)
+            menu.init(['Princess', 'Little Boy', 'Chuck Norris'], screen)
             menu.draw()
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
