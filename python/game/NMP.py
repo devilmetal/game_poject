@@ -52,6 +52,17 @@ def main():
             from characters.Bob import Bob
             from characters.Hulk import Hulk
             from CharacterMenu import CharacterMenu
+            from DifficultyMenu import DifficultyMenu
+
+            #DIFFICULTY SELECTION MENU
+            menu = DifficultyMenu()
+            menu.init(['Easy', 'Medium', 'Hard'], screen)
+            menu.draw()
+            pygame.key.set_repeat(199,69)#(delay,interval)
+            pygame.display.update()
+            dif = menu.run(joystick)
+
+            print dif
 
             #CHARACTER SELECTION MENU
             menu = CharacterMenu(screen)
