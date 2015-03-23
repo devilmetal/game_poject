@@ -22,7 +22,7 @@ import pygame
 class FirstStage(Level):
 	"""Overview of the "easy/standard" way of the first stage"""
 
-	def __init__(self, player):
+	def __init__(self, player, level_dif):
 
 		Level.__init__(self, player)
 		next_level = 0
@@ -46,15 +46,11 @@ class FirstStage(Level):
 				[150, 10, 2000, HEIGHT-240],
 				[100, 240, 2500, HEIGHT-240],
 				#small platform on the ground
-				[80, 20, 3500, HEIGHT],
-				[70, 20, 3800, HEIGHT],
-				[40, 20, 4000, HEIGHT],
-				[30, 20, 4300, HEIGHT],
-				[30, 20, 4700, HEIGHT],
+				#variation in difficulty part
+
 				#small platform in the air right after the first horiz. mov. plat.
-				[60, 20, 6000, HEIGHT-300],
-				[40, 20, 6400, HEIGHT-300],
-				[100, 20, 6500, HEIGHT-300],
+				#see diff part
+
 				#platform between moving plat in the air
 				[50, 20, 7050, HEIGHT-300],
 				#2nd ground plateform
@@ -72,7 +68,6 @@ class FirstStage(Level):
 				[60, HEIGHT-170, 9855, 0],
 				#last air part of the level
 				[30, 95, 10400, HEIGHT-75],
-				[30, HEIGHT-262, 10400, 0],
 				[120, 20, 10430, HEIGHT-75],
 				[130, 20, 10580, HEIGHT-200],
 				[130, 20, 10740, HEIGHT-320],
@@ -96,11 +91,7 @@ class FirstStage(Level):
 					]
 
 		"""Special moving platform and spikes"""
-		#falling roof at the end of the level
-		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
-		roofs = [
-				[2100, HEIGHT-60, 12200, -HEIGHT+85, -HEIGHT+85, HEIGHT-60, 1, 4, 120, 0]
-				]
+		#falling spikes at the end of the level		
 
 		number_spikes = range(70) #create a list of number from 0 to 69
 
@@ -120,13 +111,9 @@ class FirstStage(Level):
 		horiz = [
 				[60, 20, 5100, HEIGHT-300, 5100, 5600, 2],
 				#chain moving platform in the air
-				[100, 20, 6700, HEIGHT-300, 6700, 6900, 2],
-				[50, 20, 7200, HEIGHT-300, 7200, 7300, 1],
-				[20, 20, 7400, HEIGHT-300, 7400, 7500, 2],
-				[20, 20, 7600, HEIGHT-300, 7550, 7800, 3],
-				#fast moving plateform with spikes under it
-				[90, 20, 9760, HEIGHT-50, 9150, 9850, 5],
-				[23, 30, 9795, HEIGHT-30, 9185, 9885, 5],
+				#see diff part
+
+				#last moving platform
 				[120, 20, 10900, HEIGHT-200, 10900, 11700, 2]
 				]
 
@@ -144,11 +131,8 @@ class FirstStage(Level):
 				[3, 8755, HEIGHT-30],
 				[3, 8755, HEIGHT-60],
 				[3, 8755, HEIGHT-90],
-				[0, 8770, HEIGHT-135],
-				[0, 8800, HEIGHT-135],
 				[0, 8830, HEIGHT-45],
 				[0, 8860, HEIGHT-45],
-				[0, 8890, HEIGHT-45],
 				#[0, 8920, HEIGHT-45],
 				[3, 9020, HEIGHT-30],
 				[3, 9020, HEIGHT-60],
@@ -173,8 +157,7 @@ class FirstStage(Level):
 				[0, 9789, HEIGHT-225],
 				[0, 9823, HEIGHT-225],
 				#last air part of the level
-				[0, 10400, HEIGHT-120],
-				[2, 10400, HEIGHT-265],
+				[0, 10400, HEIGHT-120]
 				]
 
 		#TODO REMOVE THIS
@@ -196,10 +179,6 @@ class FirstStage(Level):
 		#moving horiz spikes
 		#[orientation, top-left x, top-left y, left bound, right bound, speed]
 		hor_mov_spikes = [
-						[3, 9750, HEIGHT-30, 9140, 9840, 5],
-						[1, 9815, HEIGHT-30, 9205, 9905, 5],
-						[3, 10900, HEIGHT-230, 10900, 12055, 10],
-						[1, 10945, HEIGHT-230, 10945, 12100, 10]
 						]
 
 
@@ -295,32 +274,6 @@ class FirstStage(Level):
 			block.rect.y = tree[2]
 			self.back_world_list.add(block)
 
-		for spike in hor_mov_spikes:
-			block = MovingSpike(spike[0])
-			block.rect.x = spike[1]
-			block.rect.y = spike[2]
-			block.boundary_left = spike[3]
-			block.boundary_right = spike[4]
-			block.change_x = spike[5]
-			block.player = self.player
-			block.level = self
-			self.platform_list.add(block)
-
-		for roof in roofs:
-			block = SpecialPlatform(roof[0], roof[1])
-			block.rect.x = roof[2]
-			block.rect.y = roof[3]
-			block.boundary_top = roof[4]
-			block.boundary_bottom = roof[5]
-			block.change_y = roof[6]
-			block.change_y_d = roof[6]
-			block.change_y_u = -roof[7]
-			block.pause_down = roof[8]
-			block.pause_up = roof[9]
-			block.player = self.player
-			block.level = self
-			self.platform_list.add(block)
-
 		for pnj in blobs:
 			enemy = Blob(pnj[2],pnj[3])
 			enemy.rect.x = pnj[0]
@@ -328,22 +281,6 @@ class FirstStage(Level):
 			enemy.player=self.player
 			enemy.level=self
 			self.pnj_list.add(enemy)
-
-		#create special moving spikes for the roof
-		for i in number_spikes:
-			block = SpecialSpike(2)
-			block.rect.x = 12200 + (i*30)
-			block.rect.y = 23
-			block.boundary_top = 23
-			block.boundary_bottom = HEIGHT-16
-			block.change_y = 1
-			block.change_y_d = 1
-			block.change_y_u = -4
-			block.pause_down = 120
-			block.pause_up = 0
-			block.player = self.player
-			block.level = self
-			self.platform_list.add(block)
 
 		#end platforms
 		for plat in end_plat:
@@ -365,3 +302,203 @@ class FirstStage(Level):
 			#CheckPoint is red!
 			block.image.fill(constants.RED)
 			self.platform_list.add(block)
+
+
+
+
+		"""here will stands specific platform for the different levels of difficulty"""
+
+		#easy
+		#[width, height, top-left x, top-left y]
+		easy_plat = [
+					[100, 20, 3400, HEIGHT],
+					[100, 20, 3700, HEIGHT],
+					[100, 20, 4000, HEIGHT],
+					[80, 20, 4300, HEIGHT],
+					[100, 20, 4650, HEIGHT],
+					[80, 20, 6000, HEIGHT-300],
+					[80, 20, 6250, HEIGHT-300],
+					[100, 20, 6500, HEIGHT-300],
+					]
+
+		#[width, height, top-left x, top-left y, left bound, right bound, speed]
+		easy_horiz = [
+				[100, 20, 6700, HEIGHT-300, 6700, 6900, 2],
+				[70, 20, 7200, HEIGHT-300, 7150, 7250, 1],
+				[70, 20, 7400, HEIGHT-300, 7350, 7500, 2],
+				[70, 20, 7700, HEIGHT-300, 7550, 7800, 2],
+				#fast moving plateform
+				[90, 20, 9760, HEIGHT-50, 9150, 9850, 3],
+				[23, 30, 9795, HEIGHT-30, 9185, 9885, 3],
+				]
+
+		#falling roof at the end of the level
+		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
+		easy_roofs = [
+				[2100, HEIGHT-60, 12200, -HEIGHT+85, -HEIGHT+85, HEIGHT-60, 1, 3, 120, 60]
+				]
+
+
+
+		#medium
+		medium_plat = [
+					[100, 20, 3400, HEIGHT],
+					[80, 20, 3700, HEIGHT],
+					[50, 20, 4000, HEIGHT],
+					[50, 20, 4300, HEIGHT],
+					[30, 20, 4700, HEIGHT],
+					#air platforms
+					[50, 20, 6000, HEIGHT-300],
+					[50, 20, 6250, HEIGHT-300],
+					[50, 20, 6500, HEIGHT-300]
+					]
+
+		medium_horiz = [
+				[100, 20, 6700, HEIGHT-300, 6700, 6900, 2],
+				[70, 20, 7200, HEIGHT-300, 7150, 7250, 1],
+				[50, 20, 7400, HEIGHT-300, 7350, 7500, 2],
+				[50, 20, 7700, HEIGHT-300, 7550, 7800, 3],
+				#fast moving plateform with spikes under it
+				[90, 20, 9760, HEIGHT-50, 9150, 9850, 5],
+				[23, 30, 9795, HEIGHT-30, 9185, 9885, 5]
+				]
+
+		medium_spikes = [
+				[0, 8770, HEIGHT-135],
+				[0, 8800, HEIGHT-135],
+				[0, 8890, HEIGHT-45]
+				]
+
+		medium_horiz_spikes = [
+						[3, 9750, HEIGHT-30, 9140, 9840, 5],
+						[1, 9815, HEIGHT-30, 9205, 9905, 5],
+						[3, 10900, HEIGHT-230, 10900, 12055, 10],
+						[1, 10945, HEIGHT-230, 10945, 12100, 10]
+						]
+
+		#falling roof at the end of the level
+		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
+		medium_roofs = [
+				[2100, HEIGHT-60, 12200, -HEIGHT+85, -HEIGHT+85, HEIGHT-60, 1, 4, 120, 0]
+				]
+
+
+		if level_dif == "easy":
+			for plat in easy_plat:
+				block = Platform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for plat in easy_horiz:
+				block = MovingPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_left = plat[4]
+				block.boundary_right = plat[5]
+				block.change_x = plat[6]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for roof in easy_roofs:
+				block = SpecialPlatform(roof[0], roof[1])
+				block.rect.x = roof[2]
+				block.rect.y = roof[3]
+				block.boundary_top = roof[4]
+				block.boundary_bottom = roof[5]
+				block.change_y = roof[6]
+				block.change_y_d = roof[6]
+				block.change_y_u = -roof[7]
+				block.pause_down = roof[8]
+				block.pause_up = roof[9]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			#create special moving spikes for the roof
+			for i in number_spikes:
+				block = SpecialSpike(2)
+				block.rect.x = 12200 + (i*30)
+				block.rect.y = 23
+				block.boundary_top = 23
+				block.boundary_bottom = HEIGHT-16
+				block.change_y = 1
+				block.change_y_d = 1
+				block.change_y_u = -3
+				block.pause_down = 120
+				block.pause_up = 60
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+		elif level_dif == "medium":
+			for plat in medium_plat:
+				block = Platform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for plat in medium_horiz:
+				block = MovingPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_left = plat[4]
+				block.boundary_right = plat[5]
+				block.change_x = plat[6]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for spike in medium_spikes:
+				block = Spike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for spike in medium_horiz_spikes:
+				block = MovingSpike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.boundary_left = spike[3]
+				block.boundary_right = spike[4]
+				block.change_x = spike[5]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for roof in medium_roofs:
+				block = SpecialPlatform(roof[0], roof[1])
+				block.rect.x = roof[2]
+				block.rect.y = roof[3]
+				block.boundary_top = roof[4]
+				block.boundary_bottom = roof[5]
+				block.change_y = roof[6]
+				block.change_y_d = roof[6]
+				block.change_y_u = -roof[7]
+				block.pause_down = roof[8]
+				block.pause_up = roof[9]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for i in number_spikes:
+				block = SpecialSpike(2)
+				block.rect.x = 12200 + (i*30)
+				block.rect.y = 23
+				block.boundary_top = 23
+				block.boundary_bottom = HEIGHT-16
+				block.change_y = 1
+				block.change_y_d = 1
+				block.change_y_u = -4
+				block.pause_down = 120
+				block.pause_up = 0
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)

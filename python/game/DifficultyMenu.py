@@ -4,32 +4,6 @@ from Menu import Menu
 
 class DifficultyMenu(Menu):
 
-    def move_menu(self, top, left):
-        self.pos_rect = (top,left)
-
-    def set_colors(self, text, selection, background):
-        self.back_color = background
-        self.font_color =  text
-        self.select_color = selection
-
-    def set_fontsize(self,font_size):
-        self.font_size = font_size
-
-    def set_font(self, path):
-        self.font_path = path
-
-    def get_position(self):
-        return self.pos_selection
-
-    def init(self, liste, dest_surface):
-        Menu.init(self, liste, dest_surface)
-
-    def draw(self,actual_pos=0):
-        Menu.draw(self, actual_pos)
-
-    def create_structure(self):
-        Menu.create_structure(self)
-
     def run(self,joystick):
 
         menu_flag = True

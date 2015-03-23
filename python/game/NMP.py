@@ -60,9 +60,7 @@ def main():
             menu.draw()
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
-            dif = menu.run(joystick)
-
-            print dif
+            level_dif = menu.run(joystick)
 
             #CHARACTER SELECTION MENU
             menu = CharacterMenu(screen)
@@ -75,7 +73,7 @@ def main():
 
             level_nbr = 0
             # Create all the levels
-            game = Game(player,level_nbr,screen,joystick)
+            game = Game(player,level_nbr,level_dif,screen,joystick)
             game.run()
         elif constants.GAME_STATUS == "menu":
 

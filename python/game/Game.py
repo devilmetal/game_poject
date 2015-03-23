@@ -19,23 +19,25 @@ class Game():
     done = False
     checkpoint = False
     joystick=None
-    def __init__(self, character, level_nbr,screen,joystick):
+    level_dif = "easy"
+    def __init__(self, character, level_nbr, level_dif, screen, joystick):
         self.screen = screen
         self.character = character
-        self.init_level(level_nbr)
+        self.level_dif = level_dif
+        self.init_level(level_nbr, level_dif)
         self.current_level_nbr = level_nbr
         self.joystick = joystick
-    def init_level(self,level_nbr):
+    def init_level(self,level_nbr, level_dif):
         if level_nbr == 0:
             if not self.checkpoint:
-                self.start_x = 300
+                self.start_x = 12300
                 self.start_y = HEIGHT - 20
-            self.level = FirstStage(self.character)
+            self.level = FirstStage(self.character, level_dif)
         elif level_nbr == 1:
             if not self.checkpoint:
                 self.start_x = 350
                 self.start_y = HEIGHT - 20
-            self.level = SecondStage(self.character)
+            self.level = SecondStage(self.character, level_dif)
 
         self.level.start_x = self.start_x
         self.level.start_y = self.start_y
@@ -72,7 +74,7 @@ class Game():
             if self.character.dead == True:
                 self.character.dead = False
                 self.character.hit = False
-                self.load_level(self.current_level_nbr)
+                self.load_level(self.current_level_nbr, self.level_dif)
                 routines.death_menu(clock)
 
             # If the self.character gets near the right side, shift the world left (-x)
@@ -156,5 +158,5 @@ class Game():
             # Go ahead and update the screen with what we've drawn.
             pygame.display.flip()
 
-    def load_level(self,level_pointer):
-        self.init_level(level_pointer)
+    def load_level(self,level_pointer, level_dif):
+        self.init_level(level_pointer, self.level_dif)
