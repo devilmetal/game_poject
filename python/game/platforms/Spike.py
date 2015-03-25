@@ -31,20 +31,24 @@ class Spike(pygame.sprite.Sprite):
         #check if the player is on top of the platform
         hit = False
         if self.orientation == 0:
+            rect = pygame.Rect(self.rect.left + int(self.rect.width/2)-3, self.rect.top, 6, 6)
             self.player.rect.y += 1
-            hit = pygame.sprite.collide_rect(self.player, self)
+            hit = not(self.player.rect.collidelist([rect]))
             self.player.rect.y -= 1
         if self.orientation == 2:
+            rect = pygame.Rect(self.rect.left + int(self.rect.width/2)-3, self.rect.top + self.rect.height-6, 6, 6)
             self.player.rect.y -= 1
-            hit = pygame.sprite.collide_rect(self.player, self)
+            hit = not(self.player.rect.collidelist([rect]))
             self.player.rect.y += 1
         if self.orientation == 1:
+            rect = pygame.Rect(self.rect.left + self.rect.width-6, self.rect.top + int(self.rect.height/2)-3, 6, 6)
             self.player.rect.x -= 1
-            hit = pygame.sprite.collide_rect(self.player, self)
+            hit = not(self.player.rect.collidelist([rect]))
             self.player.rect.x += 1
         if self.orientation == 3:
+            rect = pygame.Rect(self.rect.left, self.rect.top + int(self.rect.height/2)-3, 6, 6)
             self.player.rect.x += 1
-            hit = pygame.sprite.collide_rect(self.player, self)
+            hit = not(self.player.rect.collidelist([rect]))
             self.player.rect.x -= 1
         if hit and not self.player.hit:
             self.player.hit = True
