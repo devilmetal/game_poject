@@ -84,6 +84,7 @@ class Character(pygame.sprite.Sprite):
                 self.change_y = 0
         else:
             self.rect.y += self.change_y
+            self.change_x = 0
 
 
         #Finally calculate the image to display
