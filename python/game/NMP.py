@@ -52,6 +52,15 @@ def main():
             from characters.Bob import Bob
             from characters.Hulk import Hulk
             from CharacterMenu import CharacterMenu
+            from DifficultyMenu import DifficultyMenu
+
+            #DIFFICULTY SELECTION MENU
+            menu = DifficultyMenu()
+            menu.init(['Princess', 'Little Boy', 'Chuck Norris'], screen)
+            menu.draw()
+            pygame.key.set_repeat(199,69)#(delay,interval)
+            pygame.display.update()
+            level_dif = menu.run(joystick)
 
             #CHARACTER SELECTION MENU
             menu = CharacterMenu(screen)
@@ -62,9 +71,9 @@ def main():
             elif selected == 1:
                 player = Hulk()
 
-            level_nbr = 0
+            level_nbr = 1
             # Create all the levels
-            game = Game(player,level_nbr,screen,joystick)
+            game = Game(player,level_nbr,level_dif,screen,joystick)
             game.run()
         elif constants.GAME_STATUS == "menu":
 
