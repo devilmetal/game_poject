@@ -14,6 +14,7 @@ class PNJ(pygame.sprite.Sprite):
         # Set speed vector of PNJ
         self.change_x = direction*speed
         self.change_y = 0
+        self.dead = False
 
         #Prepare rectangle
         self.rect = None

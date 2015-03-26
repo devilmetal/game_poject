@@ -1,4 +1,5 @@
 import routines
+import pygame
 
 blob_ressources = {}
 
@@ -16,3 +17,5 @@ def init_blob_ressources():
         blob_ressources['right_blob4'] =  routines.load_png('pnj/enemy/blob/right_blob4.png')
         blob_ressources['right_blob5'] =  routines.load_png('pnj/enemy/blob/right_blob5.png')
         blob_ressources['right_blob6'] =  routines.load_png('pnj/enemy/blob/right_blob6.png')
+        blob_ressources['dead'] =  routines.load_png('pnj/enemy/blob/dead.png')
+        blob_ressources['dead_sound'] = pygame.mixer.Sound('data/sound/blobdie.wav')
