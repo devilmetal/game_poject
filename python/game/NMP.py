@@ -45,14 +45,11 @@ def main():
     pygame.display.set_caption("(Alpha) No More Pixies")
     main_loop = True
     first = True
+    level_dif = "" #difficulty level chosen
+    player = None #character chosen
 
     while main_loop:
-        if constants.GAME_STATUS == "level":
-            from Game import Game
-            from characters.Bob import Bob
-            from characters.Hulk import Hulk
-            from characters.LittleFat import LittleFat
-            from CharacterMenu import CharacterMenu
+        if constants.GAME_STATUS == "menuDiff":
             from DifficultyMenu import DifficultyMenu
 
             #DIFFICULTY SELECTION MENU
@@ -63,16 +60,25 @@ def main():
             pygame.display.update()
             level_dif = menu.run(joystick)
 
+        elif constants.GAME_STATUS == "menuChar":
+            from characters.Bob import Bob
+            from characters.Hulk import Hulk
+            from characters.LittleFat import LittleFat
+            from CharacterMenu import CharacterMenu
+
             #CHARACTER SELECTION MENU
             menu = CharacterMenu(screen)
             selected = menu.run(joystick)
-            player = None
+            # player = None
             if selected == 0:
                 player = Bob()
             elif selected == 1:
                 player = Hulk()
             elif selected == 2:
                 player = LittleFat()
+
+        elif constants.GAME_STATUS == "level":
+            from Game import Game
 
             level_nbr = 1
             # Create all the levels

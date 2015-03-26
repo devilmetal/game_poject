@@ -101,15 +101,19 @@ class CharacterMenu:
                         self.draw_by_hop(-1)
                 if event.type == pygame.JOYBUTTONDOWN:
                     if joystick.get_button(1) == 1:
+                        constants.GAME_STATUS = "level"
                         return self.selected
+
                 #Keyboard stuff
-                if event.type == pygame.KEYDOWN: # or event.type == pygame.JOYHATMOTION or event.type == pygame.JOYBUTTONDOWN:
-                    if event.key == pygame.K_RIGHT:# or joystick.get_hat()==(0,1):
-                        self.draw_by_hop(1) #here is the Menu class function
-                    if event.key == pygame.K_LEFT:# or joystick.get_hat()==(0,-1):
-                        self.draw_by_hop(-1) #here is the Menu class function
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:
+                        self.draw_by_hop(1)
+                    if event.key == pygame.K_LEFT:
+                        self.draw_by_hop(-1)
                     if event.key == pygame.K_RETURN:
+                        constants.GAME_STATUS = "level"
                         return self.selected
                 elif event.type == pygame.QUIT:
                     constants.GAME_STATUS="exit"
-                    menu_flag = False
+                    done = True
+            pygame.time.wait(8)

@@ -132,7 +132,9 @@ class Game():
 
                 #Keyboard stuff
                 if event.type == pygame.QUIT: # If user clicked close
-                    pygame.quit()
+                    constants.GAME_STATUS = "exit"
+                    self.done = True
+                    # pygame.quit()
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:

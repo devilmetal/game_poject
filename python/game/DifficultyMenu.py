@@ -15,6 +15,7 @@ class DifficultyMenu(Menu):
 
     def run(self,joystick):
         menu_flag = True
+        level_diff = ""
         while menu_flag:
             for event in pygame.event.get():
 
@@ -29,32 +30,33 @@ class DifficultyMenu(Menu):
                 if event.type == pygame.JOYBUTTONDOWN:
                     if joystick.get_button(1) == 1:
                         if self.get_position() == 2:
-                            menu_flag = False
-                            return "hard"
+                            level_diff = "hard"
                         if self.get_position() == 1:#here is the Menu class function
-                            menu_flag = False
-                            return "medium"
+                            level_diff = "medium"
                         if self.get_position() == 0:#here is the Menu class function
-                            menu_flag = False
-                            return "easy"
+                            level_diff = "easy"
+
+                        constants.GAME_STATUS = "menuChar"
+                        return level_diff
 
 
                 #Keyboard stuff
-                if event.type == pygame.KEYDOWN: # or event.type == pygame.JOYHATMOTION or event.type == pygame.JOYBUTTONDOWN:
-                    if event.key == pygame.K_UP:# or joystick.get_hat()==(0,1):
-                        self.draw(-1) #here is the Menu class function
-                    if event.key == pygame.K_DOWN:# or joystick.get_hat()==(0,-1):
-                        self.draw(1) #here is the Menu class function
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        self.draw(-1)
+                    if event.key == pygame.K_DOWN:
+                        self.draw(1)
                     if event.key == pygame.K_RETURN:
                         if self.get_position() == 2:
-                            menu_flag = False
-                            return "hard"
+                            level_diff = "hard"
                         if self.get_position() == 1:#here is the Menu class function
-                            menu_flag = False
-                            return "medium"
+                            level_diff = "medium"
                         if self.get_position() == 0:#here is the Menu class function
-                            menu_flag = False
-                            return "easy"
+                            level_diff = "easy"
+
+                        constants.GAME_STATUS = "menuChar"
+                        return level_diff
+
                     if event.key == pygame.K_ESCAPE:
                         menu_flag = False
                         main_loop = False
