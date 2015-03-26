@@ -16,11 +16,12 @@ class SpecialPlatform(MovingPlatform):
     pause_down = 0
     pause_right = 0
     pause_left = 0
+    pause = False
 
     round_mov = False
     clockwise = False
     time = 0
-
+    vert = False
 
     def update(self):
         """ Special case of the moving platforms"""
@@ -28,44 +29,50 @@ class SpecialPlatform(MovingPlatform):
         MovingPlatform.update(self)
 
 
-
     def boundaries(self):
 
 
-        cur_pos = self.rect.x - self.level.world_shift
+        #cur_pos = self.rect.x - self.level.world_shift
         # Check the boundaries and see if we have a pause and if we need to reverse direction.
         if self.round_mov:
-            #cur_pos = self.rect.x - self.level.world_shift
+            cur_pos = self.rect.x - self.level.world_shift
 
             #clockwise movement
             if self.rect.top < self.boundary_top and self.clockwise and self.change_y != 0:
+                self.player.change_x = self.change_x_r
                 self.change_x = self.change_x_r
                 self.change_y = 0
-                self.horiz = False
             elif cur_pos > self.boundary_right and self.clockwise and self.change_x != 0:
+                self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_d
-                self.vert = False
             elif self.rect.bottom > self.boundary_bottom and self.clockwise and self.change_y != 0:
+                self.player.change_x = self.change_x_l
                 self.change_x = self.change_x_l
                 self.change_y = 0
             elif cur_pos < self.boundary_left and self.clockwise and self.change_x != 0:
+                self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_u
 
             #counter clockwise
             elif self.rect.top < self.boundary_top and not self.clockwise and self.change_y != 0:
+                self.player.change_x = self.change_x_l
                 self.change_x = self.change_x_l
                 self.change_y = 0
             elif cur_pos > self.boundary_right and not self.clockwise and self.change_x != 0:
+                self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_u
             elif self.rect.bottom > self.boundary_bottom and not self.clockwise and self.change_y != 0:
+                self.player.change_x = self.change_x_r
                 self.change_x = self.change_x_r
                 self.change_y = 0
             elif cur_pos < self.boundary_left and not self.clockwise and self.change_x != 0:
+                self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_d
+            
 
         else:
             """

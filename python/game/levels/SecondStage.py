@@ -85,41 +85,29 @@ class SecondStage(Level):
 		#[width, height, x, y,
 		#top bound, bottom bound, left bound, right bound,
 		#speed up, speed down, speed left, speed right,
-		#pause up, pause down, pause left, pause right,
 		#is moving round, clockwise movement]
 		round_moving = [
 			[100, 20, 3550, HEIGHT-20, 
-			HEIGHT-120, HEIGHT, 3550, 3700,
-			1, 1, 2, 2,
-			60, 60, 60, 60,
+			HEIGHT-220, HEIGHT, 3550, 3850,
+			2, 2, 2, 2,
 			True, True]
 			]
 
-		for plat in round_moving:
-			block = SpecialPlatform(plat[0], plat[1])
-			block.rect.x = plat[2]
-			block.rect.y = plat[3]
-			block.boundary_top = plat[4]
-			block.boundary_bottom = plat[5]
-			block.boundary_left = plat[6]
-			block.boundary_right = plat[7]
-			block.change_y = -plat[8]
-			block.change_y_u = -plat[8]
-			block.change_y_d = plat[9]
-			block.change_x_l = -plat[10]
-			block.change_x_r = plat[11]
-			block.pause_up = plat[12]
-			block.pause_down = plat[13]
-			block.pause_left = plat[14]
-			block.pause_right = plat[15]
-			block.round_mov = plat[16]
-			block.clockwise = plat[17]
-			block.player = self.player
-			block.level = self
-			self.platform_list.add(block)
+		
+		#adding tree to background along the level
+		x_trees=0
+		back_trees=[]
+		while x_trees < -self.level_limit:
+			back_trees.append([0,x_trees,HEIGHT - 150])
+			x_trees+=200
 
 
-
+		"""Generation of the level design"""
+		for tree in back_trees:
+			block = Tree(tree[0])
+			block.rect.x = tree[1]
+			block.rect.y = tree[2]
+			self.back_world_list.add(block)
 
 		for plat in plats:
 			block = Platform(plat[0], plat[1])
@@ -133,6 +121,26 @@ class SecondStage(Level):
 			block = Spike(spike[0])
 			block.rect.x = spike[1]
 			block.rect.y = spike[2]
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
+
+		#round moving platform.
+		for plat in round_moving:
+			block = SpecialPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.boundary_top = plat[4]
+			block.boundary_bottom = plat[5]
+			block.boundary_left = plat[6]
+			block.boundary_right = plat[7]
+			block.change_y = -plat[8]
+			block.change_y_u = -plat[8]
+			block.change_y_d = plat[9]
+			block.change_x_l = -plat[10]
+			block.change_x_r = plat[11]
+			block.round_mov = plat[12]
+			block.clockwise = plat[13]
 			block.player = self.player
 			block.level = self
 			self.platform_list.add(block)

@@ -96,7 +96,11 @@ class MovingPlatform(Platform):
         # Check the boundaries and see if we need to reverse direction
         if self.rect.bottom > self.boundary_bottom or self.rect.top < self.boundary_top:
             self.change_y *= -1
+            if self.player.location == "block" and (self.player.status == "idle_r" or self.player.status =="idle_l"):
+                self.player.change_y *= -1
 
         cur_pos = self.rect.x - self.level.world_shift
         if cur_pos < self.boundary_left or cur_pos > self.boundary_right:
             self.change_x *= -1
+            if self.player.location == "block" and (self.player.status == "idle_r" or self.player.status =="idle_l"):
+                self.player.change_x *= -1
