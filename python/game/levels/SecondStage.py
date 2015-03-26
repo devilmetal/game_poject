@@ -30,7 +30,7 @@ class SecondStage(Level):
 		#[width, height, x, y]
 		plats = [
 				[300, HEIGHT, 0, 0],
-				[5000, 20, 0, HEIGHT],
+				[3500, 20, 0, HEIGHT],
 				#squares for spikes
 				[30, 30, 800, HEIGHT-80],
 				[30, 30, 1200, HEIGHT-120],
@@ -80,6 +80,44 @@ class SecondStage(Level):
 			[2, 2515, HEIGHT-281],
 			[2, 2545, HEIGHT-281]
 			]
+
+		#array of special moving platforms
+		#[width, height, x, y,
+		#top bound, bottom bound, left bound, right bound,
+		#speed up, speed down, speed left, speed right,
+		#pause up, pause down, pause left, pause right,
+		#is moving round, clockwise movement]
+		round_moving = [
+			[100, 20, 3550, HEIGHT-20, 
+			HEIGHT-120, HEIGHT, 3550, 3700,
+			1, 1, 2, 2,
+			60, 60, 60, 60,
+			True, True]
+			]
+
+		for plat in round_moving:
+			block = SpecialPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.boundary_top = plat[4]
+			block.boundary_bottom = plat[5]
+			block.boundary_left = plat[6]
+			block.boundary_right = plat[7]
+			block.change_y = -plat[8]
+			block.change_y_u = -plat[8]
+			block.change_y_d = plat[9]
+			block.change_x_l = -plat[10]
+			block.change_x_r = plat[11]
+			block.pause_up = plat[12]
+			block.pause_down = plat[13]
+			block.pause_left = plat[14]
+			block.pause_right = plat[15]
+			block.round_mov = plat[16]
+			block.clockwise = plat[17]
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
+
 
 
 

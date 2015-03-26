@@ -37,9 +37,6 @@ class Character(pygame.sprite.Sprite):
         self.status = None #idle,move,jump,
         self.location = None #ground,air,block
 
-        self.mov_plat = False #is on a moving plateform
-        self.dead = False #is dead
-
         self.mov_plat = False #is a moving plateform
         self.dead = False
         self.hit = False
@@ -84,7 +81,8 @@ class Character(pygame.sprite.Sprite):
                 self.change_y = 0
         else:
             self.rect.y += self.change_y
-            self.change_x = 0
+            if self.mov_plat:
+                self.change_x = 0
 
 
         #Finally calculate the image to display

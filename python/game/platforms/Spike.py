@@ -14,6 +14,7 @@ class Spike(pygame.sprite.Sprite):
         platform_ressources.init_spikes_ressources()
         self.image = None
         self.rect = None
+        self.mask = 0
         if self.orientation == 0:
             self.image = platform_ressources.spikes_ressources['up'][0]
             self.rect = platform_ressources.spikes_ressources['up'][1].copy()
@@ -26,6 +27,7 @@ class Spike(pygame.sprite.Sprite):
         else:
             self.image = platform_ressources.spikes_ressources['left'][0]
             self.rect = platform_ressources.spikes_ressources['left'][1].copy()
+        
 
     def update(self):
         #check if the player is on top of the platform
