@@ -1,22 +1,16 @@
 import pygame
 import constants
+import routines
 from Menu import Menu
 
 class DifficultyMenu(Menu):
 
     def create_structure(self):
         Menu.create_structure(self)
-
-        font_size_title = 50
-        font_path_title = 'data/coders_crux/coders_crux.ttf'
-        font_title = pygame.font.Font(font_path_title, font_size_title)
-        title = "Choose your skill level"
-        text = font_title.render(title, 1, constants.RED)
         screen = self.dest_surface
-        textRect = text.get_rect()
-        textRect.centerx = 420
-        textRect.centery = 280
-        screen.blit(text,textRect)
+        txt1 = routines.draw_text("Choose your skill level", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 50, "data/coders_crux/coders_crux.ttf", constants.RED)
+        screen.blit(txt1[0], txt1[1])
+        pygame.display.update()
 
 
     def run(self,joystick):
