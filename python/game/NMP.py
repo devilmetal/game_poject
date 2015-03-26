@@ -51,6 +51,7 @@ def main():
             from Game import Game
             from characters.Bob import Bob
             from characters.Hulk import Hulk
+            from characters.LittleFat import LittleFat
             from CharacterMenu import CharacterMenu
             from DifficultyMenu import DifficultyMenu
 
@@ -70,6 +71,8 @@ def main():
                 player = Bob()
             elif selected == 1:
                 player = Hulk()
+            elif selected == 2:
+                player = LittleFat()
 
             level_nbr = 1
             # Create all the levels

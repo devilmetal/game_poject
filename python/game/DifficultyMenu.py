@@ -8,7 +8,7 @@ class DifficultyMenu(Menu):
     def create_structure(self):
         Menu.create_structure(self)
         screen = self.dest_surface
-        txt1 = routines.draw_text("Choose your skill level", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 50, "data/coders_crux/coders_crux.ttf", constants.RED)
+        txt1 = routines.draw_text("Choose your skill level", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 50, "data/coders_crux/coders_crux.ttf", constants.WHITE)
         screen.blit(txt1[0], txt1[1])
         pygame.display.update()
 
