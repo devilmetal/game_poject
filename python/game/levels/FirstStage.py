@@ -412,10 +412,8 @@ class FirstStage(Level):
 
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed]
 		hard_vert = [
-				#[30, 220, 10550, HEIGHT-200, HEIGHT-200, HEIGHT+200, 2],
-				#[30, 340, 10710, HEIGHT-320, HEIGHT-320, HEIGHT+200, 2],
-				[30, HEIGHT-230, 10550, -180, -180, HEIGHT-230, 2],
-				[30, HEIGHT-350, 10710, -180, -180, HEIGHT-350, 2]
+				[30, HEIGHT-230, 10550, -190, -190, HEIGHT-240, 2],
+				[30, HEIGHT-350, 10710, -190, -190, HEIGHT-360, 2]
 				]
 		#first range of spikes
 		hard_num_spikes = range(26)
@@ -443,10 +441,8 @@ class FirstStage(Level):
 
 		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
 		hard_vert_spikes = [
-				#[0, 10550, HEIGHT-245, HEIGHT-245, HEIGHT-19, 2],
-				#[0, 10710, HEIGHT-365, HEIGHT-365, HEIGHT-139, 2],
-				[2, 10550, HEIGHT-412, HEIGHT-412, HEIGHT-186, 2],
-				[2, 10710, HEIGHT-532, HEIGHT-532, HEIGHT-306, 2]
+				[2, 10550, HEIGHT-422, HEIGHT-422, HEIGHT-196, 2],
+				[2, 10710, HEIGHT-542, HEIGHT-542, HEIGHT-316, 2]
 				]
 
 		#checkpoint

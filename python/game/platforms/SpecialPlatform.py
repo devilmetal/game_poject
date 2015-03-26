@@ -36,22 +36,29 @@ class SpecialPlatform(MovingPlatform):
         # Check the boundaries and see if we have a pause and if we need to reverse direction.
         if self.round_mov:
             cur_pos = self.rect.x - self.level.world_shift
+            self.player.rect.y += 2 + self.change_y
+            hit = pygame.sprite.collide_rect(self.player, self) and not self.player.hit
+            self.player.rect.y -= 2 + self.change_y
 
             #clockwise movement
             if self.rect.top < self.boundary_top and self.clockwise and self.change_y != 0:
-                self.player.change_x = self.change_x_r
+                if hit:
+                    self.player.change_x = self.change_x_r
                 self.change_x = self.change_x_r
                 self.change_y = 0
             elif cur_pos > self.boundary_right and self.clockwise and self.change_x != 0:
-                self.player.change_x = 0
+                if hit:
+                    self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_d
             elif self.rect.bottom > self.boundary_bottom and self.clockwise and self.change_y != 0:
-                self.player.change_x = self.change_x_l
+                if hit:
+                    self.player.change_x = self.change_x_l
                 self.change_x = self.change_x_l
                 self.change_y = 0
             elif cur_pos < self.boundary_left and self.clockwise and self.change_x != 0:
-                self.player.change_x = 0
+                if hit:
+                    self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_u
 
