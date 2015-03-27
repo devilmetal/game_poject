@@ -1,6 +1,6 @@
 import constants
 import pygame
-
+import platform_ressources
 
 class Platform(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -11,5 +11,8 @@ class Platform(pygame.sprite.Sprite):
         super(Platform, self).__init__()
         self.image = pygame.Surface([width, height])
         self.image.fill(constants.GREEN)
-
+        platform_ressources.init_platform_ressources()
+        texture1 = platform_ressources.platform_ressources['scratch'][0]
+        pygame.transform.scale(texture1,(width, height))
+        self.image.blit(texture1, (0, 0))
         self.rect = self.image.get_rect()
