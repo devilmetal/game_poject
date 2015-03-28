@@ -13,3 +13,4 @@ def init_spikes_ressources():
 def init_platform_ressources():
     if platform_ressources == {}:
         platform_ressources['scratch'] = routines.load_png('world/platforms/scratch.png')
+        platform_ressources['grass'] = routines.load_png('world/platforms/grass.png')
