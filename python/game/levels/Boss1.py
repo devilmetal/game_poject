@@ -8,7 +8,7 @@ from world.Tree import Tree
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
 from PNJ.Blob import Blob
-from PNJ.Boss import Boss
+from PNJ.Dragon import Dragon
 
 import constants
 import pygame
@@ -49,7 +49,7 @@ class Boss1(Level):
         bosses = [[1300, HEIGHT-400,200,400]]
 
         for boss in bosses:
-            enemy = Boss(boss[2],boss[3])
+            enemy = Dragon(boss[2],boss[3])
             enemy.rect.x = boss[0]
             enemy.rect.y = boss[1]
             enemy.player=self.player
