@@ -27,3 +27,4 @@ def init_dragon_ressources():
         dragon_ressources['fireball'] =  routines.load_png('pnj/boss/dragon/fireball.png')
         dragon_ressources['head_down'] =  routines.load_png('pnj/boss/dragon/head_down.png')
         dragon_ressources['head_up'] =  routines.load_png('pnj/boss/dragon/head_up.png')
+        dragon_ressources['cave'] =  routines.load_png('pnj/boss/dragon/cave_entrance.png')

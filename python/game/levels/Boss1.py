@@ -46,10 +46,10 @@ class Boss1(Level):
         #array of static spikes //considering spikes as image of 30x45 instead of 30x46
         #[x, y,width,height]
 
-        bosses = [[1300, HEIGHT-400,200,400]]
+        bosses = [[1000, HEIGHT-400]]
 
         for boss in bosses:
-            enemy = Dragon(boss[2],boss[3])
+            enemy = Dragon()
             enemy.rect.x = boss[0]
             enemy.rect.y = boss[1]
             enemy.player=self.player
