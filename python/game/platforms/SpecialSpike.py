@@ -80,70 +80,71 @@ class SpecialSpike(MovingSpike):
                     self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_d
+                
+        else:
+            """
+            up/down plateforms
+            """
+            #case where we have a pause down
+            if self.rect.bottom > self.boundary_bottom and not self.pause:
+                self.change_y = 0
+                self.pause = True
+                self.time = self.pause_down
 
-        """
-        up/down plateforms
-        """
-        #case where we have a pause down
-        if self.rect.bottom > self.boundary_bottom and not self.pause:
-            self.change_y = 0
-            self.pause = True
-            self.time = self.pause_down
-
-        #if we have to wait, i.e. pause == True
-        if self.rect.bottom > self.boundary_bottom and self.pause:
-            if self.time > 0:
-                self.time -= 1
-            else:
-                self.change_y = self.change_y_u #set the speed from bottom to top
-                self.pause = False
-
-
-        #case where we have a pause up
-        if self.rect.top < self.boundary_top and not self.pause:
-            self.change_y = 0
-            self.pause = True
-            self.time = self.pause_up
-
-        #if we have to wait, i.e. pause == True
-        if self.rect.top < self.boundary_top and self.pause:
-            if self.time > 0:
-                self.time -= 1
-            else:
-                self.change_y = self.change_y_d #set the speed from top to bottom
-                self.pause = False
+            #if we have to wait, i.e. pause == True
+            if self.rect.bottom > self.boundary_bottom and self.pause:
+                if self.time > 0:
+                    self.time -= 1
+                else:
+                    self.change_y = self.change_y_u #set the speed from bottom to top
+                    self.pause = False
 
 
+            #case where we have a pause up
+            if self.rect.top < self.boundary_top and not self.pause:
+                self.change_y = 0
+                self.pause = True
+                self.time = self.pause_up
+
+            #if we have to wait, i.e. pause == True
+            if self.rect.top < self.boundary_top and self.pause:
+                if self.time > 0:
+                    self.time -= 1
+                else:
+                    self.change_y = self.change_y_d #set the speed from top to bottom
+                    self.pause = False
 
 
-        """
-        left/right plateforms
-        """
-        cur_pos = self.rect.x - self.level.world_shift
 
-        #case where we have a pause on the left
-        if cur_pos < self.boundary_left and not self.pause:
-            self.change_x = 0
-            self.pause = True
-            self.time = self.pause_left
 
-        if cur_pos < self.boundary_left and self.pause:
-            if self.time > 0:
-                self.time -= 1
-            else:
-                self.change_x = self.change_x_r
-                self.pause = False
+            """
+            left/right plateforms
+            """
+            cur_pos = self.rect.x - self.level.world_shift
 
-        
-        #case where we have a pause on the left
-        if cur_pos > self.boundary_right and not self.pause:
-            self.change_x = 0
-            self.pause = True
-            self.time = self.pause_right
+            #case where we have a pause on the left
+            if cur_pos < self.boundary_left and not self.pause:
+                self.change_x = 0
+                self.pause = True
+                self.time = self.pause_left
 
-        if cur_pos > self.boundary_left and self.pause:
-            if self.time > 0:
-                self.time -= 1
-            else:
-                self.change_x = self.change_x_l
-                self.pause = False
+            if cur_pos < self.boundary_left and self.pause:
+                if self.time > 0:
+                    self.time -= 1
+                else:
+                    self.change_x = self.change_x_r
+                    self.pause = False
+
+            
+            #case where we have a pause on the left
+            if cur_pos > self.boundary_right and not self.pause:
+                self.change_x = 0
+                self.pause = True
+                self.time = self.pause_right
+
+            if cur_pos > self.boundary_left and self.pause:
+                if self.time > 0:
+                    self.time -= 1
+                else:
+                    self.change_x = self.change_x_l
+                    self.pause = False
