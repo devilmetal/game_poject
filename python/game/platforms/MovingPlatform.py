@@ -85,6 +85,12 @@ class MovingPlatform(Platform):
             if self.player.location == 'block':
                 self.player.rect.bottom = self.rect.top
 
+        #bug correction
+        else:
+            if self.player.mov_plat == True:
+                self.player.change_x = 0
+                self.player.mov_plat = False
+
         if self.player.location == 'ground':
             self.player.mov_plat = False
 
