@@ -323,7 +323,7 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		easy_roofs = [
-				[2100, HEIGHT-60, 12200, -HEIGHT+85, -HEIGHT+85, HEIGHT-60, 1, 3, 120, 60]
+				[2100, HEIGHT-60, 12200, -385, -385, HEIGHT-60, 1, 3, 120, 60]
 				]
 
 
@@ -371,7 +371,7 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		medium_roofs = [
-				[2100, HEIGHT-60, 12200, -HEIGHT+85, -HEIGHT+85, HEIGHT-60, 1, 4, 120, 0]
+				[2100, HEIGHT-60, 12200, -385, -385, HEIGHT-60, 1, 4, 120, 0]
 				]
 
 
@@ -490,8 +490,8 @@ class FirstStage(Level):
 			for i in number_spikes:
 				block = SpecialSpike(2)
 				block.rect.x = 12200 + (i*30)
-				block.rect.y = 23
-				block.boundary_top = 23
+				block.rect.y = HEIGHT-447
+				block.boundary_top = HEIGHT-447
 				block.boundary_bottom = HEIGHT-16
 				block.change_y = 1
 				block.change_y_d = 1
@@ -570,8 +570,8 @@ class FirstStage(Level):
 			for i in number_spikes:
 				block = SpecialSpike(2)
 				block.rect.x = 12200 + (i*30)
-				block.rect.y = 23
-				block.boundary_top = 23
+				block.rect.y = HEIGHT-447
+				block.boundary_top = HEIGHT-447
 				block.boundary_bottom = HEIGHT-16
 				block.change_y = 1
 				block.change_y_d = 1
@@ -693,8 +693,8 @@ class FirstStage(Level):
 			for i in number_spikes:
 				block = SpecialSpike(2)
 				block.rect.x = 12200 + (i*30)
-				block.rect.y = 23
-				block.boundary_top = 23
+				block.rect.y = HEIGHT-447
+				block.boundary_top = HEIGHT-447
 				block.boundary_bottom = HEIGHT-16
 				block.change_y = 1
 				block.change_y_d = 1

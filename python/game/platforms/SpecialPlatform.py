@@ -21,7 +21,6 @@ class SpecialPlatform(MovingPlatform):
     round_mov = False
     clockwise = False
     time = 0
-    vert = False
 
     def update(self):
         """ Special case of the moving platforms"""
@@ -64,19 +63,23 @@ class SpecialPlatform(MovingPlatform):
 
             #counter clockwise
             elif self.rect.top < self.boundary_top and not self.clockwise and self.change_y != 0:
-                self.player.change_x = self.change_x_l
+                if hit:
+                    self.player.change_x = self.change_x_l
                 self.change_x = self.change_x_l
                 self.change_y = 0
             elif cur_pos > self.boundary_right and not self.clockwise and self.change_x != 0:
-                self.player.change_x = 0
+                if hit:
+                    self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_u
             elif self.rect.bottom > self.boundary_bottom and not self.clockwise and self.change_y != 0:
-                self.player.change_x = self.change_x_r
+                if hit:
+                    self.player.change_x = self.change_x_r
                 self.change_x = self.change_x_r
                 self.change_y = 0
             elif cur_pos < self.boundary_left and not self.clockwise and self.change_x != 0:
-                self.player.change_x = 0
+                if hit:
+                    self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_d
             
