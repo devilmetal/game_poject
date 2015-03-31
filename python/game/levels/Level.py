@@ -11,6 +11,7 @@ class Level():
     platform_list = None
     pnj_list = None
     back_world_list = None
+    magma_list = None
     game = None
     # How far this world has been scrolled left/right
     world_shift = 0
@@ -27,13 +28,14 @@ class Level():
         self.platform_list = pygame.sprite.Group()
         self.pnj_list = pygame.sprite.Group()
         self.back_world_list = pygame.sprite.Group()
-
+        self.magma_list = pygame.sprite.Group()
         self.player = player
 
     # Update everythign on this level
     def update(self):
         """ Update everything in this level."""
         self.back_world_list.update()
+        self.magma_list.update()
         self.platform_list.update()
         self.pnj_list.update()
 
@@ -46,6 +48,7 @@ class Level():
         # Draw all the sprite lists that we have
         self.back_world_list.draw(screen)
         self.platform_list.draw(screen)
+        self.magma_list.draw(screen)
         self.pnj_list.draw(screen)
 
     def shift_world(self, shift_x):
@@ -56,6 +59,9 @@ class Level():
         # Go through all the sprite lists and shift
         for platform in self.platform_list:
             platform.rect.x += shift_x
+
+        for plat in self.magma_list:
+            plat.rect.x += shift_x
 
         for pnj in self.pnj_list:
             pnj.rect.x += shift_x

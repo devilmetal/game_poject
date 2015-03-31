@@ -5,7 +5,6 @@ from platforms.BoostPlatform import BoostPlatform
 from platforms.Spike import Spike
 from platforms.MovingSpike import MovingSpike
 from platforms.MagmaPlat import MagmaPlat
-from platforms.MovingMagma import MovingMagma
 from world.Tree import Tree
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
@@ -50,8 +49,21 @@ class SecondStage(Level):
 				[20, 20, 5300, HEIGHT-220],
 				[20, 20, 5700, HEIGHT-220],
 				#2nd ground platform
-				[5000, 20, 6200, HEIGHT],
-				[50, 200, 6650, HEIGHT-200]
+				[1900, 20, 6200, HEIGHT],
+				#wall containing some magma
+				[50, 200, 6650, HEIGHT-200],
+				[50, 100, 6900, HEIGHT-100],
+				[50, 70, 7150, HEIGHT-70],
+				[50, 150, 7500, HEIGHT-150],
+				[50, 150, 8000, HEIGHT-150],
+				[50, 300, 8050, HEIGHT-300],
+				#platform in the long magma moving flour
+				[100, 20, 8300, HEIGHT-200],
+				[800, 20, 8600, HEIGHT-100],
+				[100, 20, 9600, HEIGHT-200],
+				[50, 300, 10000, HEIGHT-300],
+				#third ground
+				[5000, 20, 10000, HEIGHT]
 				]
 
 		#array of static spikes //considering spikes as image of 30x45 instead of 30x46
@@ -128,7 +140,24 @@ class SecondStage(Level):
 			[30, 30, 6350, HEIGHT-130,
 			HEIGHT-210, HEIGHT-100, 6350, 6550,
 			1, 1, 3, 3,
-			True, True]
+			True, True],
+			#last moving squares
+			[30, 30, 10400, HEIGHT-100,
+			HEIGHT-180, HEIGHT-70, 10400, 10700,
+			2, 2, 3, 3,
+			True, True],
+			[30, 30, 10700, HEIGHT-100,
+			HEIGHT-180, HEIGHT-70, 10700, 11000,
+			2, 2, 3, 3,
+			True, True],
+			[30, 30, 11000, HEIGHT-100,
+			HEIGHT-180, HEIGHT-70, 11000, 11300,
+			2, 2, 3, 3,
+			True, True],
+			[30, 30, 11300, HEIGHT-100,
+			HEIGHT-180, HEIGHT-70, 11300, 11600,
+			2, 2, 3, 3,
+			True, True],
 			]
 
 		#array of special moving platforms
@@ -142,13 +171,30 @@ class SecondStage(Level):
 			[2, 6350, HEIGHT-101, HEIGHT-181, HEIGHT-55, 6350, 6550,
 			1, 1, 3, 3, True, True],
 			[3, 6304, HEIGHT-130, HEIGHT-210, HEIGHT-100, 6304, 6504,
-			1, 1, 3, 3, True, True]
+			1, 1, 3, 3, True, True],
+			#last moving spikes
+			#1st square
+			[0, 10400, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10400, 10700,
+			2, 2, 3, 3, True, True],
+			[1, 10428, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10428, 10728,
+			2, 2, 3, 3, True, True],
+			[2, 10400, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10400, 10700,
+			2, 2, 3, 3, True, True],
+			[3, 10354, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10354, 10654,
+			2, 2, 3, 3, True, True],
 			]
 		
-
 		#magma platform
+		#[width, height, x, y]
 		magma = [
-			[200, 50, 6700, HEIGHT-50]
+			[200, 50, 6700, HEIGHT-50],
+			[200, 50, 6950, HEIGHT-50],
+			[300, 50, 7200, HEIGHT-50]
+			]
+
+		#[width, height, x, y, top bound, bottom bound, speed]
+		moving_magma = [
+			[1900, 270, 8100, HEIGHT, HEIGHT-250, HEIGHT+270, 1]
 			]
 
 		#adding tree to background along the level
@@ -167,6 +213,7 @@ class SecondStage(Level):
 			block.rect.y = tree[2]
 			self.back_world_list.add(block)
 
+		#static platforms
 		for plat in plats:
 			block = Platform(plat[0], plat[1])
 			block.rect.x = plat[2]
@@ -175,6 +222,7 @@ class SecondStage(Level):
 			block.level = self
 			self.platform_list.add(block)
 
+		#static spikes
 		for spike in spikes:
 			block = Spike(spike[0])
 			block.rect.x = spike[1]
@@ -240,6 +288,7 @@ class SecondStage(Level):
 			block.level = self
 			self.platform_list.add(block)
 
+		#static magma
 		for plat in magma:
 			block = MagmaPlat(plat[0], plat[1])
 			block.rect.x = plat[2]
@@ -247,4 +296,19 @@ class SecondStage(Level):
 			block.player = self.player
 			block.level = self
 			block.image.fill(constants.RED)
-			self.platform_list.add(block)
+			self.magma_list.add(block)
+
+		#moving magma
+		for plat in moving_magma:
+			block = MagmaPlat(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.boundary_top = plat[4]
+			block.boundary_bottom = plat[5]
+			block.change_y = -plat[6]
+			block.change_y_u = -plat[6]
+			block.change_y_d = plat[6]
+			block.player = self.player
+			block.level = self
+			block.image.fill(constants.RED)
+			self.magma_list.add(block)		

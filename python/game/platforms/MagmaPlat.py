@@ -2,12 +2,13 @@ import constants
 import pygame
 from Platform import Platform
 from MovingPlatform import MovingPlatform
+from SpecialPlatform import SpecialPlatform
 
-class MagmaPlat(MovingPlatform):
+class MagmaPlat(SpecialPlatform):
 
 	def update(self):
 
-		MovingPlatform.update(self)
+		SpecialPlatform.update(self)
 
 		self.player.rect.y += 1
 		hit = not(self.player.rect.collidelist([self.rect]))

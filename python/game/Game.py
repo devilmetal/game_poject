@@ -35,7 +35,7 @@ class Game():
             self.level = FirstStage(self.character, level_dif)
         elif level_nbr == 1:
             if not self.checkpoint:
-                self.start_x = 6300
+                self.start_x = 10100
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = SecondStage(self.character, level_dif)
 
@@ -135,21 +135,21 @@ class Game():
                     pygame.quit()
 
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                         self.character.stop()
                         self.character.go_left()
-                    if event.key == pygame.K_RIGHT:
+                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                         self.character.stop()
                         self.character.go_right()
-                    if event.key == pygame.K_UP:
+                    if event.key == pygame.K_UP or event.key == pygame.K_w:
                         self.character.jump()
                     if event.key == pygame.K_p:
                         routines.pause(clock,self.screen,self.joystick)
 
                 if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_LEFT and self.character.change_x < 0:
+                    if (event.key == pygame.K_LEFT or event.key == pygame.K_a) and self.character.change_x < 0:
                         self.character.stop()
-                    if event.key == pygame.K_RIGHT and self.character.change_x > 0:
+                    if (event.key == pygame.K_RIGHT or event.key == pygame.K_d) and self.character.change_x > 0:
                         self.character.stop()
 
             # Limit to 60 frames per second
