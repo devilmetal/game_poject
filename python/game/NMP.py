@@ -71,7 +71,7 @@ def main():
             elif selected == 1:
                 player = Hulk()
 
-            level_nbr = 2
+            level_nbr = 0
             # Create all the levels
             game = Game(player,level_nbr,level_dif,screen,joystick)
             game.run()
