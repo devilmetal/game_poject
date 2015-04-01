@@ -37,7 +37,7 @@ class Character(pygame.sprite.Sprite):
         self.status = None #idle,move,jump,
         self.location = None #ground,air,block
 
-        self.mov_plat = False #is a moving plateform
+        self.mov_plat = False #is on a moving plateform
         self.dead = False
         self.hit = False
 

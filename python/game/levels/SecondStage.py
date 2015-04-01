@@ -22,7 +22,7 @@ class SecondStage(Level):
 
 		Level.__init__(self, player)
 
-		self.level_limit = -15000
+		self.level_limit = -15500
 		next_level = 1
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
@@ -63,7 +63,13 @@ class SecondStage(Level):
 				[100, 20, 9600, HEIGHT-200],
 				[50, 300, 10000, HEIGHT-300],
 				#third ground
-				[5000, 20, 10000, HEIGHT]
+				[2500, 20, 10000, HEIGHT],
+				[30, 30, 11900, HEIGHT-30],
+				[100, 220, 12500, HEIGHT-200],
+				[100, 220, 13800, HEIGHT-200],
+				#last square of spikes
+				[30, 30, 14400, HEIGHT-370],
+				[1000, 20, 15200, HEIGHT]
 				]
 
 		#array of static spikes //considering spikes as image of 30x45 instead of 30x46
@@ -113,11 +119,24 @@ class SecondStage(Level):
 			[1, 5729, HEIGHT-350],
 			[2, 5700, HEIGHT-321],
 			[3, 5653, HEIGHT-350],
+			#last spikes for squares
+			[0, 14400, HEIGHT-414],
+			[1, 14428, HEIGHT-370],
+			[2, 14400, HEIGHT-342],
+			[3, 14354, HEIGHT-370]
 			]
 
 		#[width, height, x, y, left bound, right bound, speed]
 		horiz_plat = [
-			[100, 20, 5000, HEIGHT-200, 5000, 6000, 2]
+			[100, 20, 5000, HEIGHT-200, 5000, 6000, 2],
+			[100, 20, 14100, HEIGHT-250, 14100, 15000, 2]
+			]
+
+		#[width, height, x, y, top bound, bottom bound, speed]
+		vert_plat = [
+			[100, 20, 12800, HEIGHT-250, HEIGHT-250, HEIGHT-50, 2],
+			[100, 20, 13200, HEIGHT-100, HEIGHT-250, HEIGHT-50, 2],
+			[50, 20, 13500, HEIGHT-70, HEIGHT-250, HEIGHT-50, 1]
 			]
 
 		#array of special moving platforms
@@ -158,6 +177,11 @@ class SecondStage(Level):
 			HEIGHT-180, HEIGHT-70, 11300, 11600,
 			2, 2, 3, 3,
 			True, True],
+			#last moving square of spike
+			[30, 30, 14600, HEIGHT-360,
+			HEIGHT-450, HEIGHT-330, 14600, 15000,
+			3, 3, 3, 3,
+			True, True],
 			]
 
 		#array of special moving platforms
@@ -182,14 +206,55 @@ class SecondStage(Level):
 			2, 2, 3, 3, True, True],
 			[3, 10354, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10354, 10654,
 			2, 2, 3, 3, True, True],
+			#2nd square
+			[0, 10700, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10700, 11000,
+			2, 2, 3, 3, True, True],
+			[1, 10728, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10728, 11028,
+			2, 2, 3, 3, True, True],
+			[2, 10700, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10700, 11000,
+			2, 2, 3, 3, True, True],
+			[3, 10654, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10654, 10954,
+			2, 2, 3, 3, True, True],
+			#3rd square
+			[0, 11000, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11000, 11300,
+			2, 2, 3, 3, True, True],
+			[1, 11028, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11028, 11328,
+			2, 2, 3, 3, True, True],
+			[2, 11000, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11000, 11300,
+			2, 2, 3, 3, True, True],
+			[3, 10954, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10954, 11254,
+			2, 2, 3, 3, True, True],
+			#4th square
+			[0, 11300, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11300, 11600,
+			2, 2, 3, 3, True, True],
+			[1, 11328, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11328, 11628,
+			2, 2, 3, 3, True, True],
+			[2, 11300, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11300, 11600,
+			2, 2, 3, 3, True, True],
+			[3, 11254, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11254, 11554,
+			2, 2, 3, 3, True, True],
+			#last spikes
+			[0, 14600, HEIGHT-404, HEIGHT-494, HEIGHT-358, 14600, 15000,
+			3, 3, 3, 3, True, True],
+			[1, 14628, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14628, 15028,
+			3, 3, 3, 3, True, True],
+			[2, 14600, HEIGHT-332, HEIGHT-422, HEIGHT-286, 14600, 15000,
+			3, 3, 3, 3, True, True],
+			[3, 14554, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14554, 14954,
+			3, 3, 3, 3, True, True],
 			]
+			#[30, 30, 14600, HEIGHT-360,
+			#HEIGHT-450, HEIGHT-330, 14600, 15000,
+			#2, 2, 3, 3,
+			#True, True],
 		
 		#magma platform
 		#[width, height, x, y]
 		magma = [
 			[200, 50, 6700, HEIGHT-50],
 			[200, 50, 6950, HEIGHT-50],
-			[300, 50, 7200, HEIGHT-50]
+			[300, 50, 7200, HEIGHT-50],
+			[1200, 120, 12600, HEIGHT-100]
 			]
 
 		#[width, height, x, y, top bound, bottom bound, speed]
@@ -238,6 +303,17 @@ class SecondStage(Level):
 			block.boundary_left = plat[4]
 			block.boundary_right = plat[5]
 			block.change_x = plat[6]
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
+
+		for plat in vert_plat:
+			block = MovingPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.boundary_top = plat[4]
+			block.boundary_bottom = plat[5]
+			block.change_y = plat[6]
 			block.player = self.player
 			block.level = self
 			self.platform_list.add(block)
