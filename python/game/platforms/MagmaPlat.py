@@ -3,6 +3,8 @@ import pygame
 from Platform import Platform
 from MovingPlatform import MovingPlatform
 from SpecialPlatform import SpecialPlatform
+import routines
+
 
 class MagmaPlat(SpecialPlatform):
 

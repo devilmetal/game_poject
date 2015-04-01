@@ -12,6 +12,7 @@ from PNJ.Blob import Blob
 
 import constants
 import pygame
+import routines
 
 
 
@@ -98,7 +99,7 @@ class SecondStage(Level):
 			[2, 1690, HEIGHT-71],
 			[2, 1720, HEIGHT-71],
 			[3, 1553, HEIGHT-100],
-			#spikes of th arena
+			#spikes of the arena
 			[0, 2425, HEIGHT-345],
 			[0, 2455, HEIGHT-345],
 			[0, 2485, HEIGHT-345],
@@ -270,7 +271,6 @@ class SecondStage(Level):
 			x_trees+=200
 
 
-
 		"""Generation of the level design"""
 		for tree in back_trees:
 			block = Tree(tree[0])
@@ -371,7 +371,9 @@ class SecondStage(Level):
 			block.rect.y = plat[3]
 			block.player = self.player
 			block.level = self
-			block.image.fill(constants.RED)
+			magma_image = routines.load_png('world/lava/magma.png')
+			magma_texture = pygame.transform.scale(magma_image[0], (plat[0], plat[1]))
+			block.image.blit(magma_texture, (0, 0))
 			self.magma_list.add(block)
 
 		#moving magma
@@ -386,5 +388,7 @@ class SecondStage(Level):
 			block.change_y_d = plat[6]
 			block.player = self.player
 			block.level = self
-			block.image.fill(constants.RED)
+			magma_image = routines.load_png('world/lava/magma.png')
+			magma_texture = pygame.transform.scale(magma_image[0], (plat[0], plat[1]))
+			block.image.blit(magma_texture, (0, 0))
 			self.magma_list.add(block)		
