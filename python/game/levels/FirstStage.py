@@ -509,8 +509,8 @@ class FirstStage(Level):
 				block.rect.y = plat[3]
 				block.player = self.player
 				block.level = self
-				#CheckPoint is red!
-				block.image.fill(constants.RED)
+				#CheckPoint is white!
+				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
 
 		elif level_dif == "medium":
@@ -590,7 +590,7 @@ class FirstStage(Level):
 				block.player = self.player
 				block.level = self
 				#CheckPoint is red!
-				block.image.fill(constants.RED)
+				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
 
 		elif level_dif == "hard":
@@ -713,5 +713,5 @@ class FirstStage(Level):
 				block.player = self.player
 				block.level = self
 				#CheckPoint is red!
-				block.image.fill(constants.RED)
+				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)

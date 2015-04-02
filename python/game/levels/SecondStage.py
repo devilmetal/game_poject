@@ -9,6 +9,7 @@ from world.Tree import Tree
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
 from PNJ.Blob import Blob
+from platforms.CheckPoint import CheckPoint
 
 import constants
 import pygame
@@ -72,6 +73,14 @@ class SecondStage(Level):
 				[30, 30, 14400, HEIGHT-370],
 				[1000, 20, 15200, HEIGHT]
 				]
+
+		# checkpoints
+		#[top-left x, top-left , width, height]
+		checkpoints = [
+			[50, 20, 3300, HEIGHT-20],
+			[50, 20, 7600, HEIGHT-20],
+			[50, 20, 11800, HEIGHT-20]
+			]
 
 		#array of static spikes //considering spikes as image of 30x45 instead of 30x46
 		#[orientation, x, y]
@@ -392,3 +401,13 @@ class SecondStage(Level):
 			magma_texture = pygame.transform.scale(magma_image[0], (plat[0], plat[1]))
 			block.image.blit(magma_texture, (0, 0))
 			self.magma_list.add(block)		
+
+		for plat in checkpoints:
+			block = CheckPoint(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.player = self.player
+			block.level = self
+			#CheckPoint is white!
+			block.image.fill(constants.WHITE)
+			self.platform_list.add(block)
