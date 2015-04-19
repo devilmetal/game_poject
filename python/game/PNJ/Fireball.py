@@ -16,7 +16,7 @@ class Fireball(pygame.sprite.Sprite):
     def update(self):
         self.rect.x-=self.speed*1
         hit = pygame.sprite.collide_rect(self, self.player)
-        if hit:
+        if hit and not(self.player.hit):
             self.player.hit = True
             self.player.change_y = -10
     def get_x(self):

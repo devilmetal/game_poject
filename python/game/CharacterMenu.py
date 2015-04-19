@@ -16,11 +16,11 @@ class CharacterMenu:
         bob = routines.load_png('hero/idle_l.png')
         hulk = routines.load_png('hero_1/idle_l.png')
         little_fat = routines.load_png('hero_2/idle_l.png')
-        bob2 = routines.load_png('hero/idle_l.png')
+        #bob2 = routines.load_png('hero/idle_l.png')
 
 
         #self.characters = [bob,hulk]
-        self.characters = [bob,hulk,little_fat,bob2]
+        self.characters = [bob,hulk,little_fat]
         self.draw(0)
 
     def fib(self,n):
