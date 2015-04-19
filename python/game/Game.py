@@ -41,7 +41,7 @@ class Game():
 
         elif level_nbr == 2:
             if not self.checkpoint:
-                self.start_x = 350
+                self.start_x = 500
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = Boss1(self.character, level_dif)
 

@@ -3,7 +3,7 @@ import pygame
 import PNJ_ressources
 from Dragon_Body import Dragon_Body
 class Dragon(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self,level,player):
         super(Dragon, self).__init__()
         #init ressources
         PNJ_ressources.init_dragon_ressources()
@@ -14,42 +14,19 @@ class Dragon(pygame.sprite.Sprite):
         self.body_len = 10
         self.body_offset_x = 150
         self.body_offset_y = 150
-
+        self.level=level
+        self.player=player
         #Instanciation :
-        # x = n*100 px for body + head len = 5*100px + 150px = 650px
-        # y = n*1/2*100 px for body + hen size = 5*1/2*100px + 80+50 = 380px
-        width = 650
-        height = 380
         self.image = PNJ_ressources.dragon_ressources['cave'][0]
-
         self.rect = self.image.get_rect()
-
         #body array init
         self.body_array = []
         for i in range(self.body_len):
             self.body_array.append(Dragon_Body((i+1)*90+self.body_offset_x,self.body_offset_y,1,110,i*10))
-            print self.body_array[i].get_x
-            print self.body_array[i].get_y
-            print self.body_array[i].direction
-            print self.body_array[i].down_limit
-            print self.body_array[i].up_limit
         self.head_down = [0+self.body_offset_x,50+self.body_offset_y]
         self.head_up = [0+self.body_offset_x,0+self.body_offset_y]
-        self.hit()
-        #self.hit()
-        #self.hit()
-        #self.hit()
-        #self.hit()
-
         self.draw()
 
-    def wave_motion(array):
-
-        y_first = array[0][1]
-        array[0][1] = array[0][1]
-
-
-        return array
     def draw(self):
         self.image = PNJ_ressources.dragon_ressources['cave'][0].copy()
         for i in range(len(self.body_array)):
@@ -58,18 +35,27 @@ class Dragon(pygame.sprite.Sprite):
         self.image.blit(PNJ_ressources.dragon_ressources['head_up'][0],(self.head_up[0],self.head_up[1]))
 
     def update(self):
-        #TODO:
-        a=0
-        #Move
-        #self.body_array = self.wave_motion(self.body_array)
-        #Throw something (instianciate + direction)
+        #TODO: Throw fireball if needed (timer) (instianciate + direction)
+        #TODO: Check if colision player/Dragon
+        #Check body hit
+        hit = False
+        for i in range(len(self.body_array)):
+            rect = pygame.Rect(self.body_array[i].get_x(), self.body_array[i].get_y(), 95, 95)
+            print rect
+            hit = not(self.player.rect.collidelist([rect]))
+            if hit:
+                self.player.hit = True
+                self.player.change_y = -10
+        print self.player.rect
+        #Move the dragon
         for i in range(len(self.body_array)):
             self.body_array[i].update()
-        self.draw()
+        head_x = self.body_array[0].get_x()
+        head_y = self.body_array[0].get_y()
 
-    def move(self):
-        #TODO:
-        a=0
+        self.head_down = [head_x-105,30+head_y]
+        self.head_up = [head_x-105,head_y-20]
+        self.draw()
 
     def hit(self):
         #remove last body part

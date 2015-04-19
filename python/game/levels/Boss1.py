@@ -21,7 +21,6 @@ class Boss1(Level):
     def __init__(self, player, level_dif):
 
         Level.__init__(self, player)
-
         self.level_limit = -15000
         next_level = 0
         HEIGHT = constants.SCREEN_HEIGHT-20
@@ -49,11 +48,9 @@ class Boss1(Level):
         bosses = [[1000, HEIGHT-400]]
 
         for boss in bosses:
-            enemy = Dragon()
+            enemy = Dragon(self,player)
             enemy.rect.x = boss[0]
             enemy.rect.y = boss[1]
-            enemy.player=self.player
-            enemy.level=self
             self.pnj_list.add(enemy)
 
 
