@@ -37,16 +37,29 @@ class Dragon(pygame.sprite.Sprite):
     def update(self):
         #TODO: Throw fireball if needed (timer) (instianciate + direction)
         #TODO: Check if colision player/Dragon
-        #Check body hit
+        #Check dragon hit player
+        self.draw()
         hit = False
+        #print self.player.rect
         for i in range(len(self.body_array)):
-            rect = pygame.Rect(self.body_array[i].get_x(), self.body_array[i].get_y(), 95, 95)
-            print rect
-            hit = not(self.player.rect.collidelist([rect]))
-            if hit:
-                self.player.hit = True
-                self.player.change_y = -10
-        print self.player.rect
+            rect = pygame.Rect(self.body_array[i].get_x()+self.rect.x, self.body_array[i].get_y()+self.rect.y, 95, 95)
+            hit = hit or not(self.player.rect.collidelist([rect]))
+        rect = pygame.Rect(self.head_down[0]+self.rect.x, self.head_down[1]+self.rect.y, 100, 39)
+        hit = hit or not(self.player.rect.collidelist([rect]))
+        if hit and not(self.player.hit):
+            self.player.hit = True
+            self.player.change_y = -10
+
+        #Check player hit dragon
+        hit_dragon = False
+        rect = pygame.Rect(self.head_up[0]+self.rect.x, self.head_up[1]+self.rect.y, 141, 80)
+        self.player.rect.x-=1
+        hit_dragon = not(self.player.rect.collidelist([rect]))
+        self.player.rect.x+=1
+        if hit_dragon and not(self.player.hit) :
+            self.hit()
+            self.player.change_y = -10
+            self.player.change_x = -10
         #Move the dragon
         for i in range(len(self.body_array)):
             self.body_array[i].update()
@@ -55,17 +68,18 @@ class Dragon(pygame.sprite.Sprite):
 
         self.head_down = [head_x-105,30+head_y]
         self.head_up = [head_x-105,head_y-20]
-        self.draw()
+
 
     def hit(self):
         #remove last body part
         if len(self.body_array) > 0:
             elem = self.body_array.pop(0)
+            print "pop"
         #move offset
-        for i in range(len(self.body_array)):
-            self.body_array[i].x += 60
-        self.head_down[0] += 60
-        self.head_up[0] += 60
-        if not elem.y == self.body_array[0].y:
-            self.head_down[1] += 60
-            self.head_up[1] += 60
+        #for i in range(len(self.body_array)):
+        #    self.body_array[i].x += 20
+        #self.head_down[0] += 20
+        #self.head_up[0] += 20
+        #if not elem.y == self.body_array[0].y:
+        #    self.head_down[1] += 20
+        #    self.head_up[1] += 20
