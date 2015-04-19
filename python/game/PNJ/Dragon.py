@@ -2,6 +2,8 @@ import constants
 import pygame
 import PNJ_ressources
 from Dragon_Body import Dragon_Body
+from Fireball import Fireball
+
 class Dragon(pygame.sprite.Sprite):
     def __init__(self,level,player):
         super(Dragon, self).__init__()
@@ -16,6 +18,8 @@ class Dragon(pygame.sprite.Sprite):
         self.body_offset_y = 150
         self.level=level
         self.player=player
+        self.dead = False
+        self.fireball_timer = 80
         #Instanciation :
         self.image = PNJ_ressources.dragon_ressources['cave'][0]
         self.rect = self.image.get_rect()
@@ -29,57 +33,60 @@ class Dragon(pygame.sprite.Sprite):
 
     def draw(self):
         self.image = PNJ_ressources.dragon_ressources['cave'][0].copy()
-        for i in range(len(self.body_array)):
-            self.image.blit(PNJ_ressources.dragon_ressources['body'][0],(int(self.body_array[i].get_x()),int(self.body_array[i].get_y())))
-        self.image.blit(PNJ_ressources.dragon_ressources['head_down'][0],(self.head_down[0],self.head_down[1]))
-        self.image.blit(PNJ_ressources.dragon_ressources['head_up'][0],(self.head_up[0],self.head_up[1]))
+        if not self.dead:
+            for i in range(len(self.body_array)):
+                self.image.blit(PNJ_ressources.dragon_ressources['body'][0],(int(self.body_array[i].get_x()),int(self.body_array[i].get_y())))
+            self.image.blit(PNJ_ressources.dragon_ressources['head_down'][0],(self.head_down[0],self.head_down[1]))
+            self.image.blit(PNJ_ressources.dragon_ressources['head_up'][0],(self.head_up[0],self.head_up[1]))
 
     def update(self):
-        #TODO: Throw fireball if needed (timer) (instianciate + direction)
-        #TODO: Check if colision player/Dragon
-        #Check dragon hit player
         self.draw()
-        hit = False
-        #print self.player.rect
-        for i in range(len(self.body_array)):
-            rect = pygame.Rect(self.body_array[i].get_x()+self.rect.x, self.body_array[i].get_y()+self.rect.y, 95, 95)
+        if not self.dead:
+            #Throw fireball if needed (timer) (instianciate + direction)
+            if self.fireball_timer>0:
+                self.fireball_timer-=1
+            else:
+                self.fireball_timer=80
+                x_fireball = self.rect.x+self.head_down[0]
+                y_fireball = self.rect.y+self.head_down[1]
+                speed_fireball = 5
+                self.level.pnj_list.add(Fireball(x_fireball,y_fireball,speed_fireball,self.player))
+            #Check dragon hit player
+            hit = False
+            for i in range(len(self.body_array)):
+                rect = pygame.Rect(self.body_array[i].get_x()+self.rect.x, self.body_array[i].get_y()+self.rect.y, 95, 95)
+                hit = hit or not(self.player.rect.collidelist([rect]))
+            rect = pygame.Rect(self.head_down[0]+self.rect.x, self.head_down[1]+self.rect.y, 100, 39)
             hit = hit or not(self.player.rect.collidelist([rect]))
-        rect = pygame.Rect(self.head_down[0]+self.rect.x, self.head_down[1]+self.rect.y, 100, 39)
-        hit = hit or not(self.player.rect.collidelist([rect]))
-        if hit and not(self.player.hit):
-            self.player.hit = True
-            self.player.change_y = -10
+            if hit and not(self.player.hit):
+                self.player.hit = True
+                self.player.change_y = -10
 
-        #Check player hit dragon
-        hit_dragon = False
-        rect = pygame.Rect(self.head_up[0]+self.rect.x, self.head_up[1]+self.rect.y, 141, 80)
-        self.player.rect.x-=1
-        hit_dragon = not(self.player.rect.collidelist([rect]))
-        self.player.rect.x+=1
-        if hit_dragon and not(self.player.hit) :
-            self.hit()
-            self.player.change_y = -10
-            self.player.change_x = -10
-        #Move the dragon
-        for i in range(len(self.body_array)):
-            self.body_array[i].update()
-        head_x = self.body_array[0].get_x()
-        head_y = self.body_array[0].get_y()
+            #Check player hit dragon
+            hit_dragon = False
+            rect = pygame.Rect(self.head_up[0]+self.rect.x, self.head_up[1]+self.rect.y, 141, 80)
+            self.player.rect.x-=1
+            hit_dragon = not(self.player.rect.collidelist([rect]))
+            self.player.rect.x+=1
+            if hit_dragon and not(self.player.hit) :
+                self.hit()
+                self.player.change_y = -10
+                #TODO: Force an annimation here !
+                self.player.change_x = -10
+            #Move the dragon
+            for i in range(len(self.body_array)):
+                self.body_array[i].update()
+            head_x = self.body_array[0].get_x()
+            head_y = self.body_array[0].get_y()
 
-        self.head_down = [head_x-105,30+head_y]
-        self.head_up = [head_x-105,head_y-20]
+            self.head_down = [head_x-105,30+head_y]
+            self.head_up = [head_x-105,head_y-20]
 
 
     def hit(self):
-        #remove last body part
-        if len(self.body_array) > 0:
+        if len(self.body_array) == 1:
+            #kill the dragon.
+            self.dead = True
+        elif len(self.body_array) > 0:
+            #remove a body part
             elem = self.body_array.pop(0)
-            print "pop"
-        #move offset
-        #for i in range(len(self.body_array)):
-        #    self.body_array[i].x += 20
-        #self.head_down[0] += 20
-        #self.head_up[0] += 20
-        #if not elem.y == self.body_array[0].y:
-        #    self.head_down[1] += 20
-        #    self.head_up[1] += 20
