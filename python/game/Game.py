@@ -3,7 +3,7 @@ import constants
 import routines
 from levels.FirstStage import FirstStage
 from levels.SecondStage import SecondStage
-
+from levels.Boss1 import Boss1
 HEIGHT = constants.SCREEN_HEIGHT-20
 
 class Game():
@@ -38,6 +38,12 @@ class Game():
                 self.start_x = 2300
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = SecondStage(self.character, level_dif)
+
+        elif level_nbr == 2:
+            if not self.checkpoint:
+                self.start_x = 500
+                self.start_y = HEIGHT - self.character.rect.height
+            self.level = Boss1(self.character, level_dif)
 
         self.level.start_x = self.start_x
         self.level.start_y = self.start_y

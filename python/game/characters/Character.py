@@ -46,7 +46,6 @@ class Character(pygame.sprite.Sprite):
 
     def update(self):
         """ Move the player. """
-
         # Gravity
         self.calc_grav()
 
