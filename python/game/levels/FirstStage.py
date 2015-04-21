@@ -452,6 +452,8 @@ class FirstStage(Level):
 					]
 
 
+		"""Generation of the platform corresponding to the difficulty level"""
+
 		if level_dif == "easy":
 			for plat in easy_plat:
 				block = Platform(plat[0], plat[1])

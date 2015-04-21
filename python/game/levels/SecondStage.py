@@ -45,9 +45,7 @@ class SecondStage(Level):
 				[150, 20, 2425, HEIGHT-300],
 				#first platform in the air (after first round moving plat)
 				[100, 20, 4750, HEIGHT-200],
-				#square of spikes for the moving platform
-				[30, 30, 5300, HEIGHT-350],
-				[30, 30, 5700, HEIGHT-350],
+				#little square for the moving platform
 				[20, 20, 5300, HEIGHT-220],
 				[20, 20, 5700, HEIGHT-220],
 				#2nd ground platform
@@ -77,9 +75,9 @@ class SecondStage(Level):
 		# checkpoints
 		#[top-left x, top-left , width, height]
 		checkpoints = [
-			[50, 20, 3300, HEIGHT-20],
-			[50, 20, 7600, HEIGHT-20],
-			[50, 20, 11800, HEIGHT-20]
+			[50, 20, 3300, HEIGHT],
+			[50, 20, 7600, HEIGHT],
+			[50, 20, 11800, HEIGHT]
 			]
 
 		#array of static spikes //considering spikes as image of 30x45 instead of 30x46
@@ -119,16 +117,6 @@ class SecondStage(Level):
 			[2, 2485, HEIGHT-281],
 			[2, 2515, HEIGHT-281],
 			[2, 2545, HEIGHT-281],
-			#spikes for the first square in the air
-			[0, 5300, HEIGHT-395],
-			[1, 5329, HEIGHT-350],
-			[2, 5300, HEIGHT-321],
-			[3, 5253, HEIGHT-350],
-			#spikes for the second square in the air
-			[0, 5700, HEIGHT-395],
-			[1, 5729, HEIGHT-350],
-			[2, 5700, HEIGHT-321],
-			[3, 5653, HEIGHT-350],
 			#last spikes for squares
 			[0, 14400, HEIGHT-414],
 			[1, 14428, HEIGHT-370],
@@ -136,18 +124,6 @@ class SecondStage(Level):
 			[3, 14354, HEIGHT-370]
 			]
 
-		#[width, height, x, y, left bound, right bound, speed]
-		horiz_plat = [
-			[100, 20, 5000, HEIGHT-200, 5000, 6000, 2],
-			[100, 20, 14100, HEIGHT-250, 14100, 15000, 2]
-			]
-
-		#[width, height, x, y, top bound, bottom bound, speed]
-		vert_plat = [
-			[100, 20, 12800, HEIGHT-250, HEIGHT-250, HEIGHT-50, 2],
-			[100, 20, 13200, HEIGHT-100, HEIGHT-250, HEIGHT-50, 2],
-			[50, 20, 13500, HEIGHT-70, HEIGHT-250, HEIGHT-50, 1]
-			]
 
 		#array of special moving platforms
 		#[width, height, x, y,
@@ -157,12 +133,12 @@ class SecondStage(Level):
 		round_moving = [
 			#first
 			[100, 20, 3550, HEIGHT-20, 
-			HEIGHT-220, HEIGHT, 3550, 3850,
+			HEIGHT-220, HEIGHT, 3550, 3800,
 			2, 2, 2, 2,
 			True, True],
 			#second
-			[100, 20, 4000, HEIGHT-100,
-			HEIGHT-300, HEIGHT-80, 4000, 4500,
+			[100, 20, 4100, HEIGHT-100,
+			HEIGHT-300, HEIGHT-80, 4100, 4500,
 			2, 2, 3, 3,
 			True, False],
 			#moving square of spike
@@ -170,27 +146,17 @@ class SecondStage(Level):
 			HEIGHT-210, HEIGHT-100, 6350, 6550,
 			1, 1, 3, 3,
 			True, True],
-			#last moving squares
+
+			#last moving squares on the ground
+			#1st
 			[30, 30, 10400, HEIGHT-100,
 			HEIGHT-180, HEIGHT-70, 10400, 10700,
 			2, 2, 3, 3,
 			True, True],
-			[30, 30, 10700, HEIGHT-100,
-			HEIGHT-180, HEIGHT-70, 10700, 11000,
-			2, 2, 3, 3,
-			True, True],
+			#3rd (2nd if easy)
 			[30, 30, 11000, HEIGHT-100,
 			HEIGHT-180, HEIGHT-70, 11000, 11300,
 			2, 2, 3, 3,
-			True, True],
-			[30, 30, 11300, HEIGHT-100,
-			HEIGHT-180, HEIGHT-70, 11300, 11600,
-			2, 2, 3, 3,
-			True, True],
-			#last moving square of spike
-			[30, 30, 14600, HEIGHT-360,
-			HEIGHT-450, HEIGHT-330, 14600, 15000,
-			3, 3, 3, 3,
 			True, True],
 			]
 
@@ -216,16 +182,7 @@ class SecondStage(Level):
 			2, 2, 3, 3, True, True],
 			[3, 10354, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10354, 10654,
 			2, 2, 3, 3, True, True],
-			#2nd square
-			[0, 10700, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10700, 11000,
-			2, 2, 3, 3, True, True],
-			[1, 10728, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10728, 11028,
-			2, 2, 3, 3, True, True],
-			[2, 10700, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10700, 11000,
-			2, 2, 3, 3, True, True],
-			[3, 10654, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10654, 10954,
-			2, 2, 3, 3, True, True],
-			#3rd square
+			#3rd square (2nd if easy)
 			[0, 11000, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11000, 11300,
 			2, 2, 3, 3, True, True],
 			[1, 11028, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11028, 11328,
@@ -234,29 +191,7 @@ class SecondStage(Level):
 			2, 2, 3, 3, True, True],
 			[3, 10954, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10954, 11254,
 			2, 2, 3, 3, True, True],
-			#4th square
-			[0, 11300, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11300, 11600,
-			2, 2, 3, 3, True, True],
-			[1, 11328, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11328, 11628,
-			2, 2, 3, 3, True, True],
-			[2, 11300, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11300, 11600,
-			2, 2, 3, 3, True, True],
-			[3, 11254, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11254, 11554,
-			2, 2, 3, 3, True, True],
-			#last spikes
-			[0, 14600, HEIGHT-404, HEIGHT-494, HEIGHT-358, 14600, 15000,
-			3, 3, 3, 3, True, True],
-			[1, 14628, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14628, 15028,
-			3, 3, 3, 3, True, True],
-			[2, 14600, HEIGHT-332, HEIGHT-422, HEIGHT-286, 14600, 15000,
-			3, 3, 3, 3, True, True],
-			[3, 14554, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14554, 14954,
-			3, 3, 3, 3, True, True],
 			]
-			#[30, 30, 14600, HEIGHT-360,
-			#HEIGHT-450, HEIGHT-330, 14600, 15000,
-			#2, 2, 3, 3,
-			#True, True],
 		
 		#magma platform
 		#[width, height, x, y]
@@ -267,10 +202,6 @@ class SecondStage(Level):
 			[1200, 120, 12600, HEIGHT-100]
 			]
 
-		#[width, height, x, y, top bound, bottom bound, speed]
-		moving_magma = [
-			[1900, 270, 8100, HEIGHT, HEIGHT-250, HEIGHT+270, 1]
-			]
 
 		#adding tree to background along the level
 		x_trees=0
@@ -301,28 +232,6 @@ class SecondStage(Level):
 			block = Spike(spike[0])
 			block.rect.x = spike[1]
 			block.rect.y = spike[2]
-			block.player = self.player
-			block.level = self
-			self.platform_list.add(block)
-
-		for plat in horiz_plat:
-			block = MovingPlatform(plat[0], plat[1])
-			block.rect.x = plat[2]
-			block.rect.y = plat[3]
-			block.boundary_left = plat[4]
-			block.boundary_right = plat[5]
-			block.change_x = plat[6]
-			block.player = self.player
-			block.level = self
-			self.platform_list.add(block)
-
-		for plat in vert_plat:
-			block = MovingPlatform(plat[0], plat[1])
-			block.rect.x = plat[2]
-			block.rect.y = plat[3]
-			block.boundary_top = plat[4]
-			block.boundary_bottom = plat[5]
-			block.change_y = plat[6]
 			block.player = self.player
 			block.level = self
 			self.platform_list.add(block)
@@ -380,27 +289,7 @@ class SecondStage(Level):
 			block.rect.y = plat[3]
 			block.player = self.player
 			block.level = self
-			magma_image = routines.load_png('world/lava/magma.png')
-			magma_texture = pygame.transform.scale(magma_image[0], (plat[0], plat[1]))
-			block.image.blit(magma_texture, (0, 0))
-			self.magma_list.add(block)
-
-		#moving magma
-		for plat in moving_magma:
-			block = MagmaPlat(plat[0], plat[1])
-			block.rect.x = plat[2]
-			block.rect.y = plat[3]
-			block.boundary_top = plat[4]
-			block.boundary_bottom = plat[5]
-			block.change_y = -plat[6]
-			block.change_y_u = -plat[6]
-			block.change_y_d = plat[6]
-			block.player = self.player
-			block.level = self
-			magma_image = routines.load_png('world/lava/magma.png')
-			magma_texture = pygame.transform.scale(magma_image[0], (plat[0], plat[1]))
-			block.image.blit(magma_texture, (0, 0))
-			self.magma_list.add(block)		
+			self.magma_list.add(block)	
 
 		for plat in checkpoints:
 			block = CheckPoint(plat[0], plat[1])
@@ -411,3 +300,245 @@ class SecondStage(Level):
 			#CheckPoint is white!
 			block.image.fill(constants.WHITE)
 			self.platform_list.add(block)
+
+
+
+		"""Specific platform for the difficulty level"""
+
+		#easy
+
+		#[width, height, x, y]
+		easy_plats = [
+			#platform between the round moving platform
+			[100, 20, 3950, HEIGHT-200],
+			[100, 20, 13000, HEIGHT-250],
+			[100, 20, 14800, HEIGHT-250]
+		]
+
+		#[widht, height, x, y, left bound, right bound, speed]
+		easy_horiz_plat = [
+			[150, 20, 4850, HEIGHT-200, 4850, 6000, 3],
+			[150, 20, 13900, HEIGHT-250, 13900, 14600, 2]
+		]
+
+		#[width, height, x, y, top bound, bottom bound, speed, pause]
+		easy_moving_magma = [
+			[1900, 270, 8100, HEIGHT, HEIGHT-250, HEIGHT+270, 1, 240]
+		]
+
+		#[width, height, x, y, top bound, bottom bound, speed]
+		easy_vert_plat = [
+			[100, 20, 12800, HEIGHT-250, HEIGHT-250, HEIGHT-50, 1],
+			[100, 20, 13200, HEIGHT-100, HEIGHT-250, HEIGHT-50, 1],
+			[50, 20, 13500, HEIGHT-70, HEIGHT-250, HEIGHT-50, 1]
+			]
+
+
+		#medium
+		#[width, height, x, y]
+		medium_plats = [
+			#square of spikes for the moving platform
+			[30, 30, 5300, HEIGHT-350],
+			[30, 30, 5700, HEIGHT-350],
+		]
+
+		#[orientation, x, y]
+		medium_spikes = [
+			#spikes for the first square in the air
+			[0, 5300, HEIGHT-395],
+			[1, 5329, HEIGHT-350],
+			[2, 5300, HEIGHT-321],
+			[3, 5253, HEIGHT-350],
+			#spikes for the second square in the air
+			[0, 5700, HEIGHT-395],
+			[1, 5729, HEIGHT-350],
+			[2, 5700, HEIGHT-321],
+			[3, 5653, HEIGHT-350],
+		]
+
+		medium_horiz_plat = [
+			[100, 20, 14100, HEIGHT-250, 14100, 15000, 2]
+		]
+
+		#array of special moving platforms
+		#[width, height, x, y,
+		#top bound, bottom bound, left bound, right bound,
+		#speed up, speed down, speed left, speed right,
+		#is moving round, clockwise movement]
+		medium_round_moving = [
+			#last moving squares on the ground
+			#2nd
+			[30, 30, 10700, HEIGHT-100,
+			HEIGHT-180, HEIGHT-70, 10700, 11000,
+			2, 2, 3, 3,
+			True, True],
+			#4th
+			[30, 30, 11300, HEIGHT-100,
+			HEIGHT-180, HEIGHT-70, 11300, 11600,
+			2, 2, 3, 3,
+			True, True],
+			#last moving square of spike
+			[30, 30, 14600, HEIGHT-360,
+			HEIGHT-450, HEIGHT-330, 14600, 15000,
+			3, 3, 3, 3,
+			True, True],
+		]
+
+		#array of special moving platforms
+		#[orientation, x, y, top bound, bottom bound, left bound, right bound,
+		#speed up, speed down, speed left, speed right, is moving round, clockwise movement]
+		medium_round_spikes = [
+			#2nd square
+			[0, 10700, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10700, 11000,
+			2, 2, 3, 3, True, True],
+			[1, 10728, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10728, 11028,
+			2, 2, 3, 3, True, True],
+			[2, 10700, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10700, 11000,
+			2, 2, 3, 3, True, True],
+			[3, 10654, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10654, 10954,
+			2, 2, 3, 3, True, True],
+			#4th square
+			[0, 11300, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11300, 11600,
+			2, 2, 3, 3, True, True],
+			[1, 11328, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11328, 11628,
+			2, 2, 3, 3, True, True],
+			[2, 11300, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11300, 11600,
+			2, 2, 3, 3, True, True],
+			[3, 11254, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11254, 11554,
+			2, 2, 3, 3, True, True],
+			#last spikes
+			[0, 14600, HEIGHT-404, HEIGHT-494, HEIGHT-358, 14600, 15000,
+			3, 3, 3, 3, True, True],
+			[1, 14628, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14628, 15028,
+			3, 3, 3, 3, True, True],
+			[2, 14600, HEIGHT-332, HEIGHT-422, HEIGHT-286, 14600, 15000,
+			3, 3, 3, 3, True, True],
+			[3, 14554, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14554, 14954,
+			3, 3, 3, 3, True, True],
+		]
+
+
+		"""Generation of the platform corresponding to the difficulty level"""
+
+		if level_dif == "easy":
+			for plat in easy_plats:
+				block = Platform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for plat in easy_horiz_plat:
+				block = MovingPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_left = plat[4]
+				block.boundary_right = plat[5]
+				block.change_x = plat[6]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for plat in easy_vert_plat:
+				block = MovingPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.change_y = plat[6]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			#moving magma
+			for plat in easy_moving_magma:
+				block = MagmaPlat(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.change_y = -plat[6]
+				block.change_y_u = -plat[6]
+				block.change_y_d = plat[6]
+				block.pause_down = plat[7]
+				block.player = self.player
+				block.level = self
+				self.magma_list.add(block)	
+
+		elif level_dif == "medium":
+			for plat in medium_plats:
+				block = Platform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			#static spikes
+			for spike in medium_spikes:
+				block = Spike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for plat in medium_horiz_plat:
+				block = MovingPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_left = plat[4]
+				block.boundary_right = plat[5]
+				block.change_x = plat[6]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			#round moving platform.
+			for plat in medium_round_moving:
+				block = SpecialPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.boundary_left = plat[6]
+				block.boundary_right = plat[7]
+				block.change_y_u = -plat[8]
+				block.change_y_d = plat[9]
+				block.change_x_l = -plat[10]
+				block.change_x_r = plat[11]
+				block.round_mov = plat[12]
+				block.clockwise = plat[13]
+				if plat[13] == False:
+					block.change_y = plat[9]
+				else:
+					block.change_y = -plat[8]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			#round moving spike.
+			for spike in round_spike:
+				block = SpecialSpike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.boundary_top = spike[3]
+				block.boundary_bottom = spike[4]
+				block.boundary_left = spike[5]
+				block.boundary_right = spike[6]
+				block.change_y_u = -spike[7]
+				block.change_y_d = spike[8]
+				block.change_x_l = -spike[9]
+				block.change_x_r = spike[10]
+				block.round_mov = spike[11]
+				block.clockwise = spike[12]
+				if plat[13] == False:
+					block.change_y = spike[8]
+				else:
+					block.change_y = -spike[7]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+		#elif level_dif == "hard":

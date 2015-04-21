@@ -3,10 +3,19 @@ import pygame
 from Platform import Platform
 from MovingPlatform import MovingPlatform
 from SpecialPlatform import SpecialPlatform
-#import routines
+import routines
 
 
 class MagmaPlat(SpecialPlatform):
+	def __init__ (self, width, height):
+		super(Platform, self).__init__()
+		
+		self.image = pygame.Surface([width, height])
+		magma_image = routines.load_png('world/lava/magma.png')
+		magma_texture = pygame.transform.scale(magma_image[0], (width, height))
+		self.image.blit(magma_texture, (0, 0))
+		self.rect = self.image.get_rect()
+
 
 	def update(self):
 
