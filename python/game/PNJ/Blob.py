@@ -32,8 +32,10 @@ class Blob(PNJ):
 
     def update(self):
         # Call the parent update
-        PNJ.update(self)
-        self.calc_image()
+        if not self.dead:
+            PNJ.update(self)
+            self.calc_image()
+            self.check_hit()
 
     def calc_image(self):
         if self.change_x < 0:
@@ -85,3 +87,36 @@ class Blob(PNJ):
             else:
                 self.image = PNJ_ressources.blob_ressources['right_blob1'][0]
                 self.frame_inc=0
+    def check_hit(self):
+        self.rect.x += 1
+        hit_right = pygame.sprite.collide_rect(self, self.player)
+        self.rect.x -= 1
+
+        self.rect.x -= 1
+        hit_left = pygame.sprite.collide_rect(self, self.player)
+        self.rect.x += 1
+
+        self.rect.y -= 1
+        hit_up = pygame.sprite.collide_rect(self, self.player)
+        self.rect.y += 1
+
+        self.rect.y += 1
+        hit_down = pygame.sprite.collide_rect(self, self.player)
+        self.rect.y -= 1
+
+        if hit_up and not self.player.hit:
+            self.dead = True
+            self.kill_annimation()
+
+        if (hit_down or hit_left or hit_right) and not self.player.hit and not self.dead:
+            self.player.hit = True
+            self.player.change_y = -10
+
+    def kill_annimation(self):
+        self.change_x = 0
+        self.change_y = 0
+        self.rect.y += 17
+        PNJ_ressources.blob_ressources['dead_sound'].play()
+        self.image = PNJ_ressources.blob_ressources['dead'][0]
+        #pygame.time.wait(1000) #wait 1 second
+        #self.kill() #destroy the object
