@@ -26,7 +26,7 @@ class FirstStage(Level):
 
 		Level.__init__(self, player)
 		next_level = 0
-		self.level_limit = -14300
+		self.level_limit = -15000
 
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
@@ -80,7 +80,8 @@ class FirstStage(Level):
 		#if we are on a platform that should make us go to the next level
 		#[width, height, top-left x, top-left y, next level]
 		end_plat = [
-					[120, 20, 14380, HEIGHT-350, 1]
+					[120, 20, 14380, HEIGHT-350, 1],
+					[120, 20, 15000, HEIGHT, 2]
 					]
 		# checkpoints
 		#[top-left x, top-left , width, height]

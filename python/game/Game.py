@@ -16,10 +16,12 @@ class Game():
     start_x = 0
     start_y = 0
     current_level_nbr = 0
+    level_dif = 0
     done = False
     checkpoint = False
     joystick=None
     level_dif = "easy"
+
     def __init__(self, character, level_nbr, level_dif, screen, joystick):
         self.screen = screen
         self.character = character
@@ -27,10 +29,11 @@ class Game():
         self.init_level(level_nbr, level_dif)
         self.current_level_nbr = level_nbr
         self.joystick = joystick
-    def init_level(self,level_nbr, level_dif):
+
+    def init_level(self, level_nbr, level_dif):
         if level_nbr == 0:
             if not self.checkpoint:
-                self.start_x = 350
+                self.start_x = 14300
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = FirstStage(self.character, level_dif)
         elif level_nbr == 1:
@@ -166,5 +169,5 @@ class Game():
             # Go ahead and update the screen with what we've drawn.
             pygame.display.flip()
 
-    def load_level(self,level_pointer, level_dif):
+    def load_level(self, level_pointer, level_dif):
         self.init_level(level_pointer, self.level_dif)
