@@ -152,7 +152,7 @@ class Game():
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                         self.character.stop()
                         self.character.go_right()
-                    if event.key == pygame.K_UP or event.key == pygame.K_w:
+                    if event.key == pygame.K_UP or event.key == pygame.K_w or event.key == pygame.K_SPACE:
                         self.character.jump()
                     if event.key == pygame.K_p:
                         routines.pause(clock,self.screen,self.joystick)
