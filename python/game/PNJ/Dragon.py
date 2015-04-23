@@ -60,6 +60,7 @@ class Dragon(pygame.sprite.Sprite):
                         self.image.blit(rotated1,(self.head_up[0],self.head_up[1]-int(self.hit_annimation_counter/9.0)))
                         rotated1 = pygame.transform.rotate(PNJ_ressources.dragon_ressources['head_down'][0], angle)
                         self.image.blit(rotated1,(self.head_down[0],self.head_down[1]))
+                        
                     self.hit_annimation_counter+=1
 
 
