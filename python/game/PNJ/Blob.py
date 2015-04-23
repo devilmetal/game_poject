@@ -88,13 +88,13 @@ class Blob(PNJ):
                 self.image = PNJ_ressources.blob_ressources['right_blob1'][0]
                 self.frame_inc=0
     def check_hit(self):
-        self.rect.x += 1
+        self.rect.x += 5
         hit_right = pygame.sprite.collide_rect(self, self.player)
-        self.rect.x -= 1
+        self.rect.x -= 5
 
-        self.rect.x -= 1
+        self.rect.x -= 5
         hit_left = pygame.sprite.collide_rect(self, self.player)
-        self.rect.x += 1
+        self.rect.x += 5
 
         self.rect.y -= 1
         hit_up = pygame.sprite.collide_rect(self, self.player)
