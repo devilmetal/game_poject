@@ -4,7 +4,7 @@ from platforms.MovingPlatform import MovingPlatform
 from platforms.BoostPlatform import BoostPlatform
 from platforms.Spike import Spike
 from platforms.MovingSpike import MovingSpike
-from world.Tree import Tree
+from world.Parallax import Parallax
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
 from PNJ.Blob import Blob
@@ -46,7 +46,15 @@ class Boss1(Level):
         #[x, y,width,height]
 
         bosses = [[1000, HEIGHT-400]]
-
+        """Some background"""
+        #adding parallax stuff to background along the level
+        x_parallax=0
+        back_p=[]
+        front_p=[]
+        while x_parallax < -self.level_limit + constants.SCREEN_WIDTH:
+            back_p.append([x_parallax])
+            front_p.append([x_parallax])
+            x_parallax+=constants.SCREEN_WIDTH
         for boss in bosses:
             enemy = Dragon(self,player)
             enemy.rect.x = boss[0]
@@ -61,3 +69,24 @@ class Boss1(Level):
             block.player = self.player
             block.level = self
             self.platform_list.add(block)
+
+        #Parallax background
+        for elem in back_p:
+            x = elem[0]
+            y = 0
+            width = constants.SCREEN_WIDTH
+            height = constants.SCREEN_HEIGHT
+            mode = "back"
+            level = self
+            paral = Parallax(x,y,width,height,mode,level)
+            self.back_world_list.add(paral)
+
+        for elem in front_p:
+            x = elem[0]
+            y = 0
+            width = constants.SCREEN_WIDTH
+            height = constants.SCREEN_HEIGHT
+            mode = "front"
+            level = self
+            paral = Parallax(x,y,width,height,mode,level)
+            self.back_front_world_list.add(paral)

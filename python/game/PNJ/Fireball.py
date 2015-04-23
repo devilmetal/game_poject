@@ -19,6 +19,8 @@ class Fireball(pygame.sprite.Sprite):
         if hit and not(self.player.hit):
             self.player.hit = True
             self.player.change_y = -10
+        if self.rect.x < -1000:
+            self.kill()
     def get_x(self):
         return self.x
     def get_y(self):
