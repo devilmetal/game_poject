@@ -57,9 +57,12 @@ class LevelMenu(Menu):
                         constants.GAME_STATUS = "level"
                         return level_nbr
 
-                    if event.key == pygame.K_ESCAPE:
+                    if event.key == pygame.K_BACKSPACE:
+                        constants.GAME_STATUS = "menuChar"
                         menu_flag = False
-                        main_loop = False
+                    if event.key == pygame.K_ESCAPE:
+                        constants.GAME_STATUS="exit"
+                        menu_flag = False
                     pygame.display.update()
                 elif event.type == pygame.QUIT:
                     constants.GAME_STATUS="exit"
