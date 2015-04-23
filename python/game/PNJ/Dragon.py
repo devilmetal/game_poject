@@ -64,6 +64,7 @@ class Dragon(pygame.sprite.Sprite):
 
 
     def update(self):
+        
         self.draw()
         if not self.dead:
             #Throw fireball if needed (according to timer)
