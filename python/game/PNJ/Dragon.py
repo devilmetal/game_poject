@@ -23,9 +23,6 @@ class Dragon(pygame.sprite.Sprite):
         self.hited = False
         self.hit_annimation_counter=0
         self.fireball_timer = 80
-
-
-
         #Instanciation :
         self.image = PNJ_ressources.dragon_ressources['cave'][0]
         self.rect = self.image.get_rect()
@@ -60,9 +57,7 @@ class Dragon(pygame.sprite.Sprite):
                         self.image.blit(rotated1,(self.head_up[0],self.head_up[1]-int(self.hit_annimation_counter/9.0)))
                         rotated1 = pygame.transform.rotate(PNJ_ressources.dragon_ressources['head_down'][0], angle)
                         self.image.blit(rotated1,(self.head_down[0],self.head_down[1]))
-                        
                     self.hit_annimation_counter+=1
-
 
     def update(self):
         self.draw()
@@ -93,7 +88,6 @@ class Dragon(pygame.sprite.Sprite):
                 if hit and not(self.player.hit):
                     self.player.hit = True
                     self.player.change_y = -10
-
             #Check player hit dragon only if hit animation is not in progress
             #otherwise we do a "hit annimation"
             if not self.hited:
@@ -112,11 +106,8 @@ class Dragon(pygame.sprite.Sprite):
                 self.body_array[i].update()
             head_x = self.body_array[0].get_x()
             head_y = self.body_array[0].get_y()
-
             self.head_down = [head_x-105,30+head_y]
             self.head_up = [head_x-105,head_y-20]
-
-
     def hit(self):
         if len(self.body_array) == 1:
             #kill the dragon.

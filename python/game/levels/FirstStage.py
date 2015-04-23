@@ -4,12 +4,11 @@ from platforms.MovingPlatform import MovingPlatform
 from platforms.BoostPlatform import BoostPlatform
 from platforms.Spike import Spike
 from platforms.MovingSpike import MovingSpike
-from world.Tree import Tree
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
 from platforms.EndPlatform import EndPlatform
 from platforms.CheckPoint import CheckPoint
-
+from world.Parallax import Parallax
 from PNJ.Blob import Blob
 
 import constants
@@ -91,7 +90,7 @@ class FirstStage(Level):
 					]
 
 		"""Special moving platform and spikes"""
-		#falling spikes at the end of the level		
+		#falling spikes at the end of the level
 
 		number_spikes = range(70) #create a list of number from 0 to 69
 
@@ -193,13 +192,15 @@ class FirstStage(Level):
 
 
 		"""Some background"""
-		#TODO REMOVE THIS
-		#adding tree to background along the level
-		x_trees=0
-		back_trees=[]
-		while x_trees < -self.level_limit:
-			back_trees.append([0,x_trees,HEIGHT - 150])
-			x_trees+=200
+		#adding parallax stuff to background along the level
+		x_parallax=0
+		back_p=[]
+		front_p=[]
+		while x_parallax < -self.level_limit + constants.SCREEN_WIDTH:
+			back_p.append([x_parallax])
+			front_p.append([x_parallax])
+			x_parallax+=constants.SCREEN_WIDTH
+
 
 
 
@@ -267,13 +268,13 @@ class FirstStage(Level):
 			block.player = self.player
 			block.level = self
 			self.platform_list.add(block)
-
+		'''
 		for tree in back_trees:
 			block = Tree(tree[0])
 			block.rect.x = tree[1]
 			block.rect.y = tree[2]
 			self.back_world_list.add(block)
-
+		'''
 		for pnj in blobs:
 			enemy = Blob(pnj[2],pnj[3])
 			enemy.rect.x = pnj[0]
@@ -292,7 +293,26 @@ class FirstStage(Level):
 			block.level_pointer = plat[4]
 			self.platform_list.add(block)
 
-		
+		#Parallax background
+		for elem in back_p:
+			x = elem[0]
+			y = 0
+			width = constants.SCREEN_WIDTH
+			height = constants.SCREEN_HEIGHT
+			mode = "back"
+			level = self
+			paral = Parallax(x,y,width,height,mode,level)
+			self.back_world_list.add(paral)
+
+		for elem in front_p:
+			x = elem[0]
+			y = 0
+			width = constants.SCREEN_WIDTH
+			height = constants.SCREEN_HEIGHT
+			mode = "front"
+			level = self
+			paral = Parallax(x,y,width,height,mode,level)
+			self.back_front_world_list.add(paral)
 
 		"""here will stands specific platform for the different levels of difficulty"""
 
@@ -453,6 +473,7 @@ class FirstStage(Level):
 		hard_checkpoints = [
 					[60, 20, 5750, HEIGHT-300]
 					]
+
 
 
 		if level_dif == "easy":
@@ -709,7 +730,7 @@ class FirstStage(Level):
 				block.level = self
 				self.platform_list.add(block)
 
-			#checkpoints platforms	
+			#checkpoints platforms
 			for plat in hard_checkpoints:
 				block = CheckPoint(plat[0], plat[1])
 				block.rect.x = plat[2]

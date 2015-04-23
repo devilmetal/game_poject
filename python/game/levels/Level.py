@@ -27,13 +27,14 @@ class Level():
         self.platform_list = pygame.sprite.Group()
         self.pnj_list = pygame.sprite.Group()
         self.back_world_list = pygame.sprite.Group()
-
+        self.back_front_world_list = pygame.sprite.Group()
         self.player = player
 
     # Update everythign on this level
     def update(self):
         """ Update everything in this level."""
         self.back_world_list.update()
+        self.back_front_world_list.update()
         self.platform_list.update()
         self.pnj_list.update()
 
@@ -45,6 +46,7 @@ class Level():
 
         # Draw all the sprite lists that we have
         self.back_world_list.draw(screen)
+        self.back_front_world_list.draw(screen)
         self.platform_list.draw(screen)
         self.pnj_list.draw(screen)
 
@@ -61,4 +63,7 @@ class Level():
             pnj.rect.x += shift_x
 
         for item in self.back_world_list:
+            item.rect.x += shift_x*0.5
+
+        for item in self.back_front_world_list:
             item.rect.x += shift_x
