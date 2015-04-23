@@ -56,15 +56,14 @@ class Dragon(pygame.sprite.Sprite):
                     #print PNJ_ressources.dragon_ressources['head_down'][0].get_alpha()
                     if self.hit_annimation_counter % 10 != 0:
                         angle = float(self.hit_annimation_counter)/t*15.0
+                        rotated1 = pygame.transform.rotate(PNJ_ressources.dragon_ressources['head_up'][0], -angle)
+                        self.image.blit(rotated1,(self.head_up[0],self.head_up[1]-int(self.hit_annimation_counter/9.0)))
                         rotated1 = pygame.transform.rotate(PNJ_ressources.dragon_ressources['head_down'][0], angle)
                         self.image.blit(rotated1,(self.head_down[0],self.head_down[1]))
-                        rotated1 = pygame.transform.rotate(PNJ_ressources.dragon_ressources['head_up'][0], -angle)
-                        self.image.blit(rotated1,(self.head_up[0],self.head_up[1]-int(self.hit_annimation_counter/10.0)))
                     self.hit_annimation_counter+=1
 
 
     def update(self):
-        
         self.draw()
         if not self.dead:
             #Throw fireball if needed (according to timer)
