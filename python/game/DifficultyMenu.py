@@ -57,9 +57,14 @@ class DifficultyMenu(Menu):
                         constants.GAME_STATUS = "menuChar"
                         return level_diff
 
-                    if event.key == pygame.K_ESCAPE:
+                    if event.key == pygame.K_BACKSPACE: #go back
+                        constants.GAME_STATUS = "menu"
                         menu_flag = False
-                        main_loop = False
+
+                    if event.key == pygame.K_ESCAPE:
+                        constants.GAME_STATUS="exit"
+                        menu_flag = False
+
                     pygame.display.update()
                 elif event.type == pygame.QUIT:
                     constants.GAME_STATUS="exit"

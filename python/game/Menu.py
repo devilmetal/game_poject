@@ -141,8 +141,8 @@ class Menu:
                             constants.GAME_STATUS="menuDiff"
                             menu_flag = False
                     if event.key == pygame.K_ESCAPE:
+                        constants.GAME_STATUS="exit"
                         menu_flag = False
-                        main_loop = False
                     pygame.display.update()
                 elif event.type == pygame.QUIT:
                     constants.GAME_STATUS="exit"

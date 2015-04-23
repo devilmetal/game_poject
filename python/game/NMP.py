@@ -54,6 +54,8 @@ def main():
             from DifficultyMenu import DifficultyMenu
 
             #DIFFICULTY SELECTION MENU
+            background_image = pygame.image.load("data/back.jpg").convert()
+            screen.blit(background_image, [0, 0])
             menu = DifficultyMenu()
             menu.init(['Princess', 'Little Boy', 'Chuck Norris'], screen)
             menu.draw()

@@ -113,6 +113,12 @@ class CharacterMenu:
                     if event.key == pygame.K_RETURN:
                         constants.GAME_STATUS = "menuLevel"
                         return self.selected
+                    if event.key == pygame.K_BACKSPACE:
+                        constants.GAME_STATUS = "menuDiff"
+                        done = True
+                    if event.key == pygame.K_ESCAPE:
+                        constants.GAME_STATUS="exit"
+                        done = True
                 elif event.type == pygame.QUIT:
                     constants.GAME_STATUS="exit"
                     done = True
