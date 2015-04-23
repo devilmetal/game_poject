@@ -100,9 +100,12 @@ class CharacterMenu:
                     if (-1, 0) == hat:
                         self.draw_by_hop(-1)
                 if event.type == pygame.JOYBUTTONDOWN:
-                    if joystick.get_button(1) == 1:
+                    if joystick.get_button(1) == 1:#X button
                         constants.GAME_STATUS = "menuLevel"
                         return self.selected
+                    if joystick.get_button(2) == 1:#O button
+                        constants.GAME_STATUS = "menuDiff"
+                        done = True
 
                 #Keyboard stuff
                 if event.type == pygame.KEYDOWN:
