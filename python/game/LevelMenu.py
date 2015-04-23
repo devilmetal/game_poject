@@ -28,7 +28,7 @@ class LevelMenu(Menu):
                         self.draw(1)
                     pygame.display.update()
                 if event.type == pygame.JOYBUTTONDOWN:
-                    if joystick.get_button(1) == 1:
+                    if joystick.get_button(1) == 1:#X button
                         if self.get_position() == 0:
                             level_nbr = 0
                         if self.get_position() == 1:
@@ -38,6 +38,10 @@ class LevelMenu(Menu):
 
                         constants.GAME_STATUS = "level"
                         return level_nbr
+
+                    if joystick.get_button(2) == 1:#O button
+                        constants.GAME_STATUS = "menuChar"
+                        menu_flag = False
 
 
                 #Keyboard stuff

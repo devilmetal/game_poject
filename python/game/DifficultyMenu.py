@@ -28,7 +28,7 @@ class DifficultyMenu(Menu):
                         self.draw(1)
                     pygame.display.update()
                 if event.type == pygame.JOYBUTTONDOWN:
-                    if joystick.get_button(1) == 1:
+                    if joystick.get_button(1) == 1:#X button
                         if self.get_position() == 2:
                             level_diff = "hard"
                         if self.get_position() == 1:#here is the Menu class function
@@ -39,6 +39,9 @@ class DifficultyMenu(Menu):
                         constants.GAME_STATUS = "menuChar"
                         return level_diff
 
+                    if joystick.get_button(2) == 1:#O button
+                        constants.GAME_STATUS = "menu"
+                        menu_flag = False
 
                 #Keyboard stuff
                 if event.type == pygame.KEYDOWN:
