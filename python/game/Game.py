@@ -108,6 +108,13 @@ class Game():
                 self.done = True
                 print constants.GAME_STATUS
 
+            if self.character.game_over:
+                constants.GAME_STATUS = "menu"
+                self.done = True
+                print "game over"
+                #TODO: show a game over screen
+                print constants.GAME_STATUS
+
 
 
             # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT

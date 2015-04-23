@@ -9,7 +9,7 @@ class CheckPoint(Platform):
 
     level = None
     #CheckPoint is RED
-    
+
     def update(self):
         """ Move the platform.
             If the player is in the way, it will shove the player

@@ -2,7 +2,7 @@ import pygame
 import os
 import constants
 import routines
-from interfaces import PlayerInterface as pli
+from interfaces.PlayerInterface import PlayerInterface
 
 class Character(pygame.sprite.Sprite):
     """
@@ -14,7 +14,7 @@ class Character(pygame.sprite.Sprite):
         """ Constructor function """
         super(Character, self).__init__()
 
-        self.interface = pli.PlayerInterface()
+        self.interface = PlayerInterface()
 
         #personnal aptitudes
         self.jump_height = 10
@@ -44,9 +44,9 @@ class Character(pygame.sprite.Sprite):
         self.dead = False #is dead
 
         self.mov_plat = False #is a moving plateform
-        self.dead = False
         self.hit = False
-        self.lives = 5 #the number of lives the player has TODO: this information will be retrieved from the player saved data!
+        self.lives = 6 #the number of lives the player has TODO: this information will be retrieved from the player saved data!
+        self.game_over = False
 
     def update(self):
         """ Move the player. """
@@ -92,6 +92,8 @@ class Character(pygame.sprite.Sprite):
 
         #Finally calculate the image to display
         self.calc_image()
+
+        self.lives_interface()
 
     def calc_image(self):
         if self.hit == True:
@@ -172,6 +174,8 @@ class Character(pygame.sprite.Sprite):
             self.dead = True
 
 
+
+
     def jump(self):
         """ Called when user hits 'jump' button. """
 
@@ -225,5 +229,8 @@ class Character(pygame.sprite.Sprite):
 
 
     def lives_interface(self):
-        #see PlayerInterface class
-        return True
+        if self.dead == True:
+            if self.lives > 0:
+                self.lives -= 1
+            else:
+                self.game_over = True
