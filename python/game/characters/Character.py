@@ -184,7 +184,7 @@ class Character(pygame.sprite.Sprite):
 
         if len(platform_hit_list) > 0 and not self.hit:
             #Play sound jump
-            self.sounds['jump'].play()
+            #self.sounds['jump'].play()
             if self.mov_plat == True:
                 self.change_x = 0
 
