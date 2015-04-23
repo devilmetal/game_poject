@@ -77,22 +77,28 @@ def game_over_screen(clock, screen):
 def pause(clock,screen,joystick):
     """ Pausing the game """
     pause_flag = True
+    font = "data/coders_crux/coders_crux.ttf"
+    bgw = constants.SCREEN_WIDTH - 100
+    bgh = constants.SCREEN_HEIGHT/3
+    bg = draw_rectangle(bgw, bgh, constants.BLACK)
+    txt1 = draw_text("Paused", bgw/2, bgh/2 - 30, 52, font, constants.WHITE)
+    txt2 = draw_text("Continue (c) or A or Quit (q) ?", bgw/2, bgh/2 + 30, 42, font, constants.WHITE)
 
-    txt1 = draw_text("Paused", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 - 20, 52, "data/coders_crux/coders_crux.ttf", constants.WHITE)
-    txt2 = draw_text("Continue (c) or A or Quit (q) ?", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 42, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+    bg.blit(txt1[0], txt1[1])
+    bg.blit(txt2[0], txt2[1])
 
-    screen.blit(txt1[0], txt1[1])
-    screen.blit(txt2[0], txt2[1])
-
-    screen.blit(screen, (0,0))
+    screen.blit(bg, (50, constants.SCREEN_HEIGHT/3))
     pygame.display.update()
 
     while pause_flag:
         for event in pygame.event.get():
 
             if event.type == pygame.JOYBUTTONDOWN:
-                if joystick.get_button(1) == 1:
+                if joystick.get_button(1) == 1:#X button
                     pause_flag = False
+                if joystick.get_button(2) == 1:#O button
+                    pygame.quit()
+                    quit()
 
             if event.type == pygame.QUIT:
                 pygame.quit()
