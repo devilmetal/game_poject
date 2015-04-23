@@ -19,15 +19,15 @@ class Bob(Character):
         Character.__init__(self)
 
         #Load images and rectangles
-        self.jump_l_image, self.jump_l_image_rect =  routines.load_png('hero/jump_l.png')
-        self.jump_r_image, self.jump_r_image_rect =  routines.load_png('hero/jump_r.png')
-        self.idle_l_image, self.idle_l_image_rect = routines.load_png('hero/idle_l.png')
-        self.idle_r_image, self.idle_r_image_rect = routines.load_png('hero/idle_r.png')
-        self.move_1_r_image, self.move_1_r_image_rect = routines.load_png('hero/move_1_r.png')
-        self.move_1_l_image, self.move_1_l_image_rect = routines.load_png('hero/move_1_l.png')
-        self.move_2_r_image, self.move_2_r_image_rect = routines.load_png('hero/move_2_r.png')
-        self.move_2_l_image, self.move_2_l_image_rect = routines.load_png('hero/move_2_l.png')
-        self.dead_image, self.dead_image_rect = routines.load_png('hero/death.png')
+        self.jump_l_image, self.jump_l_image_rect =  routines.load_png('hero_3/jump_l.png')
+        self.jump_r_image, self.jump_r_image_rect =  routines.load_png('hero_3/jump_r.png')
+        self.idle_l_image, self.idle_l_image_rect = routines.load_png('hero_3/idle_l.png')
+        self.idle_r_image, self.idle_r_image_rect = routines.load_png('hero_3/idle_r.png')
+        self.move_1_r_image, self.move_1_r_image_rect = routines.load_png('hero_3/move_1_r.png')
+        self.move_1_l_image, self.move_1_l_image_rect = routines.load_png('hero_3/move_1_l.png')
+        self.move_2_r_image, self.move_2_r_image_rect = routines.load_png('hero_3/move_2_r.png')
+        self.move_2_l_image, self.move_2_l_image_rect = routines.load_png('hero_3/move_2_l.png')
+        self.dead_image, self.dead_image_rect = routines.load_png('hero_3/death.png')
 
         #load sounds
         self.sounds={}

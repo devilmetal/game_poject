@@ -13,7 +13,7 @@ class CharacterMenu:
         #Init the menu
         #Draw with position = 1
         self.screen=screen
-        bob = routines.load_png('hero/idle_l.png')
+        bob = routines.load_png('hero_3/idle_l.png')
         hulk = routines.load_png('hero_1/idle_l.png')
         little_fat = routines.load_png('hero_2/idle_l.png')
         #bob2 = routines.load_png('hero/idle_l.png')
