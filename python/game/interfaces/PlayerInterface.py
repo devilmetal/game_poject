@@ -2,51 +2,34 @@ import pygame
 import os
 import constants
 import routines
-from interfaces import PlayerInterface as pli
 
-class Character(pygame.sprite.Sprite):
+class PlayerInterface():
     """
-    This class represents the bar at the bottom that the player controls.
+    This class represents the bar at the top, displaying game status (lives, time, etc.).
     """
 
     # -- Methods
     def __init__(self):
         """ Constructor function """
-        super(Character, self).__init__()
+        # super(PlayerInterface, self).__init__()
 
-        self.interface = pli.PlayerInterface()
+        #Load images and rectangles
+        self.lives_0_image, self.lives_0_image_rect =  routines.load_png('heart/0.png')
+        self.lives_1_image, self.lives_1_image_rect =  routines.load_png('heart/1.png')
+        self.lives_2_image, self.lives_2_image_rect =  routines.load_png('heart/2.png')
+        self.lives_3_image, self.lives_3_image_rect = routines.load_png('heart/3.png')
+        self.lives_4_image, self.lives_4_image_rect = routines.load_png('heart/4.png')
+        self.lives_5_image, self.lives_5_image_rect = routines.load_png('heart/5.png')
+        self.lives_6_image, self.lives_6_image_rect = routines.load_png('heart/6.png')
 
-        #personnal aptitudes
-        self.jump_height = 10
-        self.weight = 1
-        self.invisible = False
+        self.image = self.lives_6_image #lives are full
+        self.rect = self.lives_6_image_rect
 
-        #Physics stuff
-        self.gravity_a = .35
-
-
-        self.image = None
-        self.rect = None
-        # Set a referance to the image rect.
-        #self.rect = self.image.get_rect()
-
-        # Set speed vector of player
+        # Set speed vector of the interface (must move like the player)
         self.change_x = 0
         self.change_y = 0
 
-        # List of sprites we can bump against
-        self.level = None
-
-        self.status = None #idle,move,jump,
-        self.location = None #ground,air,block
-
-        self.mov_plat = False #is on a moving plateform
-        self.dead = False #is dead
-
-        self.mov_plat = False #is a moving plateform
-        self.dead = False
-        self.hit = False
-        self.lives = 5 #the number of lives the player has TODO: this information will be retrieved from the player saved data!
+        self.lives = 6 #the number of lives the player has TODO: this information will be retrieved from the player saved data!
 
     def update(self):
         """ Move the player. """
@@ -147,83 +130,15 @@ class Character(pygame.sprite.Sprite):
                 self.image = self.idle_r_image
 
 
-    def calc_grav(self):
-        """ Calculate effect of gravity. """
-        #In order to debug the image of the character that is displayed when he/she is
-        #on en plateform that moves down we need to check whether or not we're on it and
-        #make an special case
-        self.rect.y += 4
-        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        self.rect.y -= 4
+    def draw(self,screen):
+        # bg = routines.draw_rectangle(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.BLACK)
+        # #Draw funky text
+        # txt1 = routines.draw_text("Select your Badass", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/5 - 20, 52, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+        # txt2 = routines.draw_text("and go kick some asses !", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/5 + 20, 38, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+        # bg.blit(txt1[0], txt1[1])
+        # bg.blit(txt2[0], txt2[1])
 
+        heart = pygame.image.load("heart/6.png").convert()
+        screen.blit(heart, [0, 0])
 
-        if len(platform_hit_list) > 0 and self.rect.bottom < constants.SCREEN_HEIGHT - 20 and not self.hit:
-            self.location = 'block'
-        else:
-            self.location = 'air'
-            self.change_y += self.gravity_a * self.weight
-
-        # See if we are on the ground.
-        if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height - 20 and self.change_y >= 0:
-            self.location = 'ground'
-
-        if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height + 100 and self.change_y >= 0:
-            self.change_y = 0
-            self.dead = True
-
-
-    def jump(self):
-        """ Called when user hits 'jump' button. """
-
-        # move down a bit and see if there is a platform below us.
-        # Move down 2 pixels because it doesn't work well if we only move down 1
-        # when working with a platform moving down.
-        self.rect.y += 2
-        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        self.rect.y -= 2
-
-        # If it is ok to jump, set our speed upwards
-        # If we're on a moving plateform and we jump, we don't keep the speed of the plateform
-        # (it only works if we don't set the speed of the plateform same speed than the character)
-
-        if len(platform_hit_list) > 0 and not self.hit:
-            #Play sound jump
-            self.sounds['jump'].play()
-            if self.mov_plat == True:
-                self.change_x = 0
-
-            if self.status == 'move_l':
-                self.change_x = -6
-            if self.status == 'move_r':
-                self.change_x = 6
-
-            self.change_y = -self.jump_height
-            self.location = 'air'
-
-    # Player-controlled movement:
-    def go_left(self):
-        """ Called when the user hits the left arrow. """
-        self.change_x = -6
-        self.status = 'move_l'
-    def go_right(self):
-        """ Called when the user hits the right arrow. """
-        self.change_x = 6
-        self.status = 'move_r'
-    def stop(self):
-        """ Called when the user lets off the keyboard. """
-        self.change_x = 0
-        if self.status == 'move_r':
-            self.status = 'idle_r'
-        else:
-            self.status = 'idle_l'
-
-
-    def set_options(self, jump_height, invisible, weight):
-        self.jump_height = jump_height
-        self.invisible = invisible
-        self.weight = weight
-
-
-    def lives_interface(self):
-        #see PlayerInterface class
-        return True
+        # self.screen.blit(bg, (0,0))

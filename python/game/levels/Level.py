@@ -47,6 +47,7 @@ class Level():
         self.back_world_list.draw(screen)
         self.platform_list.draw(screen)
         self.pnj_list.draw(screen)
+        self.player.interface.draw(screen)
 
     def shift_world(self, shift_x):
         """ When the user moves left/right and we need to scroll everything: """

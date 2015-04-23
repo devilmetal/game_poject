@@ -27,6 +27,8 @@ class Game():
         self.init_level(level_nbr, level_dif)
         self.current_level_nbr = level_nbr
         self.joystick = joystick
+
+
     def init_level(self,level_nbr, level_dif):
         if level_nbr == 0:
             if not self.checkpoint:
@@ -57,6 +59,7 @@ class Game():
         self.character.rect.y = self.level.start_y
         self.active_sprite_list.add(self.character)
 
+
     def run(self):
         #Loop until the user clicks the close button.
         # Used to manage how fast the screen updates
@@ -86,6 +89,7 @@ class Game():
             # If the self.character gets near the right side, shift the world left (-x)
             if self.character.rect.right >= 300:
                 diff = self.character.rect.right - 300
+                txt1 = routines.draw_text("Select your Badass", 20, 20, 20, "data/coders_crux/coders_crux.ttf", constants.WHITE)
                 self.character.rect.right = 300
                 self.level.shift_world(-diff)
 
