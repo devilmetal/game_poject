@@ -101,7 +101,7 @@ class CharacterMenu:
                         self.draw_by_hop(-1)
                 if event.type == pygame.JOYBUTTONDOWN:
                     if joystick.get_button(1) == 1:
-                        constants.GAME_STATUS = "level"
+                        constants.GAME_STATUS = "menuLevel"
                         return self.selected
 
                 #Keyboard stuff
@@ -111,7 +111,7 @@ class CharacterMenu:
                     if event.key == pygame.K_LEFT:
                         self.draw_by_hop(-1)
                     if event.key == pygame.K_RETURN:
-                        constants.GAME_STATUS = "level"
+                        constants.GAME_STATUS = "menuLevel"
                         return self.selected
                 elif event.type == pygame.QUIT:
                     constants.GAME_STATUS="exit"

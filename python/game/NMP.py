@@ -47,6 +47,7 @@ def main():
     first = True
     level_dif = "" #difficulty level chosen
     player = None #character chosen
+    level_nbr = 0 #level number chosen
 
     while main_loop:
         if constants.GAME_STATUS == "menuDiff":
@@ -77,26 +78,31 @@ def main():
             elif selected == 2:
                 player = LittleFat()
 
+        elif constants.GAME_STATUS == "menuLevel":
+            #LEVEL SELECTION MENU
+            from LevelMenu import LevelMenu
+            background_image = pygame.image.load("data/back.jpg").convert()
+            screen.blit(background_image, [0, 0])
+            menu = LevelMenu()
+            menu.init(['Level 1', 'Level 2', 'Level 3'], screen)
+            menu.draw()
+            pygame.key.set_repeat(199,69)#(delay,interval)
+            pygame.display.update()
+            level_nbr = menu.run(joystick)
+
         elif constants.GAME_STATUS == "level":
             from Game import Game
-
-            level_nbr = 2
             # Create all the levels
             game = Game(player,level_nbr,level_dif,screen,joystick)
             game.run()
-        elif constants.GAME_STATUS == "menu":
 
+        elif constants.GAME_STATUS == "menu":
             from Menu import Menu
             background_image = pygame.image.load("data/back.jpg").convert()
             screen.blit(background_image, [0, 0])
-            menu = Menu()#necessary
-            #menu.set_colors((255,255,255), (0,0,255), (0,0,0))#optional
-            #menu.set_fontsize(64)#optional
-            #menu.set_font('data/couree.fon')#optional
-            #menu.move_menu(100, 99)#optional
-            menu.init(['Start','Quit'], screen)#necessary
-            #menu.move_menu(0, 0)#optional
-            menu.draw()#necessary
+            menu = Menu()
+            menu.init(['Start','Quit'], screen)
+            menu.draw()
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
             menu.run(joystick)
