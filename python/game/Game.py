@@ -80,7 +80,7 @@ class Game():
                 #self.level.world_shift = 0
 
             #if the self.character is dead
-            if self.character.dead == True:
+            if self.character.dead == True and self.character.game_over == False:
                 self.character.dead = False
                 self.character.hit = False
                 self.load_level(self.current_level_nbr, self.level_dif)
@@ -109,6 +109,7 @@ class Game():
                 print constants.GAME_STATUS
 
             if self.character.game_over:
+                routines.game_over_screen(clock, self.screen)
                 constants.GAME_STATUS = "menu"
                 self.done = True
                 print "game over"

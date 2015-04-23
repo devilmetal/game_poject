@@ -55,6 +55,25 @@ def death_menu(clock, screen):
     pygame.time.delay(2000)
 
 
+def game_over_screen(clock, screen):
+    """ Screen appearing after death """
+
+    bg = draw_rectangle(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.BLACK)
+
+    txt0 = draw_text("GAME OVER", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 - 100, 68, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+    txt1 = draw_text("You died like a noob.", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 - 20, 52, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+    txt2 = draw_text("Enemies destroyed all your checkpoints!", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 38, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+
+    bg.blit(txt0[0], txt0[1])
+    bg.blit(txt1[0], txt1[1])
+    bg.blit(txt2[0], txt2[1])
+
+    screen.blit(bg, (0,0))
+    pygame.display.update()
+
+    pygame.time.delay(4000)
+
+
 def pause(clock,screen,joystick):
     """ Pausing the game """
     pause_flag = True
