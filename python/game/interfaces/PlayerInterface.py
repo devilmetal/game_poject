@@ -34,4 +34,5 @@ class PlayerInterface():
 
     def draw(self, screen, lives):
         self.image = self.lives_arr[lives]
-        screen.blit(self.image, [10, 10])
+        hearts = pygame.transform.scale(self.image,(108,34))
+        screen.blit(hearts, [10, 10])
