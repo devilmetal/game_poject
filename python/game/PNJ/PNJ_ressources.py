@@ -3,6 +3,7 @@ import pygame
 
 blob_ressources = {}
 dragon_ressources = {}
+fairy_ressource = {}
 
 def init_blob_ressources():
     if blob_ressources == {}:
@@ -28,3 +29,10 @@ def init_dragon_ressources():
         dragon_ressources['head_down'] =  routines.load_png('pnj/boss/dragon/head_down.png')
         dragon_ressources['head_up'] =  routines.load_png('pnj/boss/dragon/head_up.png')
         dragon_ressources['cave'] =  routines.load_png('pnj/boss/dragon/cave_entrance.png')
+
+def init_fairy_ressources():
+    if fairy_ressource == {}:
+        fairy_ressource['full'] = routines.load_png('pnj/fairy/botteled_fairy.png')
+        fairy_ressource['empty'] = routines.load_png('pnj/fairy/broken_glass.png')
+        fairy_ressource['broken_sound'] = pygame.mixer.Sound('data/sound/glass.wav')
+        fairy_ressource['scream'] = pygame.mixer.Sound('data/sound/scream.wav')

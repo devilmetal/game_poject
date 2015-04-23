@@ -10,7 +10,7 @@ from platforms.EndPlatform import EndPlatform
 from platforms.CheckPoint import CheckPoint
 from world.Parallax import Parallax
 from PNJ.Blob import Blob
-
+from PNJ.Fairy import Fairy
 import constants
 import pygame
 
@@ -190,6 +190,9 @@ class FirstStage(Level):
 				[500, HEIGHT-100, -1, 2],
 				]
 
+		fairy = [
+			[520,HEIGHT-95,player]
+			]
 
 		"""Some background"""
 		#adding parallax stuff to background along the level
@@ -313,6 +316,10 @@ class FirstStage(Level):
 			level = self
 			paral = Parallax(x,y,width,height,mode,level)
 			self.back_front_world_list.add(paral)
+
+		for pnj in fairy:
+			pixie = Fairy(pnj[0],pnj[1],pnj[2])
+			self.pnj_list.add(pixie)
 
 		"""here will stands specific platform for the different levels of difficulty"""
 
