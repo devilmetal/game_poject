@@ -15,6 +15,7 @@ class Level():
     game = None
     # How far this world has been scrolled left/right
     world_shift = 0
+    game_update=0
 
     start_x = 0
     start_y = 0
@@ -35,8 +36,6 @@ class Level():
     # Update everythign on this level
     def update(self):
         """ Update everything in this level."""
-        self.back_world_list.update()
-        self.back_front_world_list.update()
         self.magma_list.update()
         self.platform_list.update()
         self.pnj_list.update()
@@ -45,14 +44,30 @@ class Level():
         """ Draw everything on this level. """
 
         # Draw the background
-        screen.fill(constants.BLUE)
+        #screen.fill(constants.BLUE)
 
         # Draw all the sprite lists that we have
-        self.back_world_list.draw(screen)
-        self.back_front_world_list.draw(screen)
-        self.platform_list.draw(screen)
-        self.magma_list.draw(screen)
-        self.pnj_list.draw(screen)
+        #self.back_world_list.draw(screen)
+        for elem in self.back_world_list:
+            if not(screen.get_rect().collidelist([elem])):
+                screen.blit(elem.image,elem.rect)
+        #self.back_front_world_list.draw(screen)
+        for elem in self.back_front_world_list:
+            if not(screen.get_rect().collidelist([elem])):
+                screen.blit(elem.image,elem.rect)
+        #self.platform_list.draw(screen)
+        for elem in self.platform_list:
+            if not(screen.get_rect().collidelist([elem])):
+                screen.blit(elem.image,elem.rect)
+        #pygame.sprite.spritecollide(screen, self.platform_list, False).draw(screen)
+        #self.magma_list.draw(screen)
+        for elem in self.magma_list:
+            if not(screen.get_rect().collidelist([elem])):
+                screen.blit(elem.image,elem.rect)
+        #self.pnj_list.draw(screen)
+        for elem in self.pnj_list:
+            if not(screen.get_rect().collidelist([elem])):
+                screen.blit(elem.image,elem.rect)
         self.player.interface.draw(screen, self.player.lives)
 
     def shift_world(self, shift_x):
