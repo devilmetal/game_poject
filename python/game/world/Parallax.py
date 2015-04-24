@@ -10,15 +10,15 @@ class Parallax(pygame.sprite.Sprite):
             an array of 5 numbers like what's defined at the top of this code.
             """
         super(Parallax, self).__init__()
-        world_ressources.init_parallax_ressources()
+        world_ressources.init_parallax_ressources(width,height)
         self.level = level
         self.rect = None
         self.image = None
         if mode == "back":
-            self.image = pygame.transform.scale(world_ressources.parallax_ressources['back'][0],(width,height))
+            self.image = world_ressources.parallax_ressources['back'][0]
             self.rect = self.image.get_rect().copy()
         else:
-            self.image = pygame.transform.scale(world_ressources.parallax_ressources['front'][0],(width,height))
+            self.image = world_ressources.parallax_ressources['front'][0]
             self.rect = self.image.get_rect().copy()
         self.rect.x = x
         self.rect.y = y

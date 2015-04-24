@@ -40,7 +40,7 @@ def draw_text(text, posx, posy, fsize, font_path, color):
 
 def death_menu(clock, screen):
     """ Screen appearing after death """
-
+    death_taunts = ["You're still not skilled enough..."]
     bg = draw_rectangle(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.BLACK)
 
     txt1 = draw_text("You died.", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 - 20, 52, "data/coders_crux/coders_crux.ttf", constants.WHITE)
