@@ -182,3 +182,28 @@ class Game():
 
     def load_level(self, level_pointer, level_dif):
         self.init_level(level_pointer, self.level_dif)
+
+
+    def save_data(data_to_save):
+        print os.getcwd()
+        #initialize file if not existent
+        if os.path.isfile("gamedata.txt") == False:
+            file = open("gamedata.txt", "w+")
+            data_init = "A,0,0,0,0\nB,0,0,0,0\nC,0,0,0,0\n"
+            file.write(data_init)
+            file.close
+
+        file = open("gamedata.txt", "r")
+        lines = file.readlines()
+        dest_save = data_to_save[0]
+
+        for i in range(len(lines)):
+            data = lines[i].split(",")[0]
+            if data == dest_save:
+                lines[i] = str(data_to_save[0]) + ',' + str(data_to_save[1]) + ',' + str(data_to_save[2]) + ',' + str(data_to_save[3]) + ',' + str(data_to_save[4]) + '\n'
+        file.close()
+
+        file = open("gamedata.txt", "w+")
+        for i in range(len(lines)):
+            file.write(str(lines[i]))
+        file.close()
