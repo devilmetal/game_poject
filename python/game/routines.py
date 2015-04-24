@@ -1,7 +1,7 @@
 import os
 import pygame
 import constants
-
+import random
 def load_png(name):
         """ Load image and return image object"""
         fullname = os.path.join('data', name)
@@ -40,11 +40,11 @@ def draw_text(text, posx, posy, fsize, font_path, color):
 
 def death_menu(clock, screen):
     """ Screen appearing after death """
-    death_taunts = ["You're still not skilled enough..."]
+    death_taunts = ["You're still not skilled enough...","Try again, noob !","Come on !","Do you want to have a rest ?","You may need to lower the difficulty... noob !","Even my grandmother is more skilled than you !","What the f**k did you do ?","You know... Maybe you should give up..."]
     bg = draw_rectangle(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.BLACK)
 
     txt1 = draw_text("You died.", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 - 20, 52, "data/coders_crux/coders_crux.ttf", constants.WHITE)
-    txt2 = draw_text("You're still not skilled enough...", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 38, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+    txt2 = draw_text(random.choice(death_taunts), constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 38, "data/coders_crux/coders_crux.ttf", constants.WHITE)
 
     bg.blit(txt1[0], txt1[1])
     bg.blit(txt2[0], txt2[1])
