@@ -1,11 +1,12 @@
 import pygame
 import constants
 import routines
+import random
 from levels.FirstStage import FirstStage
 from levels.SecondStage import SecondStage
 from levels.Boss1 import Boss1
 HEIGHT = constants.SCREEN_HEIGHT-20
-
+TAUNTS = ["You're still not skilled enough...","Try again, noob !","Come on !","Do you want to have a rest ?","You may need to lower the difficulty... noob !","Even my grandmother is more skilled than you !","What the f**k did you do ?","You know... Maybe you should give up...","You are more dying than playing bro !","Hahahahahaha ! XD","So close... but so far !","Man... seriously ?"]
 class Game():
     # Lists of sprites used in all levels. Add or remove
     # lists as needed for your game.
@@ -29,7 +30,7 @@ class Game():
         self.init_level(level_nbr, level_dif)
         self.current_level_nbr = level_nbr
         self.joystick = joystick
-
+        self.taunts = TAUNTS
     def init_level(self, level_nbr, level_dif):
         if level_nbr == 0:
             if not self.checkpoint:
@@ -86,7 +87,11 @@ class Game():
                 self.character.dead = False
                 self.character.hit = False
                 self.load_level(self.current_level_nbr, self.level_dif)
-                routines.death_menu(clock, self.screen)
+                taunt = random.choice(self.taunts)
+                if len(self.taunts)==1:
+                    self.taunts = TAUNTS
+                taunt = self.taunts.pop(self.taunts.index(taunt))
+                routines.death_menu(clock, self.screen,taunt)
 
             # If the self.character gets near the right side, shift the world left (-x)
             if self.character.rect.right >= 300:
