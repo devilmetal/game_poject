@@ -49,25 +49,20 @@ class Level():
         # Draw all the sprite lists that we have
         #self.back_world_list.draw(screen)
         for elem in self.back_world_list:
-            if not(screen.get_rect().collidelist([elem])):
-                screen.blit(elem.image,elem.rect)
+            screen.blit(elem.image,elem.rect)
         #self.back_front_world_list.draw(screen)
         for elem in self.back_front_world_list:
-            if not(screen.get_rect().collidelist([elem])):
-                screen.blit(elem.image,elem.rect)
+            screen.blit(elem.image,elem.rect)
         #self.platform_list.draw(screen)
         for elem in self.platform_list:
-            if not(screen.get_rect().collidelist([elem])):
-                screen.blit(elem.image,elem.rect)
+            screen.blit(elem.image,elem.rect)
         #pygame.sprite.spritecollide(screen, self.platform_list, False).draw(screen)
         #self.magma_list.draw(screen)
         for elem in self.magma_list:
-            if not(screen.get_rect().collidelist([elem])):
-                screen.blit(elem.image,elem.rect)
+            screen.blit(elem.image,elem.rect)
         #self.pnj_list.draw(screen)
         for elem in self.pnj_list:
-            if not(screen.get_rect().collidelist([elem])):
-                screen.blit(elem.image,elem.rect)
+            screen.blit(elem.image,elem.rect)
         self.player.interface.draw(screen, self.player.lives)
 
     def shift_world(self, shift_x):
