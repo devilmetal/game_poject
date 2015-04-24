@@ -36,9 +36,18 @@ class Level():
     # Update everythign on this level
     def update(self):
         """ Update everything in this level."""
-        self.magma_list.update()
-        self.platform_list.update()
-        self.pnj_list.update()
+        #self.magma_list.update()
+        for elem in self.magma_list:
+            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 2:
+                elem.update()
+        #self.platform_list.update()
+        for elem in self.platform_list:
+            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 2:
+                elem.update()
+        #self.pnj_list.update()
+        for elem in self.pnj_list:
+            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 2:
+                elem.update()
 
     def draw(self, screen):
         """ Draw everything on this level. """
