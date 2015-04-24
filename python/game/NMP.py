@@ -57,7 +57,7 @@ def main():
             background_image = pygame.image.load("data/back.jpg").convert()
             screen.blit(background_image, [0, 0])
             menu = DifficultyMenu()
-            menu.init(['Princess', 'Little Boy', 'Chuck Norris'], screen)
+            menu.init(['Princess', 'Little Boy', 'Death Wish'], screen)
             menu.draw()
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
@@ -94,6 +94,7 @@ def main():
 
         elif constants.GAME_STATUS == "level":
             from Game import Game
+            level_nbr = 1
             # Create all the levels
             game = Game(player,level_nbr,level_dif,screen,joystick)
             game.run()

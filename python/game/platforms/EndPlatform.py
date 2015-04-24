@@ -28,4 +28,4 @@ class EndPlatform(Platform):
         if hit:
             self.level.game.current_level_nbr = self.level_pointer
             self.level.game.checkpoint=False
-            self.level.game.load_level(self.level_pointer)
+            self.level.game.load_level(self.level_pointer, self.level.game.level_dif)

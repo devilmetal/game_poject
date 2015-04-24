@@ -25,7 +25,7 @@ class FirstStage(Level):
 
 		Level.__init__(self, player)
 		next_level = 0
-		self.level_limit = -14300
+		self.level_limit = -15000
 
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
@@ -79,7 +79,8 @@ class FirstStage(Level):
 		#if we are on a platform that should make us go to the next level
 		#[width, height, top-left x, top-left y, next level]
 		end_plat = [
-					[120, 20, 14380, HEIGHT-350, 1]
+					[120, 20, 14380, HEIGHT-350, 1],
+					[120, 20, 15000, HEIGHT, 2]
 					]
 		# checkpoints
 		#[top-left x, top-left , width, height]
@@ -350,7 +351,7 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		easy_roofs = [
-				[2100, HEIGHT-60, 12200, -HEIGHT+85, -HEIGHT+85, HEIGHT-60, 1, 3, 120, 60]
+				[2100, HEIGHT-60, 12200, -385, -385, HEIGHT-60, 1, 3, 120, 60]
 				]
 
 
@@ -398,7 +399,7 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		medium_roofs = [
-				[2100, HEIGHT-60, 12200, -HEIGHT+85, -HEIGHT+85, HEIGHT-60, 1, 4, 120, 0]
+				[2100, HEIGHT-60, 12200, -385, -385, HEIGHT-60, 1, 4, 120, 0]
 				]
 
 
@@ -439,10 +440,8 @@ class FirstStage(Level):
 
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed]
 		hard_vert = [
-				#[30, 220, 10550, HEIGHT-200, HEIGHT-200, HEIGHT+200, 2],
-				#[30, 340, 10710, HEIGHT-320, HEIGHT-320, HEIGHT+200, 2],
-				[30, HEIGHT-230, 10550, -180, -180, HEIGHT-230, 2],
-				[30, HEIGHT-350, 10710, -180, -180, HEIGHT-350, 2]
+				[30, HEIGHT-230, 10550, -190, -190, HEIGHT-240, 2],
+				[30, HEIGHT-350, 10710, -190, -190, HEIGHT-360, 2]
 				]
 		#first range of spikes
 		hard_num_spikes = range(26)
@@ -470,10 +469,8 @@ class FirstStage(Level):
 
 		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
 		hard_vert_spikes = [
-				#[0, 10550, HEIGHT-245, HEIGHT-245, HEIGHT-19, 2],
-				#[0, 10710, HEIGHT-365, HEIGHT-365, HEIGHT-139, 2],
-				[2, 10550, HEIGHT-412, HEIGHT-412, HEIGHT-186, 2],
-				[2, 10710, HEIGHT-532, HEIGHT-532, HEIGHT-306, 2]
+				[2, 10550, HEIGHT-422, HEIGHT-422, HEIGHT-196, 2],
+				[2, 10710, HEIGHT-542, HEIGHT-542, HEIGHT-316, 2]
 				]
 
 		#checkpoint
@@ -482,7 +479,7 @@ class FirstStage(Level):
 					]
 
 
-
+		"""Generation of the platform corresponding to the difficulty level"""
 		if level_dif == "easy":
 			for plat in easy_plat:
 				block = Platform(plat[0], plat[1])
@@ -522,8 +519,8 @@ class FirstStage(Level):
 			for i in number_spikes:
 				block = SpecialSpike(2)
 				block.rect.x = 12200 + (i*30)
-				block.rect.y = 23
-				block.boundary_top = 23
+				block.rect.y = HEIGHT-447
+				block.boundary_top = HEIGHT-447
 				block.boundary_bottom = HEIGHT-16
 				block.change_y = 1
 				block.change_y_d = 1
@@ -541,8 +538,8 @@ class FirstStage(Level):
 				block.rect.y = plat[3]
 				block.player = self.player
 				block.level = self
-				#CheckPoint is red!
-				block.image.fill(constants.RED)
+				#CheckPoint is white!
+				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
 
 		elif level_dif == "medium":
@@ -602,8 +599,8 @@ class FirstStage(Level):
 			for i in number_spikes:
 				block = SpecialSpike(2)
 				block.rect.x = 12200 + (i*30)
-				block.rect.y = 23
-				block.boundary_top = 23
+				block.rect.y = HEIGHT-447
+				block.boundary_top = HEIGHT-447
 				block.boundary_bottom = HEIGHT-16
 				block.change_y = 1
 				block.change_y_d = 1
@@ -622,7 +619,7 @@ class FirstStage(Level):
 				block.player = self.player
 				block.level = self
 				#CheckPoint is red!
-				block.image.fill(constants.RED)
+				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
 
 		elif level_dif == "hard":
@@ -725,8 +722,8 @@ class FirstStage(Level):
 			for i in number_spikes:
 				block = SpecialSpike(2)
 				block.rect.x = 12200 + (i*30)
-				block.rect.y = 23
-				block.boundary_top = 23
+				block.rect.y = HEIGHT-447
+				block.boundary_top = HEIGHT-447
 				block.boundary_bottom = HEIGHT-16
 				block.change_y = 1
 				block.change_y_d = 1
@@ -745,5 +742,5 @@ class FirstStage(Level):
 				block.player = self.player
 				block.level = self
 				#CheckPoint is red!
-				block.image.fill(constants.RED)
+				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
