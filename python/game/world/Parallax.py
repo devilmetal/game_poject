@@ -22,4 +22,4 @@ class Parallax(pygame.sprite.Sprite):
             self.rect = self.image.get_rect().copy()
         self.rect.x = x
         self.rect.y = y
-        print "init parallax at "+str(x)+' '+str(y)+' mode : '+mode
+        #print "init parallax at "+str(x)+' '+str(y)+' mode : '+mode

@@ -158,16 +158,7 @@ class FirstStage(Level):
 				[0, 9823, HEIGHT-225],
 				#last air part of the level
 				[0, 10400, HEIGHT-120]
-				]
-
-		#TODO REMOVE THIS
-		#adding tree to background along the level
-		x_trees=0
-		back_trees=[]
-		while x_trees < -self.level_limit:
-			back_trees.append([0,x_trees,HEIGHT - 150])
-			x_trees+=200
-
+			]
 		"""Simple moving spikes"""
 		#moving vert spikes
 		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
@@ -195,7 +186,6 @@ class FirstStage(Level):
 			[520,HEIGHT-95,player]
 			]
 
-		"""Some background"""
 		#adding parallax stuff to background along the level
 		x_parallax=0
 		back_p=[]

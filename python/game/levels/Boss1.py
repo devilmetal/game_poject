@@ -55,6 +55,7 @@ class Boss1(Level):
             back_p.append([x_parallax])
             front_p.append([x_parallax])
             x_parallax+=constants.SCREEN_WIDTH
+
         for boss in bosses:
             enemy = Dragon(self,player)
             enemy.rect.x = boss[0]

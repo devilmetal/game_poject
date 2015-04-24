@@ -94,7 +94,6 @@ def main():
 
         elif constants.GAME_STATUS == "level":
             from Game import Game
-            level_nbr = 1
             # Create all the levels
             game = Game(player,level_nbr,level_dif,screen,joystick)
             game.run()

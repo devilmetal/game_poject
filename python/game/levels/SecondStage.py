@@ -5,7 +5,7 @@ from platforms.BoostPlatform import BoostPlatform
 from platforms.Spike import Spike
 from platforms.MovingSpike import MovingSpike
 from platforms.MagmaPlat import MagmaPlat
-from world.Tree import Tree
+from world.Parallax import Parallax
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
 from PNJ.Blob import Blob
@@ -129,7 +129,7 @@ class SecondStage(Level):
 		#is moving round, clockwise movement]
 		round_moving = [
 			#first
-			[100, 20, 3550, HEIGHT-20, 
+			[100, 20, 3550, HEIGHT-20,
 			HEIGHT-220, HEIGHT, 3550, 3800,
 			2, 2, 2, 2,
 			True, True],
@@ -189,7 +189,7 @@ class SecondStage(Level):
 			[3, 10954, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10954, 11254,
 			2, 2, 3, 3, True, True],
 			]
-		
+
 		#magma platform
 		#[width, height, x, y]
 		magma = [
@@ -198,20 +198,14 @@ class SecondStage(Level):
 			]
 
 
-		#adding tree to background along the level
-		x_trees=0
-		back_trees=[]
-		while x_trees < -self.level_limit:
-			back_trees.append([0,x_trees,HEIGHT - 150])
-			x_trees+=200
-
-
-		"""Generation of the level design"""
-		for tree in back_trees:
-			block = Tree(tree[0])
-			block.rect.x = tree[1]
-			block.rect.y = tree[2]
-			self.back_world_list.add(block)
+		#adding parallax stuff to background along the level
+		x_parallax=0
+		back_p=[]
+		front_p=[]
+		while x_parallax < -self.level_limit + constants.SCREEN_WIDTH:
+			back_p.append([x_parallax])
+			front_p.append([x_parallax])
+			x_parallax+=constants.SCREEN_WIDTH
 
 		#static platforms
 		for plat in plats:
@@ -284,7 +278,7 @@ class SecondStage(Level):
 			block.rect.y = plat[3]
 			block.player = self.player
 			block.level = self
-			self.magma_list.add(block)	
+			self.magma_list.add(block)
 
 		for plat in checkpoints:
 			block = CheckPoint(plat[0], plat[1])
@@ -296,7 +290,26 @@ class SecondStage(Level):
 			block.image.fill(constants.WHITE)
 			self.platform_list.add(block)
 
+		#Parallax background
+		for elem in back_p:
+			x = elem[0]
+			y = 0
+			width = constants.SCREEN_WIDTH
+			height = constants.SCREEN_HEIGHT
+			mode = "back"
+			level = self
+			paral = Parallax(x,y,width,height,mode,level)
+			self.back_world_list.add(paral)
 
+		for elem in front_p:
+			x = elem[0]
+			y = 0
+			width = constants.SCREEN_WIDTH
+			height = constants.SCREEN_HEIGHT
+			mode = "front"
+			level = self
+			paral = Parallax(x,y,width,height,mode,level)
+			self.back_front_world_list.add(paral)
 
 		"""Specific platform for the difficulty level"""
 
@@ -583,7 +596,7 @@ class SecondStage(Level):
 			[0, 15820, HEIGHT-202, HEIGHT-244, HEIGHT-44, 6],
 			[0, 15850, HEIGHT-232, HEIGHT-244, HEIGHT-44, 6],
 		]
-		
+
 		#[orientation, x, y, left bound, right bound, speed, pause]
 		hard_spec_horiz_spikes = [
 			[3, 6322, HEIGHT-30, 6322, 6522, 3, 164],
@@ -704,7 +717,7 @@ class SecondStage(Level):
 				block.pause_down = plat[7]
 				block.player = self.player
 				block.level = self
-				self.magma_list.add(block)	
+				self.magma_list.add(block)
 
 			for plat in easy_checkpoints:
 				block = CheckPoint(plat[0], plat[1])
@@ -845,7 +858,7 @@ class SecondStage(Level):
 				block.pause_down = plat[7]
 				block.player = self.player
 				block.level = self
-				self.magma_list.add(block)	
+				self.magma_list.add(block)
 
 			for plat in easy_checkpoints:
 				block = CheckPoint(plat[0], plat[1])
@@ -1000,4 +1013,4 @@ class SecondStage(Level):
 				block.pause_down = plat[7]
 				block.player = self.player
 				block.level = self
-				self.magma_list.add(block)	
+				self.magma_list.add(block)
