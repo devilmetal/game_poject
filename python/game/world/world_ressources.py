@@ -1,4 +1,5 @@
 import routines
+import pygame
 
 tree_ressources = {}
 parallax_ressources = {}
