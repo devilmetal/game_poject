@@ -40,7 +40,7 @@ class DifficultyMenu(Menu):
                         return level_diff
 
                     if joystick.get_button(2) == 1:#O button
-                        constants.GAME_STATUS = "menu"
+                        constants.GAME_STATUS = "menuSave"
                         menu_flag = False
 
                 #Keyboard stuff
@@ -61,7 +61,7 @@ class DifficultyMenu(Menu):
                         return level_diff
 
                     if event.key == pygame.K_BACKSPACE: #go back
-                        constants.GAME_STATUS = "menu"
+                        constants.GAME_STATUS = "menuSave"
                         menu_flag = False
 
                     if event.key == pygame.K_ESCAPE:

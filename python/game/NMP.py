@@ -23,6 +23,7 @@ import pygame
 import os
 import constants
 import sys
+from Data import Data
 
 constants.GAME_STATUS = "menu" #menu, char_select, level_selct, level
 pygame.joystick.init()
@@ -48,6 +49,10 @@ def main():
     level_dif = "" #difficulty level chosen
     player = None #character chosen
     level_nbr = 0 #level number chosen
+    slot = '' #choix de la sauvegarde
+    # nmp_data = Data("gamedata.txt")
+    nmp_data = Data("gamedata_dev.txt", "A,2,2,6,2\nB,0,0,6,0\nC,1,1,6,1\n") #slot A has everything already unlocked for dev purpose
+    choices = None #choices for the different menus
 
     while main_loop:
         if constants.GAME_STATUS == "menuDiff":
@@ -57,7 +62,15 @@ def main():
             background_image = pygame.image.load("data/back.jpg").convert()
             screen.blit(background_image, [0, 0])
             menu = DifficultyMenu()
-            menu.init(['Princess', 'Little Boy', 'Death Wish'], screen)
+
+            if nmp_data.unlocked_skills == 0:
+                choices = ['Princess']
+            elif nmp_data.unlocked_skills == 1:
+                choices = ['Princess','Little Boy']
+            else:
+                choices = ['Princess','Little Boy','Death Wish']
+
+            menu.init(choices, screen)
             menu.draw()
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
@@ -70,7 +83,7 @@ def main():
             from CharacterMenu import CharacterMenu
 
             #CHARACTER SELECTION MENU
-            menu = CharacterMenu(screen)
+            menu = CharacterMenu(screen,nmp_data.unlocked_chars)
             selected = menu.run(joystick)
             # player = None
             if selected == 0:
@@ -80,13 +93,24 @@ def main():
             elif selected == 2:
                 player = LittleFat()
 
+            if player != None:
+                player.lives = nmp_data.remaining_lives
+
         elif constants.GAME_STATUS == "menuLevel":
             #LEVEL SELECTION MENU
             from LevelMenu import LevelMenu
             background_image = pygame.image.load("data/back.jpg").convert()
             screen.blit(background_image, [0, 0])
             menu = LevelMenu()
-            menu.init(['Level 1', 'Level 2', 'Level 3'], screen)
+
+            if nmp_data.unlocked_stages == 0:
+                choices = ['Level 1']
+            elif nmp_data.unlocked_stages == 1:
+                choices = ['Level 1','Level 2']
+            else:
+                choices = ['Level 1','Level 2','Level 3']
+
+            menu.init(choices, screen)
             menu.draw()
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
@@ -95,8 +119,21 @@ def main():
         elif constants.GAME_STATUS == "level":
             from Game import Game
             # Create all the levels
-            game = Game(player,level_nbr,level_dif,screen,joystick)
+            game = Game(player,level_nbr,level_dif,screen,joystick,nmp_data)
             game.run()
+
+        elif constants.GAME_STATUS == "menuSave":
+            from SaveMenu import SaveMenu
+            background_image = pygame.image.load("data/back.jpg").convert()
+            screen.blit(background_image, [0, 0])
+            menu = SaveMenu()
+            menu.init(['Slot A','Slot B','Slot C'], screen)
+            menu.draw()
+            pygame.key.set_repeat(199,69)#(delay,interval)
+            pygame.display.update()
+            slot = menu.run(joystick)
+            nmp_data.slot = slot
+            nmp_data.load_data()#prepare the data to load for other menus
 
         elif constants.GAME_STATUS == "menu":
             from Menu import Menu

@@ -9,7 +9,7 @@ class CharacterMenu:
     font = pygame.font.Font
     screen = None
     characters = None
-    def __init__(self,screen):
+    def __init__(self,screen,unlocked_chars):
         #Init the menu
         #Draw with position = 1
         self.screen=screen
@@ -20,7 +20,13 @@ class CharacterMenu:
 
 
         #self.characters = [bob,hulk]
-        self.characters = [bob,hulk,little_fat]
+        if unlocked_chars == 0:
+            self.characters = [bob]
+        elif unlocked_chars == 1:
+            self.characters = [bob,hulk]
+        else:
+            self.characters = [bob,hulk,little_fat]
+
         self.draw(0)
 
     def fib(self,n):

@@ -19,7 +19,7 @@ class Character(pygame.sprite.Sprite):
         #personnal aptitudes
         self.jump_height = 10
         self.weight = 1
-        self.invisible = False
+        self.id = 1 #this number is used to save game progress (determined when new char is unlocked)
 
         #Physics stuff
         self.gravity_a = .35
@@ -223,9 +223,9 @@ class Character(pygame.sprite.Sprite):
             self.status = 'idle_l'
 
 
-    def set_options(self, jump_height, invisible, weight):
+    def set_options(self, jump_height, id, weight):
         self.jump_height = jump_height
-        self.invisible = invisible
+        self.id = id #this number is used to save game progress (determined when new char is unlocked)
         self.weight = weight
 
 

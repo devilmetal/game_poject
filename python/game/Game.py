@@ -23,14 +23,24 @@ class Game():
     joystick=None
     level_dif = "easy"
 
-    def __init__(self, character, level_nbr, level_dif, screen, joystick):
+    def __init__(self, character, level_nbr, level_dif, screen, joystick, nmp_data):
         self.screen = screen
         self.character = character
         self.level_dif = level_dif
-        self.init_level(level_nbr, level_dif)
+
+        if level_dif == 'easy':
+            self.level_dif_nbr = 0 #this number is used to save game progress
+        elif level_dif == 'medium':
+            self.level_dif_nbr = 1
+        else:
+            self.level_dif_nbr = 2
+        
         self.current_level_nbr = level_nbr
         self.joystick = joystick
         self.taunts = TAUNTS
+        self.nmp_data = nmp_data
+        self.init_level(level_nbr, level_dif)
+
     def init_level(self, level_nbr, level_dif):
         if level_nbr == 0:
             if not self.checkpoint:
@@ -61,6 +71,16 @@ class Game():
         self.character.rect.x = self.level.start_x
         self.character.rect.y = self.level.start_y
         self.active_sprite_list.add(self.character)
+
+        #Save game progress (unlocked things + lives)
+        if level_nbr > self.nmp_data.unlocked_stages:
+            self.nmp_data.unlocked_stages = level_nbr
+        if self.level_dif_nbr > self.nmp_data.unlocked_skills:
+            self.nmp_data.unlocked_skills = self.level_dif_nbr
+        if self.character.id > self.nmp_data.unlocked_chars:
+            self.nmp_data.unlocked_chars = self.character.id
+        self.nmp_data.remaining_lives = self.character.lives
+        self.nmp_data.save_data()
 
 
     def run(self):
@@ -120,8 +140,6 @@ class Game():
                 constants.GAME_STATUS = "menu"
                 self.done = True
                 print "game over"
-                #TODO: show a game over screen
-                print constants.GAME_STATUS
 
 
 
@@ -187,28 +205,3 @@ class Game():
 
     def load_level(self, level_pointer, level_dif):
         self.init_level(level_pointer, self.level_dif)
-
-
-    def save_data(data_to_save):
-        print os.getcwd()
-        #initialize file if not existent
-        if os.path.isfile("gamedata.txt") == False:
-            file = open("gamedata.txt", "w+")
-            data_init = "A,0,0,0,0\nB,0,0,0,0\nC,0,0,0,0\n"
-            file.write(data_init)
-            file.close
-
-        file = open("gamedata.txt", "r")
-        lines = file.readlines()
-        dest_save = data_to_save[0]
-
-        for i in range(len(lines)):
-            data = lines[i].split(",")[0]
-            if data == dest_save:
-                lines[i] = str(data_to_save[0]) + ',' + str(data_to_save[1]) + ',' + str(data_to_save[2]) + ',' + str(data_to_save[3]) + ',' + str(data_to_save[4]) + '\n'
-        file.close()
-
-        file = open("gamedata.txt", "w+")
-        for i in range(len(lines)):
-            file.write(str(lines[i]))
-        file.close()

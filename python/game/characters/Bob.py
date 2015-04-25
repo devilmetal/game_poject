@@ -42,4 +42,4 @@ class Bob(Character):
         self.status = 'idle_r' #idle,move,jump,
         self.location = 'ground' #ground,air,block
 
-        Character.set_options(self, 13, False, 1)
+        Character.set_options(self, 13, 0, 1)

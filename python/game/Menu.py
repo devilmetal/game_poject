@@ -123,7 +123,7 @@ class Menu:
                             constants.GAME_STATUS="exit"
                             menu_flag = False
                         if self.get_position() == 0:#here is the Menu class function
-                            constants.GAME_STATUS="menuDiff"
+                            constants.GAME_STATUS="menuSave"
                             menu_flag = False
 
 
@@ -138,7 +138,7 @@ class Menu:
                             constants.GAME_STATUS="exit"
                             menu_flag = False
                         if self.get_position() == 0:#here is the Menu class function
-                            constants.GAME_STATUS="menuDiff"
+                            constants.GAME_STATUS="menuSave"
                             menu_flag = False
                     if event.key == pygame.K_ESCAPE:
                         constants.GAME_STATUS="exit"
