@@ -34,7 +34,7 @@ class Game():
             self.level_dif_nbr = 1
         else:
             self.level_dif_nbr = 2
-        
+
         self.current_level_nbr = level_nbr
         self.joystick = joystick
         self.taunts = TAUNTS
@@ -116,7 +116,6 @@ class Game():
             # If the self.character gets near the right side, shift the world left (-x)
             if self.character.rect.right >= 300:
                 diff = self.character.rect.right - 300
-                txt1 = routines.draw_text("Select your Badass", 20, 20, 20, "data/coders_crux/coders_crux.ttf", constants.WHITE)
                 self.character.rect.right = 300
                 self.level.shift_world(-diff)
 
