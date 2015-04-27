@@ -5,12 +5,16 @@ import platform_ressources
 
 class Spike(pygame.sprite.Sprite):
     """ Platform the user can jump on """
+    subblock = None
     def __init__(self,orientation):
         """ Platform constructor. Assumes constructed with user passing in
             an array of 5 numbers like what's defined at the top of this code.
             """
         super(Spike, self).__init__()
         self.orientation = orientation #0,1,2,3
+        
+        self.subblock = pygame.sprite.Group()
+
         platform_ressources.init_spikes_ressources()
         self.image = None
         self.rect = None

@@ -217,7 +217,7 @@ class FirstStage(Level):
 			block.change_y = plat[6]
 			block.player = self.player
 			block.level = self
-			self.mov_plat_list.add(block)
+			self.platform_list.add(block)
 
 		for plat in horiz:
 			block = MovingPlatform(plat[0], plat[1])
@@ -228,7 +228,7 @@ class FirstStage(Level):
 			block.change_x = plat[6]
 			block.player = self.player
 			block.level = self
-			self.mov_plat_list.add(block)
+			self.platform_list.add(block)
 
 		for plat in diag:
 			block = MovingPlatform(plat[0], plat[1])
@@ -242,7 +242,7 @@ class FirstStage(Level):
 			block.change_y = plat[8]
 			block.player = self.player
 			block.level = self
-			self.mov_plat_list.add(block)
+			self.platform_list.add(block)
 
 		for spike in spikes:
 			block = Spike(spike[0])
@@ -261,7 +261,7 @@ class FirstStage(Level):
 			block.change_y = spike[5]
 			block.player = self.player
 			block.level = self
-			self.mov_plat_list.add(block)
+			self.platform_list.add(block)
 		'''
 		for tree in back_trees:
 			block = Tree(tree[0])
@@ -337,8 +337,7 @@ class FirstStage(Level):
 
 		easy_block_horiz = [
 			#fast moving plateform
-			[90, 20, 9760, HEIGHT-50, 9150, 9850, 3],
-			[23, 30, 9795, HEIGHT-30, 9185, 9885, 3],
+			[90, 20, 9760, HEIGHT-50, 9150, 9850, 3, [23, 30, 9795, HEIGHT-30, 9185, 9885, 3]]
 		]
 
 		#falling roof at the end of the level
@@ -371,10 +370,14 @@ class FirstStage(Level):
 				[50, 20, 7700, HEIGHT-300, 7550, 7800, 3]
 		]
 
-		medium_block_plat = [
+		medium_block_horiz = [
 			#fast moving plateform with spikes under it
-			[90, 20, 9760, HEIGHT-50, 9150, 9850, 5],
-			[23, 30, 9795, HEIGHT-30, 9185, 9885, 5]
+			[90, 20, 9760, HEIGHT-50, 9150, 9850, 5, [
+				['block', 23, 30, 9795, HEIGHT-30, 9185, 9885, 5],
+				['spike', 3, 9750, HEIGHT-30, 9140, 9840, 5],
+				['spike', 1, 9815, HEIGHT-30, 9205, 9905, 5]
+				]
+			],
 		]
 
 		#[orientation, top-left x, top-left y]
@@ -386,10 +389,7 @@ class FirstStage(Level):
 
 		#[orientation, top-left x, top-left y, left bound, right bound, speed]
 		medium_horiz_spikes = [
-						[3, 9750, HEIGHT-30, 9140, 9840, 5],
-						[1, 9815, HEIGHT-30, 9205, 9905, 5],
-						[3, 10900, HEIGHT-380, 10900, 12055, 10],
-						[1, 10945, HEIGHT-380, 10945, 12100, 10]
+						[3, 10900, HEIGHT-380, 10900, 12055, 10, [1, 10945, HEIGHT-380, 10945, 12100, 10]]
 						]
 
 		#falling roof at the end of the level
@@ -433,8 +433,12 @@ class FirstStage(Level):
 
 		hard_block_horiz = [
 			#fast moving plateform with spikes under it
-			[90, 20, 9760, HEIGHT-50, 9150, 9850, 5],
-			[23, 30, 9795, HEIGHT-30, 9185, 9885, 5],
+			[90, 20, 9760, HEIGHT-50, 9150, 9850, 5,[
+				['block', 23, 30, 9795, HEIGHT-30, 9185, 9885, 5],
+				['spike', 3, 9750, HEIGHT-30, 9140, 9840, 5],
+				['spike', 1, 9815, HEIGHT-30, 9205, 9905, 5]
+				]
+			]
 		]
 
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed]
@@ -456,15 +460,11 @@ class FirstStage(Level):
 				[0, 10430, HEIGHT-120]
 				]
 
-		#[orientation, top-left x, top-left y, left bound, right bound, speed]
+		#[orientation, top-left x, top-left y, left bound, right bound, speed, [subblock]]
 		hard_horiz_spikes = [
-						[3, 9750, HEIGHT-30, 9140, 9840, 5],
-						[1, 9815, HEIGHT-30, 9205, 9905, 5],
-						[3, 9200, HEIGHT-250, 9200, 9750, 5],
-						[1, 9245, HEIGHT-250, 9245, 9795, 5],
-						[3, 10900, HEIGHT-380, 10900, 11855, 10],
-						[1, 10945, HEIGHT-380, 10945, 11900, 10]
-						]
+			[3, 9200, HEIGHT-250, 9200, 9750, 5, [1, 9245, HEIGHT-250, 9245, 9795, 5]],
+			[3, 10900, HEIGHT-380, 10900, 11855, 10, [1, 10945, HEIGHT-380, 10945, 11900, 10]]
+		]
 
 		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
 		hard_vert_spikes = [
@@ -523,22 +523,21 @@ class FirstStage(Level):
 				block.pause_up = roof[9]
 				block.player = self.player
 				block.level = self
-				self.mov_plat_list.add(block)
-
-			#create special moving spikes for the roof
-			for i in number_spikes:
-				block = SpecialSpike(2)
-				block.rect.x = 12200 + (i*30)
-				block.rect.y = HEIGHT-447
-				block.boundary_top = HEIGHT-447
-				block.boundary_bottom = HEIGHT-16
-				block.change_y = 1
-				block.change_y_d = 1
-				block.change_y_u = -3
-				block.pause_down = 120
-				block.pause_up = 60
-				block.player = self.player
-				block.level = self
+				#create special moving spikes for the roof
+				for i in number_spikes:
+					subblock = SpecialSpike(2)
+					subblock.rect.x = 12200 + (i*30)
+					subblock.rect.y = HEIGHT-447
+					subblock.boundary_top = HEIGHT-447
+					subblock.boundary_bottom = HEIGHT-16
+					subblock.change_y = 1
+					subblock.change_y_d = 1
+					subblock.change_y_u = -3
+					subblock.pause_down = 120
+					subblock.pause_up = 60
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
 				self.mov_plat_list.add(block)
 
 			#checkpoints platforms
@@ -581,6 +580,28 @@ class FirstStage(Level):
 				block.change_x = plat[6]
 				block.player = self.player
 				block.level = self
+				for subblock in plat[7]:
+					if subblock[0] == 'block':
+						sub = MovingPlatform(subblock[1], subblock[2])
+						sub.rect.x = subblock[3]
+						sub.rect.y = subblock[4]
+						sub.boundary_left = subblock[5]
+						sub.boundary_right = subblock[6]
+						sub.change_x = subblock[7]
+						sub.player = self.player
+						sub.level = self
+						block.subblock.add(sub)
+					elif subblock[0] == 'spike':
+						sub = MovingSpike(subblock[1])
+						sub.rect.x = subblock[2]
+						sub.rect.y = subblock[3]
+						sub.boundary_left = subblock[4]
+						sub.boundary_right = subblock[5]
+						sub.change_x = subblock[6]
+						sub.player = self.player
+						sub.level = self
+						block.subblock.add(sub)
+				
 				self.mov_plat_list.add(block)
 
 			for spike in medium_spikes:
@@ -600,6 +621,17 @@ class FirstStage(Level):
 				block.change_x = spike[5]
 				block.player = self.player
 				block.level = self
+
+				subspike = MovingSpike(spike[6][0])
+				subspike.rect.x = spike[6][1]
+				subspike.rect.y = spike[6][2]
+				subspike.boundary_left = spike[6][3]
+				subspike.boundary_right = spike[6][4]
+				subspike.change_x = spike[6][5]
+				subspike.player = self.player
+				subspike.level = self
+				block.subblock.add(subspike)
+
 				self.mov_plat_list.add(block)
 
 			for roof in medium_roofs:
@@ -615,22 +647,22 @@ class FirstStage(Level):
 				block.pause_up = roof[9]
 				block.player = self.player
 				block.level = self
+				for i in number_spikes:
+					subblock = SpecialSpike(2)
+					subblock.rect.x = 12200 + (i*30)
+					subblock.rect.y = HEIGHT-447
+					subblock.boundary_top = HEIGHT-447
+					subblock.boundary_bottom = HEIGHT-16
+					subblock.change_y = 1
+					subblock.change_y_d = 1
+					subblock.change_y_u = -4
+					subblock.pause_down = 120
+					subblock.pause_up = 0
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
 				self.mov_plat_list.add(block)
 
-			for i in number_spikes:
-				block = SpecialSpike(2)
-				block.rect.x = 12200 + (i*30)
-				block.rect.y = HEIGHT-447
-				block.boundary_top = HEIGHT-447
-				block.boundary_bottom = HEIGHT-16
-				block.change_y = 1
-				block.change_y_d = 1
-				block.change_y_u = -4
-				block.pause_down = 120
-				block.pause_up = 0
-				block.player = self.player
-				block.level = self
-				self.mov_plat_list.add(block)
 
 			#checkpoints platforms
 			for plat in checkpoints:
@@ -672,6 +704,27 @@ class FirstStage(Level):
 				block.change_x = plat[6]
 				block.player = self.player
 				block.level = self
+				for subblock in plat[7]:
+					if subblock[0] == 'block':
+						sub = MovingPlatform(subblock[1], subblock[2])
+						sub.rect.x = subblock[3]
+						sub.rect.y = subblock[4]
+						sub.boundary_left = subblock[5]
+						sub.boundary_right = subblock[6]
+						sub.change_x = subblock[7]
+						sub.player = self.player
+						sub.level = self
+						block.subblock.add(sub)
+					elif subblock[0] == 'spike':
+						sub = MovingSpike(subblock[1])
+						sub.rect.x = subblock[2]
+						sub.rect.y = subblock[3]
+						sub.boundary_left = subblock[4]
+						sub.boundary_right = subblock[5]
+						sub.change_x = subblock[6]
+						sub.player = self.player
+						sub.level = self
+						block.subblock.add(sub)
 				self.mov_plat_list.add(block)
 
 			for plat in hard_vert:
@@ -702,6 +755,17 @@ class FirstStage(Level):
 				block.change_x = spike[5]
 				block.player = self.player
 				block.level = self
+
+				subspike = MovingSpike(spike[6][0])
+				subspike.rect.x = spike[6][1]
+				subspike.rect.y = spike[6][2]
+				subspike.boundary_left = spike[6][3]
+				subspike.boundary_right = spike[6][4]
+				subspike.change_x = spike[6][5]
+				subspike.player = self.player
+				subspike.level = self
+				block.subblock.add(subspike)
+
 				self.mov_plat_list.add(block)
 
 
@@ -749,21 +813,20 @@ class FirstStage(Level):
 				block.pause_up = roof[9]
 				block.player = self.player
 				block.level = self
-				self.mov_plat_list.add(block)
-
-			for i in number_spikes:
-				block = SpecialSpike(2)
-				block.rect.x = 12200 + (i*30)
-				block.rect.y = HEIGHT-447
-				block.boundary_top = HEIGHT-447
-				block.boundary_bottom = HEIGHT-16
-				block.change_y = 1
-				block.change_y_d = 1
-				block.change_y_u = -4
-				block.pause_down = 120
-				block.pause_up = 0
-				block.player = self.player
-				block.level = self
+				for i in number_spikes:
+					subblock = SpecialSpike(2)
+					subblock.rect.x = 12200 + (i*30)
+					subblock.rect.y = HEIGHT-447
+					subblock.boundary_top = HEIGHT-447
+					subblock.boundary_bottom = HEIGHT-16
+					subblock.change_y = 1
+					subblock.change_y_d = 1
+					subblock.change_y_u = -4
+					subblock.pause_down = 120
+					subblock.pause_up = 0
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
 				self.mov_plat_list.add(block)
 
 			#checkpoints platforms

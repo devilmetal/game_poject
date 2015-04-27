@@ -4,6 +4,7 @@ import platform_ressources
 
 class Platform(pygame.sprite.Sprite):
     """ Platform the user can jump on """
+    subblock = None
     def __init__(self, width, height):
         """ Platform constructor. Assumes constructed with user passing in
             an array of 5 numbers like what's defined at the top of this code.
@@ -19,6 +20,8 @@ class Platform(pygame.sprite.Sprite):
         self.image.blit(new_texture1, (0, 0))
         #Compute and apply grass texture
         grass_width, grass_height = texture2.get_size()
+        
+        self.subblock = pygame.sprite.Group()
 
         '''
         #TODO: Correct this part

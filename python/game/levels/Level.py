@@ -51,7 +51,10 @@ class Level():
             if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 2:
                 elem.update()
         for elem in self.mov_plat_list:
-            elem.update()
+            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
+                for block in elem.subblock:
+                    block.update()
+                elem.update()
 
     def draw(self, screen):
         """ Draw everything on this level. """
@@ -83,6 +86,9 @@ class Level():
                 screen.blit(elem.image,elem.rect)
         for elem in self.mov_plat_list:
             if not(screen.get_rect().collidelist([elem])):
+                for block in elem.subblock:
+                    if not (screen.get_rect().collidelist([block])):
+                        screen.blit(block.image,block.rect)
                 screen.blit(elem.image,elem.rect)
         self.player.interface.draw(screen, self.player.lives)
 
@@ -108,4 +114,6 @@ class Level():
             item.rect.x += shift_x
 
         for item in self.mov_plat_list:
+            for block in item.subblock:
+                    block.rect.x += shift_x
             item.rect.x += shift_x
