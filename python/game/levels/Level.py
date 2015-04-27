@@ -9,6 +9,7 @@ class Level():
     # Lists of sprites used in all levels. Add or remove
     # lists as needed for your game.
     platform_list = None
+    mov_plat_list = None
     pnj_list = None
     back_world_list = None
     magma_list = None
@@ -27,6 +28,7 @@ class Level():
         """ Constructor. Pass in a handle to player. Needed for when moving
             platforms collide with the player. """
         self.platform_list = pygame.sprite.Group()
+        self.mov_plat_list = pygame.sprite.Group()
         self.pnj_list = pygame.sprite.Group()
         self.back_world_list = pygame.sprite.Group()
         self.back_front_world_list = pygame.sprite.Group()
@@ -48,6 +50,8 @@ class Level():
         for elem in self.pnj_list:
             if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 2:
                 elem.update()
+        for elem in self.mov_plat_list:
+            elem.update()
 
     def draw(self, screen):
         """ Draw everything on this level. """
@@ -77,6 +81,9 @@ class Level():
         for elem in self.pnj_list:
             if not(screen.get_rect().collidelist([elem])):
                 screen.blit(elem.image,elem.rect)
+        for elem in self.mov_plat_list:
+            if not(screen.get_rect().collidelist([elem])):
+                screen.blit(elem.image,elem.rect)
         self.player.interface.draw(screen, self.player.lives)
 
     def shift_world(self, shift_x):
@@ -98,4 +105,7 @@ class Level():
             item.rect.x += shift_x*0.5
 
         for item in self.back_front_world_list:
+            item.rect.x += shift_x
+
+        for item in self.mov_plat_list:
             item.rect.x += shift_x

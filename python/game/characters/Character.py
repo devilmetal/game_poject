@@ -59,7 +59,7 @@ class Character(pygame.sprite.Sprite):
             self.rect.x += self.change_x
 
             # See if we hit anything
-            block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+            block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False) + pygame.sprite.spritecollide(self, self.level.mov_plat_list, False)
             for block in block_hit_list:
                 # If we are moving right,
                 # set our right side to the left side of the item we hit
@@ -74,7 +74,7 @@ class Character(pygame.sprite.Sprite):
 
 
             # Check and see if we hit anything
-            block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+            block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False) + pygame.sprite.spritecollide(self, self.level.mov_plat_list, False)
             for block in block_hit_list:
 
                 # Reset our position based on the top/bottom of the object.
@@ -156,7 +156,7 @@ class Character(pygame.sprite.Sprite):
         #on en plateform that moves down we need to check whether or not we're on it and
         #make an special case
         self.rect.y += 4
-        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False) + pygame.sprite.spritecollide(self, self.level.mov_plat_list, False)
         self.rect.y -= 4
 
 
@@ -184,7 +184,7 @@ class Character(pygame.sprite.Sprite):
         # Move down 2 pixels because it doesn't work well if we only move down 1
         # when working with a platform moving down.
         self.rect.y += 2
-        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False) + pygame.sprite.spritecollide(self, self.level.mov_plat_list, False)
         self.rect.y -= 2
 
         # If it is ok to jump, set our speed upwards
