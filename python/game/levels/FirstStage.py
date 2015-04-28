@@ -337,7 +337,7 @@ class FirstStage(Level):
 
 		easy_block_horiz = [
 			#fast moving plateform
-			[90, 20, 9760, HEIGHT-50, 9150, 9850, 3, [23, 30, 9795, HEIGHT-30, 9185, 9885, 3]]
+			[90, 20, 9760, HEIGHT-50, 9150, 9850, 3, [[23, 30, 9795, HEIGHT-30, 9185, 9885, 3]]]
 		]
 
 		#falling roof at the end of the level
@@ -508,6 +508,16 @@ class FirstStage(Level):
 				block.change_x = plat[6]
 				block.player = self.player
 				block.level = self
+				for subblock in plat[7]:
+					sub = MovingPlatform(subblock[0], subblock[1])
+					sub.rect.x = subblock[2]
+					sub.rect.y = subblock[3]
+					sub.boundary_left = subblock[4]
+					sub.boundary_right = subblock[5]
+					sub.change_x = subblock[6]
+					sub.player = self.player
+					sub.level = self
+					block.subblock.add(sub)
 				self.mov_plat_list.add(block)
 
 			for roof in easy_roofs:

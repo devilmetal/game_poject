@@ -137,57 +137,63 @@ class SecondStage(Level):
 			[100, 20, 4100, HEIGHT-100,
 			HEIGHT-300, HEIGHT-80, 4100, 4500,
 			2, 2, 3, 3,
-			True, False],
-			#moving square of spike
-			[30, 30, 6350, HEIGHT-130,
-			HEIGHT-210, HEIGHT-100, 6350, 6550,
-			1, 1, 3, 3,
-			True, True],
+			True, False]
+		]
 
-			#last moving squares on the ground
+
+		#array of special moving platforms
+		#[width, height, x, y,
+		#top bound, bottom bound, left bound, right bound,
+		#speed up, speed down, speed left, speed right,
+		#is moving round, clockwise movement
+		#[[array of subblock]]]
+		block_round_moving = [
+			#moving square of spike
+			#last moving squares on the ground & last moving spikes
 			#1st
 			[30, 30, 10400, HEIGHT-100,
 			HEIGHT-180, HEIGHT-70, 10400, 10700,
 			2, 2, 3, 3,
-			True, True],
+			True, True,
+				[
+				#1st square
+				[0, 10400, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10400, 10700,
+				2, 2, 3, 3, True, True],
+				[1, 10428, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10428, 10728,
+				2, 2, 3, 3, True, True],
+				[2, 10400, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10400, 10700,
+				2, 2, 3, 3, True, True],
+				[3, 10354, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10354, 10654,
+				2, 2, 3, 3, True, True],
+				]
+			],
+
+
 			#3rd (2nd if easy)
 			[30, 30, 11000, HEIGHT-100,
 			HEIGHT-180, HEIGHT-70, 11000, 11300,
 			2, 2, 3, 3,
-			True, True],
+			True, True,
+				[
+				#3rd square (2nd if easy)
+				[0, 11000, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11000, 11300,
+				2, 2, 3, 3, True, True],
+				[1, 11028, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11028, 11328,
+				2, 2, 3, 3, True, True],
+				[2, 11000, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11000, 11300,
+				2, 2, 3, 3, True, True],
+				[3, 10954, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10954, 11254,
+				2, 2, 3, 3, True, True]
+				]
 			]
+		]
+
 
 		#array of special moving platforms
 		#[orientation, x, y, top bound, bottom bound, left bound, right bound,
 		#speed up, speed down, speed left, speed right, is moving round, clockwise movement]
 		round_spike=[
-			[0, 6350, HEIGHT-175, HEIGHT-255, HEIGHT-129, 6350, 6550,
-			1, 1, 3, 3, True, True],
-			[1, 6378, HEIGHT-130, HEIGHT-210, HEIGHT-100, 6378, 6578,
-			1, 1, 3, 3, True, True],
-			[2, 6350, HEIGHT-101, HEIGHT-181, HEIGHT-55, 6350, 6550,
-			1, 1, 3, 3, True, True],
-			[3, 6304, HEIGHT-130, HEIGHT-210, HEIGHT-100, 6304, 6504,
-			1, 1, 3, 3, True, True],
-			#last moving spikes
-			#1st square
-			[0, 10400, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10400, 10700,
-			2, 2, 3, 3, True, True],
-			[1, 10428, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10428, 10728,
-			2, 2, 3, 3, True, True],
-			[2, 10400, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10400, 10700,
-			2, 2, 3, 3, True, True],
-			[3, 10354, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10354, 10654,
-			2, 2, 3, 3, True, True],
-			#3rd square (2nd if easy)
-			[0, 11000, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11000, 11300,
-			2, 2, 3, 3, True, True],
-			[1, 11028, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11028, 11328,
-			2, 2, 3, 3, True, True],
-			[2, 11000, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11000, 11300,
-			2, 2, 3, 3, True, True],
-			[3, 10954, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10954, 11254,
-			2, 2, 3, 3, True, True],
+			#moved into block_round_moving : [array of subblock]
 			]
 
 		#magma platform
@@ -206,6 +212,9 @@ class SecondStage(Level):
 			back_p.append([x_parallax])
 			front_p.append([x_parallax])
 			x_parallax+=constants.SCREEN_WIDTH
+
+
+		"""Generation of the standard level's elements"""
 
 		#static platforms
 		for plat in plats:
@@ -248,28 +257,52 @@ class SecondStage(Level):
 			block.level = self
 			self.platform_list.add(block)
 
-		#round moving spike.
-		for spike in round_spike:
-			block = SpecialSpike(spike[0])
-			block.rect.x = spike[1]
-			block.rect.y = spike[2]
-			block.boundary_top = spike[3]
-			block.boundary_bottom = spike[4]
-			block.boundary_left = spike[5]
-			block.boundary_right = spike[6]
-			block.change_y_u = -spike[7]
-			block.change_y_d = spike[8]
-			block.change_x_l = -spike[9]
-			block.change_x_r = spike[10]
-			block.round_mov = spike[11]
-			block.clockwise = spike[12]
+		#block round moving platform.
+		for plat in block_round_moving:
+			block = SpecialPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.boundary_top = plat[4]
+			block.boundary_bottom = plat[5]
+			block.boundary_left = plat[6]
+			block.boundary_right = plat[7]
+			block.change_y_u = -plat[8]
+			block.change_y_d = plat[9]
+			block.change_x_l = -plat[10]
+			block.change_x_r = plat[11]
+			block.round_mov = plat[12]
+			block.clockwise = plat[13]
 			if plat[13] == False:
-				block.change_y = spike[8]
+				block.change_y = plat[9]
 			else:
-				block.change_y = -spike[7]
+				block.change_y = -plat[8]
 			block.player = self.player
 			block.level = self
-			self.platform_list.add(block)
+			#subblock
+			for sub in plat[14]:
+				subblock = SpecialSpike(sub[0])
+				subblock.rect.x = sub[1]
+				subblock.rect.y = sub[2]
+				subblock.boundary_top = sub[3]
+				subblock.boundary_bottom = sub[4]
+				subblock.boundary_left = sub[5]
+				subblock.boundary_right = sub[6]
+				subblock.change_y_u = -sub[7]
+				subblock.change_y_d = sub[8]
+				subblock.change_x_l = -sub[9]
+				subblock.change_x_r = sub[10]
+				subblock.round_mov = sub[11]
+				subblock.clockwise = sub[12]
+				if sub[12] == False:
+					subblock.change_y = sub[8]
+				else:
+					subblock.change_y = -sub[7]
+				subblock.player = self.player
+				subblock.level = self
+				block.subblock.add(subblock)
+
+			self.mov_plat_list.add(block)
+
 
 		#static magma
 		for plat in magma:
@@ -345,6 +378,29 @@ class SecondStage(Level):
 			[50, 20, 13500, HEIGHT-70, HEIGHT-250, HEIGHT-50, 1]
 		]
 
+
+		easy_block_round_moving = [
+			[30, 30, 6350, HEIGHT-130,
+			HEIGHT-210, HEIGHT-100, 6350, 6550,
+			1, 1, 3, 3,
+			True, True,
+				[
+				#array of special moving platforms
+				#[orientation, x, y, top bound, bottom bound, left bound, right bound,
+				#speed up, speed down, speed left, speed right, is moving round, clockwise movement]
+				[0, 6350, HEIGHT-175, HEIGHT-255, HEIGHT-129, 6350, 6550,
+				1, 1, 3, 3, True, True],
+				[1, 6378, HEIGHT-130, HEIGHT-210, HEIGHT-100, 6378, 6578,
+				1, 1, 3, 3, True, True],
+				[2, 6350, HEIGHT-101, HEIGHT-181, HEIGHT-55, 6350, 6550,
+				1, 1, 3, 3, True, True],
+				[3, 6304, HEIGHT-130, HEIGHT-210, HEIGHT-100, 6304, 6504,
+				1, 1, 3, 3, True, True]
+				]
+			]
+		]
+
+
 		#[width, height, x, y, top bound, bottom bound, speed, pause]
 		easy_moving_magma = [
 			[1900, 270, 8100, HEIGHT, HEIGHT-250, HEIGHT+270, 1, 240]
@@ -393,10 +449,14 @@ class SecondStage(Level):
 			[100, 20, 13950, HEIGHT-250, 13950, 15000, 3]
 		]
 
-		#[orientation, top-left x, top-left y, left bound, right bound, speed]
+		#[orientation, top-left x, top-left y, left bound, right bound, speed,
+		#[array of subblock]]
 		medium_horiz_spikes = [
-			[3, 6800, HEIGHT-130, 6800, 7300, 5],
-			[1, 6845, HEIGHT-130, 6845, 7345, 5]
+			[3, 6800, HEIGHT-130, 6800, 7300, 5,
+				[
+				[1, 6845, HEIGHT-130, 6845, 7345, 5]
+				]
+			]
 		]
 
 		#[width, height, x, y, top bound, bottom bound, speed]
@@ -406,104 +466,141 @@ class SecondStage(Level):
 			[50, 20, 13500, HEIGHT-70, HEIGHT-250, HEIGHT-50, 1]
 		]
 
-		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
+		#[orientation, top-left x, top-left y, top bound, bottom bound, speed,
+		#[[array of subblock]]]
 		medium_vert_spikes = [
 			#stalagtite spikes at the end
-			[2, 15400, HEIGHT-46, HEIGHT-200, HEIGHT, 4],
-			[2, 15430, HEIGHT-66, HEIGHT-200, HEIGHT, 4],
-			[2, 15460, HEIGHT-86, HEIGHT-200, HEIGHT, 4],
-			[2, 15490, HEIGHT-106, HEIGHT-200, HEIGHT, 4],
-			[2, 15520, HEIGHT-126, HEIGHT-200, HEIGHT, 4],
-			[2, 15550, HEIGHT-146, HEIGHT-200, HEIGHT, 4],
-			[2, 15580, HEIGHT-166, HEIGHT-200, HEIGHT, 4],
-			[2, 15610, HEIGHT-186, HEIGHT-200, HEIGHT, 4],
-			[2, 15640, HEIGHT-194, HEIGHT-200, HEIGHT, -4],
-			[2, 15670, HEIGHT-174, HEIGHT-200, HEIGHT, -4],
-			[2, 15700, HEIGHT-154, HEIGHT-200, HEIGHT, -4],
-			[2, 15730, HEIGHT-134, HEIGHT-200, HEIGHT, -4],
-			[2, 15760, HEIGHT-114, HEIGHT-200, HEIGHT, -4],
-			[2, 15790, HEIGHT-94, HEIGHT-200, HEIGHT, -4],
-			[2, 15820, HEIGHT-74, HEIGHT-200, HEIGHT, -4],
-			[2, 15850, HEIGHT-54, HEIGHT-200, HEIGHT, -4],
-			#stalagmite spikes at the end
-			[0, 15400, HEIGHT-90, HEIGHT-244, HEIGHT-44, 4],
-			[0, 15430, HEIGHT-110, HEIGHT-244, HEIGHT-44, 4],
-			[0, 15460, HEIGHT-130, HEIGHT-244, HEIGHT-44, 4],
-			[0, 15490, HEIGHT-150, HEIGHT-244, HEIGHT-44, 4],
-			[0, 15520, HEIGHT-170, HEIGHT-244, HEIGHT-44, 4],
-			[0, 15550, HEIGHT-190, HEIGHT-244, HEIGHT-44, 4],
-			[0, 15580, HEIGHT-210, HEIGHT-244, HEIGHT-44, 4],
-			[0, 15610, HEIGHT-230, HEIGHT-244, HEIGHT-44, 4],
-			[0, 15640, HEIGHT-238, HEIGHT-244, HEIGHT-44, -4],
-			[0, 15670, HEIGHT-218, HEIGHT-244, HEIGHT-44, -4],
-			[0, 15700, HEIGHT-198, HEIGHT-244, HEIGHT-44, -4],
-			[0, 15730, HEIGHT-178, HEIGHT-244, HEIGHT-44, -4],
-			[0, 15760, HEIGHT-158, HEIGHT-244, HEIGHT-44, -4],
-			[0, 15790, HEIGHT-138, HEIGHT-244, HEIGHT-44, -4],
-			[0, 15820, HEIGHT-118, HEIGHT-244, HEIGHT-44, -4],
-			[0, 15850, HEIGHT-98, HEIGHT-244, HEIGHT-44, -4],
+			[2, 15400, HEIGHT-46, HEIGHT-200, HEIGHT, 4,
+				[
+				[2, 15430, HEIGHT-66, HEIGHT-200, HEIGHT, 4],
+				[2, 15460, HEIGHT-86, HEIGHT-200, HEIGHT, 4],
+				[2, 15490, HEIGHT-106, HEIGHT-200, HEIGHT, 4],
+				[2, 15520, HEIGHT-126, HEIGHT-200, HEIGHT, 4],
+				[2, 15550, HEIGHT-146, HEIGHT-200, HEIGHT, 4],
+				[2, 15580, HEIGHT-166, HEIGHT-200, HEIGHT, 4],
+				[2, 15610, HEIGHT-186, HEIGHT-200, HEIGHT, 4],
+				[2, 15640, HEIGHT-194, HEIGHT-200, HEIGHT, -4],
+				[2, 15670, HEIGHT-174, HEIGHT-200, HEIGHT, -4],
+				[2, 15700, HEIGHT-154, HEIGHT-200, HEIGHT, -4],
+				[2, 15730, HEIGHT-134, HEIGHT-200, HEIGHT, -4],
+				[2, 15760, HEIGHT-114, HEIGHT-200, HEIGHT, -4],
+				[2, 15790, HEIGHT-94, HEIGHT-200, HEIGHT, -4],
+				[2, 15820, HEIGHT-74, HEIGHT-200, HEIGHT, -4],
+				[2, 15850, HEIGHT-54, HEIGHT-200, HEIGHT, -4],
+				#stalagmite spikes at the end
+				[0, 15400, HEIGHT-90, HEIGHT-244, HEIGHT-44, 4],
+				[0, 15430, HEIGHT-110, HEIGHT-244, HEIGHT-44, 4],
+				[0, 15460, HEIGHT-130, HEIGHT-244, HEIGHT-44, 4],
+				[0, 15490, HEIGHT-150, HEIGHT-244, HEIGHT-44, 4],
+				[0, 15520, HEIGHT-170, HEIGHT-244, HEIGHT-44, 4],
+				[0, 15550, HEIGHT-190, HEIGHT-244, HEIGHT-44, 4],
+				[0, 15580, HEIGHT-210, HEIGHT-244, HEIGHT-44, 4],
+				[0, 15610, HEIGHT-230, HEIGHT-244, HEIGHT-44, 4],
+				[0, 15640, HEIGHT-238, HEIGHT-244, HEIGHT-44, -4],
+				[0, 15670, HEIGHT-218, HEIGHT-244, HEIGHT-44, -4],
+				[0, 15700, HEIGHT-198, HEIGHT-244, HEIGHT-44, -4],
+				[0, 15730, HEIGHT-178, HEIGHT-244, HEIGHT-44, -4],
+				[0, 15760, HEIGHT-158, HEIGHT-244, HEIGHT-44, -4],
+				[0, 15790, HEIGHT-138, HEIGHT-244, HEIGHT-44, -4],
+				[0, 15820, HEIGHT-118, HEIGHT-244, HEIGHT-44, -4],
+				[0, 15850, HEIGHT-98, HEIGHT-244, HEIGHT-44, -4],
+				]
+			]
 		]
+
 
 		#array of special moving platforms
 		#[width, height, x, y,
 		#top bound, bottom bound, left bound, right bound,
 		#speed up, speed down, speed left, speed right,
-		#is moving round, clockwise movement]
-		medium_round_moving = [
+		#is moving round, clockwise movement,
+		#[[array of subblock, see medium_round_spikes]]]
+		medium_block_round_moving = [
+			[30, 30, 6350, HEIGHT-130,
+			HEIGHT-210, HEIGHT-100, 6350, 6550,
+			1, 1, 3, 3,
+			True, True,
+				[
+				#array of special moving spikes
+				#[orientation, x, y, top bound, bottom bound, left bound, right bound,
+				#speed up, speed down, speed left, speed right, is moving round, clockwise movement]
+				[0, 6350, HEIGHT-175, HEIGHT-255, HEIGHT-129, 6350, 6550,
+				1, 1, 3, 3, True, True],
+				[1, 6378, HEIGHT-130, HEIGHT-210, HEIGHT-100, 6378, 6578,
+				1, 1, 3, 3, True, True],
+				[2, 6350, HEIGHT-101, HEIGHT-181, HEIGHT-55, 6350, 6550,
+				1, 1, 3, 3, True, True],
+				[3, 6304, HEIGHT-130, HEIGHT-210, HEIGHT-100, 6304, 6504,
+				1, 1, 3, 3, True, True]
+				]
+			],
+
 			#last moving squares on the ground
 			#2nd
 			[30, 30, 10700, HEIGHT-100,
 			HEIGHT-180, HEIGHT-70, 10700, 11000,
 			2, 2, 3, 3,
-			True, True],
+			True, True,
+				[
+				#2nd square
+				[0, 10700, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10700, 11000,
+				2, 2, 3, 3, True, True],
+				[1, 10728, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10728, 11028,
+				2, 2, 3, 3, True, True],
+				[2, 10700, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10700, 11000,
+				2, 2, 3, 3, True, True],
+				[3, 10654, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10654, 10954,
+				2, 2, 3, 3, True, True]
+				]
+			],
+
 			#4th
 			[30, 30, 11300, HEIGHT-100,
 			HEIGHT-180, HEIGHT-70, 11300, 11600,
 			2, 2, 3, 3,
-			True, True],
+			True, True,
+				[
+				#4th square
+				[0, 11300, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11300, 11600,
+				2, 2, 3, 3, True, True],
+				[1, 11328, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11328, 11628,
+				2, 2, 3, 3, True, True],
+				[2, 11300, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11300, 11600,
+				2, 2, 3, 3, True, True],
+				[3, 11254, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11254, 11554,
+				2, 2, 3, 3, True, True],
+				]
+			],
+
 			#last moving square of spike
 			[30, 30, 14600, HEIGHT-360,
 			HEIGHT-450, HEIGHT-330, 14600, 15000,
 			3, 3, 3, 3,
-			True, True],
+			True, True,
+				[
+				#last spikes
+				[0, 14600, HEIGHT-404, HEIGHT-494, HEIGHT-358, 14600, 15000,
+				3, 3, 3, 3, True, True],
+				[1, 14628, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14628, 15028,
+				3, 3, 3, 3, True, True],
+				[2, 14600, HEIGHT-332, HEIGHT-422, HEIGHT-286, 14600, 15000,
+				3, 3, 3, 3, True, True],
+				[3, 14554, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14554, 14954,
+				3, 3, 3, 3, True, True]
+				]
+			]
 		]
 
 		#array of special moving platforms
 		#[orientation, x, y, top bound, bottom bound, left bound, right bound,
 		#speed up, speed down, speed left, speed right, is moving round, clockwise movement]
 		medium_round_spikes = [
-			#2nd square
-			[0, 10700, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10700, 11000,
-			2, 2, 3, 3, True, True],
-			[1, 10728, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10728, 11028,
-			2, 2, 3, 3, True, True],
-			[2, 10700, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10700, 11000,
-			2, 2, 3, 3, True, True],
-			[3, 10654, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10654, 10954,
-			2, 2, 3, 3, True, True],
-			#4th square
-			[0, 11300, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11300, 11600,
-			2, 2, 3, 3, True, True],
-			[1, 11328, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11328, 11628,
-			2, 2, 3, 3, True, True],
-			[2, 11300, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11300, 11600,
-			2, 2, 3, 3, True, True],
-			[3, 11254, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11254, 11554,
-			2, 2, 3, 3, True, True],
-			#last spikes
-			[0, 14600, HEIGHT-404, HEIGHT-494, HEIGHT-358, 14600, 15000,
-			3, 3, 3, 3, True, True],
-			[1, 14628, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14628, 15028,
-			3, 3, 3, 3, True, True],
-			[2, 14600, HEIGHT-332, HEIGHT-422, HEIGHT-286, 14600, 15000,
-			3, 3, 3, 3, True, True],
-			[3, 14554, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14554, 14954,
-			3, 3, 3, 3, True, True],
+			#see medium_block_round_moving [array of subblock]
 		]
 
 		#[width, height, x, y, top bound, bottom bound, speed, pause]
 		medium_moving_magma = [
-			[1900, 270, 8100, HEIGHT, HEIGHT-250, HEIGHT+270, 1, 0]
+			[1900, 270, 8100, HEIGHT, HEIGHT-250, HEIGHT+270, 1, 120]
 		]
 
 
@@ -515,25 +612,13 @@ class SecondStage(Level):
 			#square of spikes for the moving platform
 			[30, 30, 5300, HEIGHT-350],
 			[30, 30, 5700, HEIGHT-350],
+			#square for spikes in the middle of the platform where moving magma stands
+			[30, 30, 9000, HEIGHT-200]
 		]
 
 		#[width, height, x, y]
 		hard_magma = [
 			[450, 50, 6700, HEIGHT-50],
-		]
-
-		#[orientation, x, y]
-		hard_spikes = [
-			#spikes for the first square in the air
-			[0, 5300, HEIGHT-395],
-			[1, 5329, HEIGHT-350],
-			[2, 5300, HEIGHT-321],
-			[3, 5253, HEIGHT-350],
-			#spikes for the second square in the air
-			[0, 5700, HEIGHT-395],
-			[1, 5729, HEIGHT-350],
-			[2, 5700, HEIGHT-321],
-			[3, 5653, HEIGHT-350],
 		]
 
 		#[width, height, x, y, left bound, right bound, speed]
@@ -542,14 +627,24 @@ class SecondStage(Level):
 			[80, 20, 13950, HEIGHT-250, 13950, 15000, 3]
 		]
 
-		#[orientation, top-left x, top-left y, left bound, right bound, speed]
+		#[orientation, top-left x, top-left y, left bound, right bound, speed,
+		#[[array of subblock]]]
 		hard_horiz_spikes = [
-			[3, 900, HEIGHT-30, 900, 1450, 8],
-			[1, 945, HEIGHT-30, 945, 1495, 8],
-			[3, 2200, HEIGHT-100, 2200, 2700, 8],
-			[1, 2245, HEIGHT-100, 2245, 2745, 8],
-			[3, 6800, HEIGHT-130, 6800, 7300, 6],
-			[1, 6845, HEIGHT-130, 6845, 7345, 6]
+			[3, 900, HEIGHT-30, 900, 1450, 8,
+				[
+				[1, 945, HEIGHT-30, 945, 1495, 8]
+				]
+			],
+			[3, 2200, HEIGHT-100, 2200, 2700, 8,
+				[
+				[1, 2245, HEIGHT-100, 2245, 2745, 8]
+				]
+			],
+			[3, 6800, HEIGHT-130, 6800, 7300, 6,
+				[
+				[1, 6845, HEIGHT-130, 6845, 7345, 6]
+				]
+			]
 		]
 
 		#[width, height, x, y, top bound, bottom bound, speed]
@@ -559,48 +654,75 @@ class SecondStage(Level):
 			[50, 20, 13500, HEIGHT-70, HEIGHT-250, HEIGHT-50, 1]
 		]
 
-		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
+		#[orientation, top-left x, top-left y, top bound, bottom bound, speed
+		#[[array of subblock]]]
 		hard_vert_spikes = [
 			#stalagtite spikes at the end
-			[2, 15400, HEIGHT-46, HEIGHT-200, HEIGHT, 6],
-			[2, 15430, HEIGHT-76, HEIGHT-200, HEIGHT, 6],
-			[2, 15460, HEIGHT-106, HEIGHT-200, HEIGHT, 6],
-			[2, 15490, HEIGHT-136, HEIGHT-200, HEIGHT, 6],
-			[2, 15520, HEIGHT-166, HEIGHT-200, HEIGHT, 6],
-			[2, 15550, HEIGHT-196, HEIGHT-200, HEIGHT, 6],
-			[2, 15580, HEIGHT-174, HEIGHT-200, HEIGHT, -6],
-			[2, 15610, HEIGHT-144, HEIGHT-200, HEIGHT, -6],
-			[2, 15640, HEIGHT-114, HEIGHT-200, HEIGHT, -6],
-			[2, 15670, HEIGHT-84, HEIGHT-200, HEIGHT, -6],
-			[2, 15700, HEIGHT-54, HEIGHT-200, HEIGHT, -6],
-			[2, 15730, HEIGHT-68, HEIGHT-200, HEIGHT, 6],
-			[2, 15760, HEIGHT-98, HEIGHT-200, HEIGHT, 6],
-			[2, 15790, HEIGHT-128, HEIGHT-200, HEIGHT, 6],
-			[2, 15820, HEIGHT-158, HEIGHT-200, HEIGHT, 6],
-			[2, 15850, HEIGHT-188, HEIGHT-200, HEIGHT, 6],
-			#stalagmite spikes at the end
-			[0, 15400, HEIGHT-90, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15430, HEIGHT-120, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15460, HEIGHT-150, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15490, HEIGHT-180, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15520, HEIGHT-210, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15550, HEIGHT-240, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15580, HEIGHT-218, HEIGHT-244, HEIGHT-44, -6],
-			[0, 15610, HEIGHT-188, HEIGHT-244, HEIGHT-44, -6],
-			[0, 15640, HEIGHT-158, HEIGHT-244, HEIGHT-44, -6],
-			[0, 15670, HEIGHT-128, HEIGHT-244, HEIGHT-44, -6],
-			[0, 15700, HEIGHT-98, HEIGHT-244, HEIGHT-44, -6],
-			[0, 15730, HEIGHT-112, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15760, HEIGHT-142, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15790, HEIGHT-172, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15820, HEIGHT-202, HEIGHT-244, HEIGHT-44, 6],
-			[0, 15850, HEIGHT-232, HEIGHT-244, HEIGHT-44, 6],
+			[2, 15400, HEIGHT-46, HEIGHT-200, HEIGHT, 6,
+				[
+				[2, 15430, HEIGHT-76, HEIGHT-200, HEIGHT, 6],
+				[2, 15460, HEIGHT-106, HEIGHT-200, HEIGHT, 6],
+				[2, 15490, HEIGHT-136, HEIGHT-200, HEIGHT, 6],
+				[2, 15520, HEIGHT-166, HEIGHT-200, HEIGHT, 6],
+				[2, 15550, HEIGHT-196, HEIGHT-200, HEIGHT, 6],
+				[2, 15580, HEIGHT-174, HEIGHT-200, HEIGHT, -6],
+				[2, 15610, HEIGHT-144, HEIGHT-200, HEIGHT, -6],
+				[2, 15640, HEIGHT-114, HEIGHT-200, HEIGHT, -6],
+				[2, 15670, HEIGHT-84, HEIGHT-200, HEIGHT, -6],
+				[2, 15700, HEIGHT-54, HEIGHT-200, HEIGHT, -6],
+				[2, 15730, HEIGHT-68, HEIGHT-200, HEIGHT, 6],
+				[2, 15760, HEIGHT-98, HEIGHT-200, HEIGHT, 6],
+				[2, 15790, HEIGHT-128, HEIGHT-200, HEIGHT, 6],
+				[2, 15820, HEIGHT-158, HEIGHT-200, HEIGHT, 6],
+				[2, 15850, HEIGHT-188, HEIGHT-200, HEIGHT, 6],
+				#stalagmite spikes at the end
+				[0, 15400, HEIGHT-90, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15430, HEIGHT-120, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15460, HEIGHT-150, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15490, HEIGHT-180, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15520, HEIGHT-210, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15550, HEIGHT-240, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15580, HEIGHT-218, HEIGHT-244, HEIGHT-44, -6],
+				[0, 15610, HEIGHT-188, HEIGHT-244, HEIGHT-44, -6],
+				[0, 15640, HEIGHT-158, HEIGHT-244, HEIGHT-44, -6],
+				[0, 15670, HEIGHT-128, HEIGHT-244, HEIGHT-44, -6],
+				[0, 15700, HEIGHT-98, HEIGHT-244, HEIGHT-44, -6],
+				[0, 15730, HEIGHT-112, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15760, HEIGHT-142, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15790, HEIGHT-172, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15820, HEIGHT-202, HEIGHT-244, HEIGHT-44, 6],
+				[0, 15850, HEIGHT-232, HEIGHT-244, HEIGHT-44, 6]
+				]
+			]
+		]
+
+
+		hard_block_round_moving = [
+			[30, 30, 6350, HEIGHT-130,
+			HEIGHT-210, HEIGHT-100, 6350, 6550,
+			1, 1, 3, 3,
+			True, True,
+				[
+				#array of special moving platforms
+				#[type of spike, orientation, x, y, top bound, bottom bound, left bound, right bound,
+				#speed up, speed down, speed left, speed right, is moving round, clockwise movement]
+				['standard', 0, 6350, HEIGHT-175, HEIGHT-255, HEIGHT-129, 6350, 6550,
+				1, 1, 3, 3, True, True],
+				['standard', 1, 6378, HEIGHT-130, HEIGHT-210, HEIGHT-100, 6378, 6578,
+				1, 1, 3, 3, True, True],
+				['standard', 2, 6350, HEIGHT-101, HEIGHT-181, HEIGHT-55, 6350, 6550,
+				1, 1, 3, 3, True, True],
+				['standard', 3, 6304, HEIGHT-130, HEIGHT-210, HEIGHT-100, 6304, 6504,
+				1, 1, 3, 3, True, True],
+				['special', 3, 6322, HEIGHT-30, 6322, 6522, 3, 164],
+				['special', 1, 6367, HEIGHT-30, 6367, 6567, 3, 164]
+				]
+			]
 		]
 
 		#[orientation, x, y, left bound, right bound, speed, pause]
 		hard_spec_horiz_spikes = [
-			[3, 6322, HEIGHT-30, 6322, 6522, 3, 164],
-			[1, 6367, HEIGHT-30, 6367, 6567, 3, 164]
+			#see just above as 'special'
 		]
 
 		#[width, height, x, y,
@@ -613,49 +735,59 @@ class SecondStage(Level):
 			[30, 30, 10700, HEIGHT-100,
 			HEIGHT-180, HEIGHT-70, 10700, 11000,
 			3, 3, 4, 4,
-			True, False],
+			True, False,
+				[
+				#2nd square
+				[0, 10700, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10700, 11000,
+				3, 3, 4, 4, True, False],
+				[1, 10728, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10728, 11028,
+				3, 3, 4, 4, True, False],
+				[2, 10700, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10700, 11000,
+				3, 3, 4, 4, True, False],
+				[3, 10654, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10654, 10954,
+				3, 3, 4, 4, True, False],
+				]
+			],
 			#4th
 			[30, 30, 11300, HEIGHT-100,
 			HEIGHT-180, HEIGHT-70, 11300, 11600,
 			3, 3, 4, 4,
-			True, False],
+			True, False,
+				[
+				#4th square
+				[0, 11300, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11300, 11600,
+				3, 3, 4, 4, True, False],
+				[1, 11328, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11328, 11628,
+				3, 3, 4, 4, True, False],
+				[2, 11300, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11300, 11600,
+				3, 3, 4, 4, True, False],
+				[3, 11254, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11254, 11554,
+				3, 3, 4, 4, True, False],
+				]
+			],
 			#last moving square of spike
 			[30, 30, 14600, HEIGHT-360,
 			HEIGHT-450, HEIGHT-330, 14600, 15000,
 			4, 4, 5, 5,
-			True, True],
+			True, True,
+				[
+				#last spikes
+				[0, 14600, HEIGHT-404, HEIGHT-494, HEIGHT-358, 14600, 15000,
+				4, 4, 5, 5, True, True],
+				[1, 14628, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14628, 15028,
+				4, 4, 5, 5, True, True],
+				[2, 14600, HEIGHT-332, HEIGHT-422, HEIGHT-286, 14600, 15000,
+				4, 4, 5, 5, True, True],
+				[3, 14554, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14554, 14954,
+				4, 4, 5, 5, True, True],
+				]
+			],
 		]
 
 		#[orientation, x, y, top bound, bottom bound, left bound, right bound,
 		#speed up, speed down, speed left, speed right, is moving round, clockwise movement]
 		hard_round_spikes = [
-			#2nd square
-			[0, 10700, HEIGHT-145, HEIGHT-225, HEIGHT-99, 10700, 11000,
-			3, 3, 4, 4, True, False],
-			[1, 10728, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10728, 11028,
-			3, 3, 4, 4, True, False],
-			[2, 10700, HEIGHT-71, HEIGHT-151, HEIGHT-25, 10700, 11000,
-			3, 3, 4, 4, True, False],
-			[3, 10654, HEIGHT-100, HEIGHT-180, HEIGHT-70, 10654, 10954,
-			3, 3, 4, 4, True, False],
-			#4th square
-			[0, 11300, HEIGHT-145, HEIGHT-225, HEIGHT-99, 11300, 11600,
-			3, 3, 4, 4, True, False],
-			[1, 11328, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11328, 11628,
-			3, 3, 4, 4, True, False],
-			[2, 11300, HEIGHT-71, HEIGHT-151, HEIGHT-25, 11300, 11600,
-			3, 3, 4, 4, True, False],
-			[3, 11254, HEIGHT-100, HEIGHT-180, HEIGHT-70, 11254, 11554,
-			3, 3, 4, 4, True, False],
-			#last spikes
-			[0, 14600, HEIGHT-404, HEIGHT-494, HEIGHT-358, 14600, 15000,
-			4, 4, 5, 5, True, True],
-			[1, 14628, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14628, 15028,
-			4, 4, 5, 5, True, True],
-			[2, 14600, HEIGHT-332, HEIGHT-422, HEIGHT-286, 14600, 15000,
-			4, 4, 5, 5, True, True],
-			[3, 14554, HEIGHT-360, HEIGHT-450, HEIGHT-330, 14554, 14954,
-			4, 4, 5, 5, True, True],
+			#see just above
 		]
 
 		#[width, height, x, y, top bound, bottom bound, speed, pause]
@@ -703,6 +835,52 @@ class SecondStage(Level):
 				block.player = self.player
 				block.level = self
 				self.platform_list.add(block)
+
+			#block round moving platform.
+			for plat in easy_block_round_moving:
+				block = SpecialPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.boundary_left = plat[6]
+				block.boundary_right = plat[7]
+				block.change_y_u = -plat[8]
+				block.change_y_d = plat[9]
+				block.change_x_l = -plat[10]
+				block.change_x_r = plat[11]
+				block.round_mov = plat[12]
+				block.clockwise = plat[13]
+				if plat[13] == False:
+					block.change_y = plat[9]
+				else:
+					block.change_y = -plat[8]
+				block.player = self.player
+				block.level = self
+				#subblock
+				for sub in plat[14]:
+					subblock = SpecialSpike(sub[0])
+					subblock.rect.x = sub[1]
+					subblock.rect.y = sub[2]
+					subblock.boundary_top = sub[3]
+					subblock.boundary_bottom = sub[4]
+					subblock.boundary_left = sub[5]
+					subblock.boundary_right = sub[6]
+					subblock.change_y_u = -sub[7]
+					subblock.change_y_d = sub[8]
+					subblock.change_x_l = -sub[9]
+					subblock.change_x_r = sub[10]
+					subblock.round_mov = sub[11]
+					subblock.clockwise = sub[12]
+					if sub[12] == False:
+						subblock.change_y = sub[8]
+					else:
+						subblock.change_y = -sub[7]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
+
+				self.mov_plat_list.add(block)
 
 			#moving magma
 			for plat in easy_moving_magma:
@@ -786,7 +964,17 @@ class SecondStage(Level):
 				block.change_x = spike[5]
 				block.player = self.player
 				block.level = self
-				self.platform_list.add(block)
+				for sub in spike[6]:
+					subblock = MovingSpike(sub[0])
+					subblock.rect.x = sub[1]
+					subblock.rect.y = sub[2]
+					subblock.boundary_left = sub[3]
+					subblock.boundary_right = sub[4]
+					subblock.change_x = sub[5]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
+				self.mov_plat_list.add(block)
 
 			for spike in medium_vert_spikes:
 				block = MovingSpike(spike[0])
@@ -797,10 +985,21 @@ class SecondStage(Level):
 				block.change_y = spike[5]
 				block.player = self.player
 				block.level = self
-				self.platform_list.add(block)
+				for sub in spike[6]:
+					subblock = MovingSpike(sub[0])
+					subblock.rect.x = sub[1]
+					subblock.rect.y = sub[2]
+					subblock.boundary_top = sub[3]
+					subblock.boundary_bottom = sub[4]
+					subblock.change_y = sub[5]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
+				self.mov_plat_list.add(block)
+
 
 			#round moving platform.
-			for plat in medium_round_moving:
+			for plat in medium_block_round_moving:
 				block = SpecialPlatform(plat[0], plat[1])
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
@@ -820,30 +1019,30 @@ class SecondStage(Level):
 					block.change_y = -plat[8]
 				block.player = self.player
 				block.level = self
-				self.platform_list.add(block)
+				#subblock
+				for sub in plat[14]:
+					subblock = SpecialSpike(sub[0])
+					subblock.rect.x = sub[1]
+					subblock.rect.y = sub[2]
+					subblock.boundary_top = sub[3]
+					subblock.boundary_bottom = sub[4]
+					subblock.boundary_left = sub[5]
+					subblock.boundary_right = sub[6]
+					subblock.change_y_u = -sub[7]
+					subblock.change_y_d = sub[8]
+					subblock.change_x_l = -sub[9]
+					subblock.change_x_r = sub[10]
+					subblock.round_mov = sub[11]
+					subblock.clockwise = sub[12]
+					if sub[12] == False:
+						subblock.change_y = sub[8]
+					else:
+						subblock.change_y = -sub[7]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
 
-			#round moving spike.
-			for spike in medium_round_spikes:
-				block = SpecialSpike(spike[0])
-				block.rect.x = spike[1]
-				block.rect.y = spike[2]
-				block.boundary_top = spike[3]
-				block.boundary_bottom = spike[4]
-				block.boundary_left = spike[5]
-				block.boundary_right = spike[6]
-				block.change_y_u = -spike[7]
-				block.change_y_d = spike[8]
-				block.change_x_l = -spike[9]
-				block.change_x_r = spike[10]
-				block.round_mov = spike[11]
-				block.clockwise = spike[12]
-				if plat[13] == False:
-					block.change_y = spike[8]
-				else:
-					block.change_y = -spike[7]
-				block.player = self.player
-				block.level = self
-				self.platform_list.add(block)
+				self.mov_plat_list.add(block)
 
 			#moving magma
 			for plat in medium_moving_magma:
@@ -879,7 +1078,7 @@ class SecondStage(Level):
 				block.level = self
 				self.platform_list.add(block)
 
-			for spike in hard_spikes:
+			for spike in medium_spikes:
 				block = Spike(spike[0])
 				block.rect.x = spike[1]
 				block.rect.y = spike[2]
@@ -915,7 +1114,17 @@ class SecondStage(Level):
 				block.change_x = spike[5]
 				block.player = self.player
 				block.level = self
-				self.platform_list.add(block)
+				for sub in spike[6]:
+					subblock = MovingSpike(sub[0])
+					subblock.rect.x = sub[1]
+					subblock.rect.y = sub[2]
+					subblock.boundary_left = sub[3]
+					subblock.boundary_right = sub[4]
+					subblock.change_x = sub[5]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
+				self.mov_plat_list.add(block)
 
 			for plat in hard_vert_plat:
 				block = MovingPlatform(plat[0], plat[1])
@@ -937,22 +1146,18 @@ class SecondStage(Level):
 				block.change_y = spike[5]
 				block.player = self.player
 				block.level = self
-				self.platform_list.add(block)
+				for sub in spike[6]:
+					subblock = MovingSpike(sub[0])
+					subblock.rect.x = sub[1]
+					subblock.rect.y = sub[2]
+					subblock.boundary_top = sub[3]
+					subblock.boundary_bottom = sub[4]
+					subblock.change_y = sub[5]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
+				self.mov_plat_list.add(block)
 
-			for spike in hard_spec_horiz_spikes:
-				block = SpecialSpike(spike[0])
-				block.rect.x = spike[1]
-				block.rect.y = spike[2]
-				block.boundary_left = spike[3]
-				block.boundary_right = spike[4]
-				block.change_x = -spike[5]
-				block.change_x_l = -spike[5]
-				block.change_x_r = spike[5]
-				block.pause_left = spike[6]
-				block.pause_right = spike[6]
-				block.player = self.player
-				block.level = self
-				self.platform_list.add(block)
 
 			#round moving platform.
 			for plat in hard_round_moving:
@@ -975,30 +1180,93 @@ class SecondStage(Level):
 					block.change_y = -plat[8]
 				block.player = self.player
 				block.level = self
-				self.platform_list.add(block)
+				#subblock
+				for sub in plat[14]:
+					subblock = SpecialSpike(sub[0])
+					subblock.rect.x = sub[1]
+					subblock.rect.y = sub[2]
+					subblock.boundary_top = sub[3]
+					subblock.boundary_bottom = sub[4]
+					subblock.boundary_left = sub[5]
+					subblock.boundary_right = sub[6]
+					subblock.change_y_u = -sub[7]
+					subblock.change_y_d = sub[8]
+					subblock.change_x_l = -sub[9]
+					subblock.change_x_r = sub[10]
+					subblock.round_mov = sub[11]
+					subblock.clockwise = sub[12]
+					if sub[12] == False:
+						subblock.change_y = sub[8]
+					else:
+						subblock.change_y = -sub[7]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
 
-			#round moving spike.
-			for spike in hard_round_spikes:
-				block = SpecialSpike(spike[0])
-				block.rect.x = spike[1]
-				block.rect.y = spike[2]
-				block.boundary_top = spike[3]
-				block.boundary_bottom = spike[4]
-				block.boundary_left = spike[5]
-				block.boundary_right = spike[6]
-				block.change_y_u = -spike[7]
-				block.change_y_d = spike[8]
-				block.change_x_l = -spike[9]
-				block.change_x_r = spike[10]
-				block.round_mov = spike[11]
-				block.clockwise = spike[12]
+				self.mov_plat_list.add(block)
+
+
+			#block round moving platform.
+			for plat in hard_block_round_moving:
+				block = SpecialPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.boundary_left = plat[6]
+				block.boundary_right = plat[7]
+				block.change_y_u = -plat[8]
+				block.change_y_d = plat[9]
+				block.change_x_l = -plat[10]
+				block.change_x_r = plat[11]
+				block.round_mov = plat[12]
+				block.clockwise = plat[13]
 				if plat[13] == False:
-					block.change_y = spike[8]
+					block.change_y = plat[9]
 				else:
-					block.change_y = -spike[7]
+					block.change_y = -plat[8]
 				block.player = self.player
 				block.level = self
-				self.platform_list.add(block)
+				#subblock
+				for sub in plat[14]:
+					if sub[0] == 'standard':
+						subblock = SpecialSpike(sub[1])
+						subblock.rect.x = sub[2]
+						subblock.rect.y = sub[3]
+						subblock.boundary_top = sub[4]
+						subblock.boundary_bottom = sub[5]
+						subblock.boundary_left = sub[6]
+						subblock.boundary_right = sub[7]
+						subblock.change_y_u = -sub[8]
+						subblock.change_y_d = sub[9]
+						subblock.change_x_l = -sub[10]
+						subblock.change_x_r = sub[11]
+						subblock.round_mov = sub[12]
+						subblock.clockwise = sub[13]
+						if sub[13] == False:
+							subblock.change_y = sub[9]
+						else:
+							subblock.change_y = -sub[8]
+						subblock.player = self.player
+						subblock.level = self
+						block.subblock.add(subblock)
+					elif sub[0] == 'special':
+						subblock = SpecialSpike(sub[1])
+						subblock.rect.x = sub[2]
+						subblock.rect.y = sub[3]
+						subblock.boundary_left = sub[4]
+						subblock.boundary_right = sub[5]
+						subblock.change_x = -sub[6]
+						subblock.change_x_l = -sub[6]
+						subblock.change_x_r = sub[6]
+						subblock.pause_left = sub[7]
+						subblock.pause_right = sub[7]
+						subblock.player = self.player
+						subblock.level = self
+						block.subblock.add(subblock)
+
+				self.mov_plat_list.add(block)
+
 
 			#moving magma
 			for plat in hard_moving_magma:

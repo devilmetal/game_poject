@@ -40,7 +40,7 @@ class Level():
         """ Update everything in this level."""
         #self.magma_list.update()
         for elem in self.magma_list:
-            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 2:
+            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
                 elem.update()
         #self.platform_list.update()
         for elem in self.platform_list:
@@ -85,11 +85,10 @@ class Level():
             if not(screen.get_rect().collidelist([elem])):
                 screen.blit(elem.image,elem.rect)
         for elem in self.mov_plat_list:
-            if not(screen.get_rect().collidelist([elem])):
-                for block in elem.subblock:
-                    if not (screen.get_rect().collidelist([block])):
-                        screen.blit(block.image,block.rect)
-                screen.blit(elem.image,elem.rect)
+            for block in elem.subblock:
+                if not(screen.get_rect().collidelist([elem])) or not(screen.get_rect().collidelist([block])):
+                    screen.blit(block.image,block.rect)
+                    screen.blit(elem.image,elem.rect)
         self.player.interface.draw(screen, self.player.lives)
 
     def shift_world(self, shift_x):
