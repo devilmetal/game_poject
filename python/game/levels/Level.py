@@ -44,7 +44,7 @@ class Level():
                 elem.update()
         #self.platform_list.update()
         for elem in self.platform_list:
-            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 2:
+            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
                 elem.update()
         #self.pnj_list.update()
         for elem in self.pnj_list:

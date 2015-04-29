@@ -27,6 +27,14 @@ class MagmaPlat(SpecialPlatform):
 			self.player.hit = True
 			self.player.change_y = -10
 
+		self.player.rect.y -= 2
+		hit = not(self.player.rect.collidelist([self.rect]))
+		self.player.rect.y += 2
+
+		if hit and not self.player.hit:
+			self.player.hit = True
+			self.player.change_y = -10
+
 		SpecialPlatform.update(self)
 
 		

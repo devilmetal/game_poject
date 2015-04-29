@@ -12,7 +12,7 @@ class Data():
     unlocked_stages = 0
     remaining_lives = 6
 
-    def __init__(self, file, data_init=""):
+    def __init__(self, file, data_init):
         self.file = file
         if os.path.isfile(self.file) == False:
             file = open(self.file, "w+")

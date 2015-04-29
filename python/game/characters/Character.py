@@ -235,3 +235,4 @@ class Character(pygame.sprite.Sprite):
                 self.lives -= 1
             else:
                 self.game_over = True
+                self.lives = 6
