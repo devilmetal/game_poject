@@ -88,8 +88,8 @@ class Game():
         # Used to manage how fast the screen updates
         clock = pygame.time.Clock()
         #Play audio stuff
-        #pygame.mixer.music.load('data/sound/test.wav')
-        #pygame.mixer.music.play(-1)
+        pygame.mixer.music.load('data/sound/music.wav')
+        pygame.mixer.music.play(-1)
         # -------- Main Program Loop -----------
         while not self.done:
 
@@ -135,7 +135,10 @@ class Game():
                 print constants.GAME_STATUS
 
             if self.character.game_over:
+                pygame.mixer.music.fadeout(4000)
                 routines.game_over_screen(clock, self.screen)
+                #Stop music
+
                 constants.GAME_STATUS = "menu"
                 self.done = True
                 print "game over"

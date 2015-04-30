@@ -29,6 +29,8 @@ def init_dragon_ressources():
         dragon_ressources['head_down'] =  routines.load_png('pnj/boss/dragon/head_down.png')
         dragon_ressources['head_up'] =  routines.load_png('pnj/boss/dragon/head_up.png')
         dragon_ressources['cave'] =  routines.load_png('pnj/boss/dragon/cave_entrance.png')
+        dragon_ressources['roar'] =  pygame.mixer.Sound('data/sound/roar.wav')
+        dragon_ressources['fireball_sound'] =  pygame.mixer.Sound('data/sound/fireball.wav')
 
 def init_fairy_ressources():
     if fairy_ressource == {}:

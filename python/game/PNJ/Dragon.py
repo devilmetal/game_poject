@@ -70,6 +70,7 @@ class Dragon(pygame.sprite.Sprite):
                 x_fireball = self.rect.x+self.head_down[0]
                 y_fireball = self.rect.y+self.head_down[1]
                 speed_fireball = 5
+                PNJ_ressources.dragon_ressources['fireball_sound'].play()
                 self.level.pnj_list.add(Fireball(x_fireball,y_fireball,speed_fireball,self.player))
             #Check dragon hit player
             hit = False
@@ -109,6 +110,7 @@ class Dragon(pygame.sprite.Sprite):
             self.head_down = [head_x-105,30+head_y]
             self.head_up = [head_x-105,head_y-20]
     def hit(self):
+        PNJ_ressources.dragon_ressources['roar'].play()
         if len(self.body_array) == 1:
             #kill the dragon.
             self.dead = True
