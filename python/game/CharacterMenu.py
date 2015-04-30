@@ -21,11 +21,11 @@ class CharacterMenu:
 
         #self.characters = [bob,hulk]
         if unlocked_chars == 0:
-            self.characters = [bob]
+            self.characters = [hulk]
         elif unlocked_chars == 1:
-            self.characters = [bob,hulk]
+            self.characters = [hulk, bob]
         else:
-            self.characters = [bob,hulk,little_fat]
+            self.characters = [hulk, bob, little_fat]
 
         self.draw(0)
 

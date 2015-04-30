@@ -8,6 +8,7 @@ from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
 from platforms.EndPlatform import EndPlatform
 from platforms.CheckPoint import CheckPoint
+from platforms.MagmaPlat import MagmaPlat
 from world.Parallax import Parallax
 from PNJ.Blob import Blob
 from PNJ.Fairy import Fairy
@@ -89,11 +90,6 @@ class FirstStage(Level):
 					[60, 20, 5750, HEIGHT-300],
 					[50, 20, 8400, HEIGHT-20]
 					]
-
-		"""Special moving platform and spikes"""
-		#falling spikes at the end of the level
-
-		number_spikes = range(70) #create a list of number from 0 to 69
 
 
 		"""Simple moving platforms"""
@@ -343,9 +339,14 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		easy_roofs = [
-				[2100, HEIGHT-60, 12200, -385, -385, HEIGHT-60, 1, 3, 120, 60]
-				]
+			[2100, HEIGHT-60, 12200, -385, -385, HEIGHT-60, 1, 3, 120, 60]
+		]
 
+		#magma on the roof
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
+		easy_magma_roof = [
+			[2100, 10, 12200, -385+HEIGHT-60, -385+HEIGHT-60, HEIGHT-50, 1, 3, 120, 60]
+		]
 
 
 		#medium
@@ -397,6 +398,12 @@ class FirstStage(Level):
 		medium_roofs = [
 				[2100, HEIGHT-60, 12200, -385, -385, HEIGHT-60, 1, 4, 120, 0]
 				]
+
+		#magma on the roof
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
+		medium_magma_roof = [
+			[2100, 10, 12200, -385+HEIGHT-60, -385+HEIGHT-60, HEIGHT-50, 1, 4, 120, 0]
+		]
 
 
 
@@ -533,22 +540,22 @@ class FirstStage(Level):
 				block.pause_up = roof[9]
 				block.player = self.player
 				block.level = self
-				#create special moving spikes for the roof
-				for i in number_spikes:
-					subblock = SpecialSpike(2)
-					subblock.rect.x = 12200 + (i*30)
-					subblock.rect.y = HEIGHT-447
-					subblock.boundary_top = HEIGHT-447
-					subblock.boundary_bottom = HEIGHT-16
-					subblock.change_y = 1
-					subblock.change_y_d = 1
-					subblock.change_y_u = -3
-					subblock.pause_down = 120
-					subblock.pause_up = 60
-					subblock.player = self.player
-					subblock.level = self
-					block.subblock.add(subblock)
-				self.mov_plat_list.add(block)
+				self.platform_list.add(block)
+
+			for roof in easy_magma_roof:
+				block = MagmaPlat(roof[0], roof[1])
+				block.rect.x = roof[2]
+				block.rect.y = roof[3]
+				block.boundary_top = roof[4]
+				block.boundary_bottom = roof[5]
+				block.change_y = roof[6]
+				block.change_y_d = roof[6]
+				block.change_y_u = -roof[7]
+				block.pause_down = roof[8]
+				block.pause_up = roof[9]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
 
 			#checkpoints platforms
 			for plat in checkpoints:
@@ -657,22 +664,22 @@ class FirstStage(Level):
 				block.pause_up = roof[9]
 				block.player = self.player
 				block.level = self
-				for i in number_spikes:
-					subblock = SpecialSpike(2)
-					subblock.rect.x = 12200 + (i*30)
-					subblock.rect.y = HEIGHT-447
-					subblock.boundary_top = HEIGHT-447
-					subblock.boundary_bottom = HEIGHT-16
-					subblock.change_y = 1
-					subblock.change_y_d = 1
-					subblock.change_y_u = -4
-					subblock.pause_down = 120
-					subblock.pause_up = 0
-					subblock.player = self.player
-					subblock.level = self
-					block.subblock.add(subblock)
-				self.mov_plat_list.add(block)
+				self.platform_list.add(block)
 
+			for roof in medium_magma_roof:
+				block = MagmaPlat(roof[0], roof[1])
+				block.rect.x = roof[2]
+				block.rect.y = roof[3]
+				block.boundary_top = roof[4]
+				block.boundary_bottom = roof[5]
+				block.change_y = roof[6]
+				block.change_y_d = roof[6]
+				block.change_y_u = -roof[7]
+				block.pause_down = roof[8]
+				block.pause_up = roof[9]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
 
 			#checkpoints platforms
 			for plat in checkpoints:
@@ -823,21 +830,22 @@ class FirstStage(Level):
 				block.pause_up = roof[9]
 				block.player = self.player
 				block.level = self
-				for i in number_spikes:
-					subblock = SpecialSpike(2)
-					subblock.rect.x = 12200 + (i*30)
-					subblock.rect.y = HEIGHT-447
-					subblock.boundary_top = HEIGHT-447
-					subblock.boundary_bottom = HEIGHT-16
-					subblock.change_y = 1
-					subblock.change_y_d = 1
-					subblock.change_y_u = -4
-					subblock.pause_down = 120
-					subblock.pause_up = 0
-					subblock.player = self.player
-					subblock.level = self
-					block.subblock.add(subblock)
-				self.mov_plat_list.add(block)
+				self.platform_list.add(block)
+
+			for roof in medium_magma_roof:
+				block = MagmaPlat(roof[0], roof[1])
+				block.rect.x = roof[2]
+				block.rect.y = roof[3]
+				block.boundary_top = roof[4]
+				block.boundary_bottom = roof[5]
+				block.change_y = roof[6]
+				block.change_y_d = roof[6]
+				block.change_y_u = -roof[7]
+				block.pause_down = roof[8]
+				block.pause_up = roof[9]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
 
 			#checkpoints platforms
 			for plat in hard_checkpoints:

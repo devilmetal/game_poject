@@ -51,7 +51,7 @@ def main():
     level_nbr = 0 #level number chosen
     slot = '' #choix de la sauvegarde
     # nmp_data = Data("gamedata.txt")
-    nmp_data = Data("gamedata_dev.txt", "A,2,2,6,2\nB,0,0,6,0\nC,1,1,6,1\n") #slot A has everything already unlocked for dev purpose
+    nmp_data = Data("gamedata_dev.txt", "A,0,2,6,2\nB,0,0,6,0\nC,1,1,6,1\n") #slot A has everything already unlocked for dev purpose
     choices = None #choices for the different menus
 
     while main_loop:
@@ -64,11 +64,11 @@ def main():
             menu = DifficultyMenu()
 
             if nmp_data.unlocked_skills == 0:
-                choices = ['Princess']
+                choices = ['Newborn']
             elif nmp_data.unlocked_skills == 1:
-                choices = ['Princess','Little Boy']
+                choices = ['Newborn','Little Boy']
             else:
-                choices = ['Princess','Little Boy','Death Wish']
+                choices = ['Newborn','Little Boy','Kick Ass']
 
             menu.init(choices, screen)
             menu.draw()
@@ -87,9 +87,9 @@ def main():
             selected = menu.run(joystick)
             # player = None
             if selected == 0:
-                player = Bob()
-            elif selected == 1:
                 player = Hulk()
+            elif selected == 1:
+                player = Bob()
             elif selected == 2:
                 player = LittleFat()
 
