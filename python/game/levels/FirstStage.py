@@ -194,6 +194,17 @@ class FirstStage(Level):
 			x_parallax+=constants.SCREEN_WIDTH
 
 
+		############################################################
+
+		#standard platform for the little guy
+		#[width, height, x, y]
+		fat_plat = [
+			[50, 20, 4950, HEIGHT-300],
+			[50, 20, 8600, HEIGHT-100],
+			[20, 20, 10280, HEIGHT-20]
+		]
+
+
 
 
 
@@ -316,6 +327,15 @@ class FirstStage(Level):
 
 
 
+		if self.id == 2:
+			for plat in fat_plat:
+				block = Platform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
 
 
 	###################################################################################
@@ -352,13 +372,13 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		easy_roofs = [
-			[2100, HEIGHT-60, 12200, -385, -385, HEIGHT-60, 1, 3, 120, 60]
+			[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-40, 1, 3, 120, 60]
 		]
 
 		#magma on the roof
 		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		easy_magma_roof = [
-			[2100, 10, 12200, -385+HEIGHT-60, -385+HEIGHT-60, HEIGHT-50, 1, 3, 120, 60]
+			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-30, 1, 3, 120, 60]
 		]
 
 
@@ -412,13 +432,13 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		medium_roofs = [
-				[2100, HEIGHT-60, 12200, -385, -385, HEIGHT-60, 1, 4, 120, 0]
+				[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-40, 1, 4, 120, 0]
 				]
 
 		#magma on the roof
 		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		medium_magma_roof = [
-			[2100, 10, 12200, -385+HEIGHT-60, -385+HEIGHT-60, HEIGHT-50, 1, 4, 120, 0]
+			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-30, 1, 4, 120, 0]
 		]
 
 
