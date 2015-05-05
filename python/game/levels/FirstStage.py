@@ -28,6 +28,8 @@ class FirstStage(Level):
 		next_level = 0
 		self.level_limit = -15000
 
+		self.id = player.id
+
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
 
@@ -44,7 +46,7 @@ class FirstStage(Level):
 				[100, 240, 1600, HEIGHT-240],
 				[100, 120, 1700, HEIGHT-120],
 				[150, 10, 2000, HEIGHT-240],
-				[100, 240, 2500, HEIGHT-240],
+				[100, 200, 2500, HEIGHT-240],
 				#small platform on the ground
 				#variation in difficulty part
 
@@ -86,7 +88,7 @@ class FirstStage(Level):
 		# checkpoints
 		#[top-left x, top-left , width, height]
 		checkpoints = [
-					[50, 20, 2600, HEIGHT-240],
+					[50, 20, 2700, HEIGHT],
 					[60, 20, 5750, HEIGHT-300],
 					[50, 20, 8400, HEIGHT-20]
 					]
@@ -155,6 +157,8 @@ class FirstStage(Level):
 				#last air part of the level
 				[0, 10400, HEIGHT-120]
 			]
+
+
 		"""Simple moving spikes"""
 		#moving vert spikes
 		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
@@ -167,8 +171,6 @@ class FirstStage(Level):
 		#[orientation, top-left x, top-left y, left bound, right bound, speed]
 		hor_mov_spikes = [
 						]
-
-
 
 		"""Some foes"""
 		#TODO: REMOVE
@@ -193,6 +195,10 @@ class FirstStage(Level):
 
 
 
+
+
+	###################################################################
+	###################################################################
 
 		"""Generation of the differents platforms/spikes"""
 		# Go through the array above and add platforms
@@ -308,6 +314,13 @@ class FirstStage(Level):
 			pixie = Fairy(pnj[0],pnj[1],pnj[2])
 			self.pnj_list.add(pixie)
 
+
+
+
+
+	###################################################################################
+	###################################################################################
+
 		"""here will stands specific platform for the different levels of difficulty"""
 
 		#easy
@@ -349,6 +362,9 @@ class FirstStage(Level):
 		]
 
 
+
+
+		###################################################################################
 		#medium
 		#[width, height, top-left x, top-left y]
 		medium_plat = [
@@ -407,26 +423,28 @@ class FirstStage(Level):
 
 
 
+
+		#############################################################################
 		#hard
 		#[width, height, top-left x, top-left y]
 		hard_plat = [
-					[50, 20, 3400, HEIGHT],
-					[50, 20, 3800, HEIGHT],
-					[50, 20, 4200, HEIGHT],
-					[30, 20, 4600, HEIGHT],
-					#air platforms
-					[50, 20, 6000, HEIGHT-300],
-					[50, 20, 6250, HEIGHT-300],
-					[50, 20, 6500, HEIGHT-300],
-					#final platforms
-					[30, 55, 10870, HEIGHT-320],
-					[20, 300, 10740, HEIGHT-300],
-					[780, 20, 10900, HEIGHT-285],
-					[1050, 20, 10900, HEIGHT-135],
-					[130, 20, 11820, HEIGHT-200],
-					[1400, 20, 10730, HEIGHT],
-					[20, HEIGHT-115, 11950, 0]
-					]
+			[50, 20, 3400, HEIGHT],
+			[50, 20, 3800, HEIGHT],
+			[50, 20, 4200, HEIGHT],
+			[30, 20, 4600, HEIGHT],
+			#air platforms
+			[50, 20, 6000, HEIGHT-300],
+			[50, 20, 6250, HEIGHT-300],
+			[50, 20, 6500, HEIGHT-300],
+			#final platforms
+			[30, 55, 10870, HEIGHT-320],
+			[20, 300, 10740, HEIGHT-300],
+			[780, 20, 10900, HEIGHT-285],
+			[1050, 20, 10900, HEIGHT-135],
+			[130, 20, 11820, HEIGHT-200],
+			[1400, 20, 10730, HEIGHT],
+			[20, HEIGHT-115, 11950, 0]
+		]
 
 		#[width, height, top-left x, top-left y, left bound, right bound, speed]
 		hard_horiz = [
@@ -461,11 +479,11 @@ class FirstStage(Level):
 
 		#[orientation, top-left x, top-left y]
 		hard_spikes = [
-				[0, 8770, HEIGHT-135],
-				[0, 8800, HEIGHT-135],
-				[0, 8890, HEIGHT-45],
-				[0, 10430, HEIGHT-120]
-				]
+			[0, 8770, HEIGHT-135],
+			[0, 8800, HEIGHT-135],
+			[0, 8890, HEIGHT-45],
+			[0, 10430, HEIGHT-120]
+		]
 
 		#[orientation, top-left x, top-left y, left bound, right bound, speed, [subblock]]
 		hard_horiz_spikes = [
@@ -475,14 +493,37 @@ class FirstStage(Level):
 
 		#[orientation, top-left x, top-left y, top bound, bottom bound, speed]
 		hard_vert_spikes = [
-				[2, 10550, HEIGHT-422, HEIGHT-422, HEIGHT-196, 2],
-				[2, 10710, HEIGHT-542, HEIGHT-542, HEIGHT-316, 2]
-				]
+			[2, 10550, HEIGHT-422, HEIGHT-422, HEIGHT-196, 2],
+			[2, 10710, HEIGHT-542, HEIGHT-542, HEIGHT-316, 2]
+		]
 
 		#checkpoint
 		hard_checkpoints = [
-					[60, 20, 5750, HEIGHT-300]
-					]
+			[60, 20, 5750, HEIGHT-300]
+		]
+
+
+
+	#####################################################################
+	#####################################################################
+
+
+		"""Here are additionnal platform for the little fat hero, that are add in the diff part"""
+
+		fat_med_plat = [
+			[40, 20, 4500, HEIGHT],
+		]
+
+		fat_hard_plat = [
+			[20, 20, 3600, HEIGHT],
+			[20, 20, 4000, HEIGHT],
+			[20, 20, 4400, HEIGHT]
+		]
+
+
+
+	######################################################################
+	######################################################################
 
 
 		"""Generation of the platform corresponding to the difficulty level"""
@@ -567,6 +608,12 @@ class FirstStage(Level):
 				#CheckPoint is white!
 				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
+
+
+
+
+	####################################################
+
 
 		elif level_dif == "medium":
 			for plat in medium_plat:
@@ -691,6 +738,24 @@ class FirstStage(Level):
 				#CheckPoint is red!
 				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
+
+
+
+			"""ADDITIONNAL PART FOR FAT GUY"""
+
+			if self.id == 2:
+				for plat in fat_med_plat:
+					block = Platform(plat[0], plat[1])
+					block.rect.x = plat[2]
+					block.rect.y = plat[3]
+					block.player = self.player
+					block.level = self
+					self.platform_list.add(block)
+
+
+
+
+	########################################################################
 
 		elif level_dif == "hard":
 			for plat in hard_plat:
@@ -857,3 +922,16 @@ class FirstStage(Level):
 				#CheckPoint is red!
 				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
+
+
+
+			"""ADDITIONNAL PART FOR FAT GUY"""
+
+			if self.id == 2:
+				for plat in fat_hard_plat:
+					block = Platform(plat[0], plat[1])
+					block.rect.x = plat[2]
+					block.rect.y = plat[3]
+					block.player = self.player
+					block.level = self
+					self.platform_list.add(block)
