@@ -4,6 +4,8 @@ from platforms.MovingPlatform import MovingPlatform
 from platforms.BoostPlatform import BoostPlatform
 from platforms.Spike import Spike
 from platforms.MovingSpike import MovingSpike
+from platforms.EndPlatform import EndPlatform
+
 from world.Parallax import Parallax
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
@@ -71,6 +73,9 @@ class Boss1(Level):
             block.level = self
             self.platform_list.add(block)
 
+        end_plat = []
+        end_plat.append([120, 20, 2500, HEIGHT-10, 0])
+
         #Parallax background
         for elem in back_p:
             x = elem[0]
@@ -91,3 +96,22 @@ class Boss1(Level):
             level = self
             paral = Parallax(x,y,width,height,mode,level)
             self.back_front_world_list.add(paral)
+
+        #end platforms
+        for plat in end_plat:
+            block = EndPlatform(plat[0], plat[1])
+            block.rect.x = plat[2]
+            block.rect.y = plat[3]
+            block.player = self.player
+            block.level = self
+            block.level_pointer = plat[4]
+            next_player=None
+            if player.name == 'hulk':
+                next_player='bob'
+            if player.name == 'bob':
+                next_player='little_fat'
+            if player.name == 'little_fat':
+                next_player='hulk'
+                block.change_difficulty = True
+            block.character_pointer = next_player
+            self.platform_list.add(block)

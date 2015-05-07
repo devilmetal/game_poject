@@ -1,84 +1,59 @@
-import pygame
-import constants
-import routines
+import pickle
 import os
-
 
 class Data():
     file = 'gamedata.txt'
-    slot = 'A' #by default
-    unlocked_skills = 0
-    unlocked_chars = 0
-    unlocked_stages = 0
-    remaining_lives = 6
+    save={}
+    selected_slot=None
+    selected_diff=None
+    selected_char=None
 
-    def __init__(self, file, data_init=""):
+    def __init__(self, file):
         self.file = file
         if os.path.isfile(self.file) == False:
-            file = open(self.file, "w+")
-            if data_init == "":
-                data_init = "A,0,0,6,0\nB,0,0,6,0\nC,0,0,6,0\n"
-            '''
-            data_init description:
-            [0] : slot name
-            [1] : number of skills unlocked 0-2
-            [2] : number of characters unlocked 0-2
-            [3] : number of lives remaining 0-6
-            [4] : number of stages unlocked 0-2
-            '''
-            file.write(data_init)
-            file.close
+            for slot in ['A','B','C']:
+                data={}
+                for diff in ['easy','medium','hard']:
+                    data[diff] = {}
+                    data[diff]['unlocked'] = False
+                    for c in ['hulk', 'bob', 'little_fat']:
+                        data[diff][c]={}
+                        data[diff][c]['unlocked'] = False
+                        data[diff][c]['levels'] = []
+                    #Hulk is available by default
+                    data[diff]['hulk']['unlocked'] = True
+                    #Hulk has level 0 unlocked
+                    data[diff]['hulk']['levels'].append(0)
+                self.save[slot] = data
+                #'easy' is always unlocked
+                self.save[slot]['used'] = False
+                data['easy']['unlocked'] = True
 
-
-    # def save_data(self,data_to_save):
-    #     print os.getcwd()
-    #
-    #     file = open(self.file, "r")
-    #     lines = file.readlines()
-    #     dest_save = data_to_save[0]
-    #
-    #     for i in range(len(lines)):
-    #         data = lines[i].split(",")[0]
-    #         if data == dest_save:
-    #             lines[i] = str(data_to_save[0]) + ',' + str(data_to_save[1]) + ',' + str(data_to_save[2]) + ',' + str(data_to_save[3]) + ',' + str(data_to_save[4]) + '\n'
-    #     file.close()
-    #
-    #     file = open(self.file, "w+")
-    #     for i in range(len(lines)):
-    #         file.write(str(lines[i]))
-    #     file.close()
-
+            self.save_data()
+        else:
+            self.load_data()
 
     def save_data(self):
-        # print os.getcwd()
-
-        file = open(self.file, "r")
-        lines = file.readlines()
-
-        for i in range(len(lines)):
-            data = lines[i].split(",")[0]
-            if data == self.slot:
-                lines[i] = self.slot + ',' + str(self.unlocked_skills) + ',' + str(self.unlocked_chars) + ',' + str(self.remaining_lives) + ',' + str(self.unlocked_stages) + '\n'
-        file.close()
-
-        file = open(self.file, "w+")
-        for i in range(len(lines)):
-            file.write(str(lines[i]))
-        file.close()
-
+        pickle.dump(self.save,open(self.file,'wb'))
 
     def load_data(self):
-        #slot is choosen by the user in the menu
+        self.save = pickle.load(open(self.file,'rb'))
 
-        file = open(self.file, "r")
-        lines = file.readlines()
+    def stats(self,slot):
+        total = 21.0
+        unlocked = 0.0
+        for diff in ['easy','medium','hard']:
+            if self.save[slot][diff]['unlocked']:
+                for c in ['hulk', 'bob', 'little_fat']:
+                    if self.save[slot][diff][c]['unlocked']:
+                        unlocked += len(self.save[slot][diff][c]['levels'])
+        percentage = str(int(unlocked/total*100))
+        return percentage
+'''
+STANDARD ACCESS TO DATA SLOT
+    FOR SLOT A
 
-        for i in range(len(lines)):
-            data = lines[i].split("\n")[0]
-            data = lines[i].split(",")
-            if data[0] == self.slot:
-                self.unlocked_skills = int(data[1])
-                self.unlocked_chars = int(data[2])
-                self.remaining_lives = int(data[3])
-                self.unlocked_stages = int(data[4])
-        file.close()
+    save['A']['easy']['hulk'][0] => is hulk on easy unlocked ?
+    save['A']['easy']['hulk'][1] => List of unlocked levels of hulk in easy difficulty
+    save['A']['easy']['unlocked'] => Is the difficulty 'easy' unlocked
+'''

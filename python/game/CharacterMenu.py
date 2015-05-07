@@ -9,7 +9,7 @@ class CharacterMenu:
     font = pygame.font.Font
     screen = None
     characters = None
-    def __init__(self,screen,unlocked_chars):
+    def __init__(self,screen,nmp_data):
         #Init the menu
         #Draw with position = 1
         self.screen=screen
@@ -19,14 +19,13 @@ class CharacterMenu:
         #bob2 = routines.load_png('hero/idle_l.png')
 
 
-        #self.characters = [bob,hulk]
-        if unlocked_chars == 0:
-            self.characters = [hulk]
-        elif unlocked_chars == 1:
-            self.characters = [hulk, bob]
-        else:
-            self.characters = [hulk, bob, little_fat]
-
+        self.characters = []
+        if nmp_data.save[nmp_data.selected_slot][nmp_data.selected_diff]['hulk']['unlocked']:
+            self.characters.append(hulk)
+        if nmp_data.save[nmp_data.selected_slot][nmp_data.selected_diff]['bob']['unlocked']:
+            self.characters.append(bob)
+        if nmp_data.save[nmp_data.selected_slot][nmp_data.selected_diff]['little_fat']['unlocked']:
+            self.characters.append(little_fat)
         self.draw(0)
 
     def fib(self,n):

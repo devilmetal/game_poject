@@ -51,7 +51,7 @@ def main():
     level_nbr = 0 #level number chosen
     slot = '' #choix de la sauvegarde
     # nmp_data = Data("gamedata.txt")
-    nmp_data = Data("gamedata_dev.txt", "A,0,2,6,2\nB,0,0,6,0\nC,1,1,6,1\n") #slot A has everything already unlocked for dev purpose
+    nmp_data = Data("gamedata.noob") #slot A has everything already unlocked for dev purpose
     choices = None #choices for the different menus
 
     while main_loop:
@@ -62,19 +62,20 @@ def main():
             background_image = pygame.image.load("data/back.jpg").convert()
             screen.blit(background_image, [0, 0])
             menu = DifficultyMenu()
-
-            if nmp_data.unlocked_skills == 0:
-                choices = ['Newborn']
-            elif nmp_data.unlocked_skills == 1:
-                choices = ['Newborn','Little Boy']
-            else:
-                choices = ['Newborn','Little Boy','Kick Ass']
+            choices=[]
+            if nmp_data.save[nmp_data.selected_slot]['easy']['unlocked']:
+                choices.append('Newborn')
+            if nmp_data.save[nmp_data.selected_slot]['medium']['unlocked']:
+                choices.append('Little Boy')
+            if nmp_data.save[nmp_data.selected_slot]['hard']['unlocked']:
+                choices.append('Kickass')
 
             menu.init(choices, screen)
             menu.draw()
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
             level_dif = menu.run(joystick)
+            nmp_data.selected_diff = level_dif
 
         elif constants.GAME_STATUS == "menuChar":
             from characters.Bob import Bob
@@ -83,18 +84,18 @@ def main():
             from CharacterMenu import CharacterMenu
 
             #CHARACTER SELECTION MENU
-            menu = CharacterMenu(screen,nmp_data.unlocked_chars)
+            menu = CharacterMenu(screen,nmp_data)
             selected = menu.run(joystick)
             # player = None
             if selected == 0:
                 player = Hulk()
+                nmp_data.selected_char = 'hulk'
             elif selected == 1:
                 player = Bob()
+                nmp_data.selected_char = 'bob'
             elif selected == 2:
                 player = LittleFat()
-
-            if player != None:
-                player.lives = nmp_data.remaining_lives
+                nmp_data.selected_char = 'little_fat'
 
         elif constants.GAME_STATUS == "menuLevel":
             #LEVEL SELECTION MENU
@@ -103,18 +104,23 @@ def main():
             screen.blit(background_image, [0, 0])
             menu = LevelMenu()
 
-            if nmp_data.unlocked_stages == 0:
-                choices = ['Level 1']
-            elif nmp_data.unlocked_stages == 1:
-                choices = ['Level 1','Level 2']
-            else:
-                choices = ['Level 1','Level 2','Level 3']
-
+            choices_levels = nmp_data.save[nmp_data.selected_slot][nmp_data.selected_diff][nmp_data.selected_char]['levels']
+            choices = []
+            for l_choice in choices_levels:
+                if l_choice == 0:
+                    choices.append('Stage 1')
+                if l_choice == 1:
+                    choices.append('Stage 2')
+                if l_choice == 2:
+                    choices.append('Dragon')
             menu.init(choices, screen)
             menu.draw()
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
-            level_nbr = menu.run(joystick)
+            menu_position = None
+            menu_position = menu.run(joystick)
+            if not menu_position == None:
+                level_nbr = nmp_data.save[nmp_data.selected_slot][nmp_data.selected_diff][nmp_data.selected_char]['levels'][menu_position]
 
         elif constants.GAME_STATUS == "level":
             from Game import Game
@@ -127,13 +133,21 @@ def main():
             background_image = pygame.image.load("data/back.jpg").convert()
             screen.blit(background_image, [0, 0])
             menu = SaveMenu()
-            menu.init(['Slot A','Slot B','Slot C'], screen)
+            slot_list = []
+            for key in ['A','B','C']:
+                if not nmp_data.save[key]['used']:
+                    slot_list.append("Slot "+key)
+                else:
+                    slot_list.append("Progress : "+nmp_data.stats(key)+"%")
+            #menu.init(['Slot A','Slot B','Slot C'], screen)
+            menu.init(slot_list, screen)
             menu.draw()
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
             slot = menu.run(joystick)
-            nmp_data.slot = slot
-            nmp_data.load_data()#prepare the data to load for other menus
+            nmp_data.selected_slot = slot
+            nmp_data.save[slot]['used'] = True
+            nmp_data.save_data()
 
         elif constants.GAME_STATUS == "menu":
             from Menu import Menu

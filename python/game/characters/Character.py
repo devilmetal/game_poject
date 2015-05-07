@@ -13,7 +13,7 @@ class Character(pygame.sprite.Sprite):
     def __init__(self):
         """ Constructor function """
         super(Character, self).__init__()
-
+        self.name=None
         self.interface = PlayerInterface()
 
         #personnal aptitudes

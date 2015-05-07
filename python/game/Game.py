@@ -44,7 +44,7 @@ class Game():
     def init_level(self, level_nbr, level_dif):
         if level_nbr == 0:
             if not self.checkpoint:
-                self.start_x = 350
+                self.start_x = 14000#350
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = FirstStage(self.character, level_dif)
         elif level_nbr == 1:
@@ -56,7 +56,7 @@ class Game():
         elif level_nbr == 2:
             print "initiate level boss"
             if not self.checkpoint:
-                self.start_x = 500
+                self.start_x = 2400#500
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = Boss1(self.character, level_dif)
 
@@ -71,17 +71,6 @@ class Game():
         self.character.rect.x = self.level.start_x
         self.character.rect.y = self.level.start_y
         self.active_sprite_list.add(self.character)
-
-        #Save game progress (unlocked things + lives)
-        if level_nbr > self.nmp_data.unlocked_stages:
-            self.nmp_data.unlocked_stages = level_nbr
-        if self.level_dif_nbr > self.nmp_data.unlocked_skills:
-            self.nmp_data.unlocked_skills = self.level_dif_nbr
-        if self.character.id > self.nmp_data.unlocked_chars:
-            self.nmp_data.unlocked_chars = self.character.id
-        self.nmp_data.remaining_lives = self.character.lives
-        self.nmp_data.save_data()
-
 
     def run(self):
         #Loop until the user clicks the close button.

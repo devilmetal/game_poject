@@ -81,10 +81,10 @@ class FirstStage(Level):
 
 		#if we are on a platform that should make us go to the next level
 		#[width, height, top-left x, top-left y, next level]
-		end_plat = [
-					[120, 20, 14380, HEIGHT-350, 1],
-					[120, 20, 15000, HEIGHT, 2]
-					]
+		end_plat = []
+		end_plat.append([120, 20, 14380, HEIGHT-350, 1, 'bob'])
+		end_plat.append([120, 20, 15000, HEIGHT, 2, player.name])
+
 		# checkpoints
 		#[top-left x, top-left , width, height]
 		checkpoints = [
@@ -298,6 +298,7 @@ class FirstStage(Level):
 			block.player = self.player
 			block.level = self
 			block.level_pointer = plat[4]
+			block.character_pointer = plat[5]
 			self.platform_list.add(block)
 
 		#Parallax background
@@ -685,7 +686,7 @@ class FirstStage(Level):
 						sub.player = self.player
 						sub.level = self
 						block.subblock.add(sub)
-				
+
 				self.mov_plat_list.add(block)
 
 			for spike in medium_spikes:

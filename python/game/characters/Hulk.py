@@ -17,6 +17,7 @@ class Hulk(Character):
     def __init__(self):
         """ Constructor function """
         Character.__init__(self)
+        self.name='hulk'
         self.jump_l_image, self.jump_l_image_rect =  routines.load_png('hero_1/jump_l.png')
         self.jump_r_image, self.jump_r_image_rect =  routines.load_png('hero_1/jump_r.png')
         self.idle_l_image, self.idle_l_image_rect = routines.load_png('hero_1/idle_l.png')
