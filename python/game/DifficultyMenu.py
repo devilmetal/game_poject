@@ -24,8 +24,10 @@ class DifficultyMenu(Menu):
                     hat = joystick.get_hat(0)
                     if (0, 1) == hat:
                         self.draw(-1)
+                        Menu.menu_res['menu_hover'].play()
                     if (0, -1) == hat:
                         self.draw(1)
+                        Menu.menu_res['menu_hover'].play()
                     pygame.display.update()
                 if event.type == pygame.JOYBUTTONDOWN:
                     if joystick.get_button(1) == 1:#X button
@@ -37,18 +39,22 @@ class DifficultyMenu(Menu):
                             level_diff = "easy"
 
                         constants.GAME_STATUS = "menuChar"
+                        Menu.menu_res['menu_select'].play()
                         return level_diff
 
                     if joystick.get_button(2) == 1:#O button
                         constants.GAME_STATUS = "menuSave"
+                        Menu.menu_res['menu_back'].play()
                         menu_flag = False
 
                 #Keyboard stuff
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         self.draw(-1)
+                        Menu.menu_res['menu_hover'].play()
                     if event.key == pygame.K_DOWN:
                         self.draw(1)
+                        Menu.menu_res['menu_hover'].play()
                     if event.key == pygame.K_RETURN:
                         if self.get_position() == 2:
                             level_diff = "hard"
@@ -58,10 +64,12 @@ class DifficultyMenu(Menu):
                             level_diff = "easy"
 
                         constants.GAME_STATUS = "menuChar"
+                        Menu.menu_res['menu_select'].play()
                         return level_diff
 
                     if event.key == pygame.K_BACKSPACE: #go back
                         constants.GAME_STATUS = "menuSave"
+                        Menu.menu_res['menu_back'].play()
                         menu_flag = False
 
                     if event.key == pygame.K_ESCAPE:

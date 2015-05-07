@@ -145,9 +145,10 @@ def main():
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
             slot = menu.run(joystick)
-            nmp_data.selected_slot = slot
-            nmp_data.save[slot]['used'] = True
-            nmp_data.save_data()
+            if slot != None:#when nothing has been selected (ex: going back in menu)
+                nmp_data.selected_slot = slot
+                nmp_data.save[slot]['used'] = True
+                nmp_data.save_data()
 
         elif constants.GAME_STATUS == "menu":
             from Menu import Menu

@@ -44,7 +44,7 @@ class Game():
     def init_level(self, level_nbr, level_dif):
         if level_nbr == 0:
             if not self.checkpoint:
-                self.start_x = 14000#350
+                self.start_x = 350
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = FirstStage(self.character, level_dif)
         elif level_nbr == 1:
@@ -56,7 +56,7 @@ class Game():
         elif level_nbr == 2:
             print "initiate level boss"
             if not self.checkpoint:
-                self.start_x = 2400#500
+                self.start_x = 500
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = Boss1(self.character, level_dif)
 

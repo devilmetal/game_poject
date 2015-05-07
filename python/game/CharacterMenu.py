@@ -1,6 +1,7 @@
 import pygame
 import constants
 import routines
+from Menu import Menu
 
 class CharacterMenu:
     selected = 0
@@ -102,27 +103,35 @@ class CharacterMenu:
                     hat = joystick.get_hat(0)
                     if (1, 0) == hat:
                         self.draw_by_hop(1)
+                        Menu.menu_res['menu_hover'].play()
                     if (-1, 0) == hat:
                         self.draw_by_hop(-1)
+                        Menu.menu_res['menu_hover'].play()
                 if event.type == pygame.JOYBUTTONDOWN:
                     if joystick.get_button(1) == 1:#X button
                         constants.GAME_STATUS = "menuLevel"
+                        Menu.menu_res['menu_select'].play()
                         return self.selected
                     if joystick.get_button(2) == 1:#O button
                         constants.GAME_STATUS = "menuDiff"
+                        Menu.menu_res['menu_back'].play()
                         done = True
 
                 #Keyboard stuff
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
                         self.draw_by_hop(1)
+                        Menu.menu_res['menu_hover'].play()
                     if event.key == pygame.K_LEFT:
                         self.draw_by_hop(-1)
+                        Menu.menu_res['menu_hover'].play()
                     if event.key == pygame.K_RETURN:
                         constants.GAME_STATUS = "menuLevel"
+                        Menu.menu_res['menu_select'].play()
                         return self.selected
                     if event.key == pygame.K_BACKSPACE:
                         constants.GAME_STATUS = "menuDiff"
+                        Menu.menu_res['menu_back'].play()
                         done = True
                     if event.key == pygame.K_ESCAPE:
                         constants.GAME_STATUS="exit"

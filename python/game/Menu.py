@@ -16,6 +16,10 @@ class Menu:
     pos_rect = (0,0)
     menu_width = 0
     menu_height = 0
+    menu_res = {}
+    menu_res['menu_hover'] = pygame.mixer.Sound('data/sound/menu-hover.wav')
+    menu_res['menu_back'] = pygame.mixer.Sound('data/sound/menu-back.wav')
+    menu_res['menu_select'] = pygame.mixer.Sound('data/sound/menu-select.wav')
 
     class Pole:
         tekst = ''
@@ -114,8 +118,10 @@ class Menu:
                     hat = joystick.get_hat(0)
                     if (0, 1) == hat:
                         self.draw(-1)
+                        Menu.menu_res['menu_hover'].play()
                     if (0, -1) == hat:
                         self.draw(1)
+                        Menu.menu_res['menu_hover'].play()
                     pygame.display.update()
                 if event.type == pygame.JOYBUTTONDOWN:
                     if joystick.get_button(1) == 1:
@@ -124,6 +130,7 @@ class Menu:
                             menu_flag = False
                         if self.get_position() == 0:#here is the Menu class function
                             constants.GAME_STATUS="menuSave"
+                            Menu.menu_res['menu_select'].play()
                             menu_flag = False
 
 
@@ -131,14 +138,17 @@ class Menu:
                 if event.type == pygame.KEYDOWN: # or event.type == pygame.JOYHATMOTION or event.type == pygame.JOYBUTTONDOWN:
                     if event.key == pygame.K_UP:# or joystick.get_hat()==(0,1):
                         self.draw(-1) #here is the Menu class function
+                        Menu.menu_res['menu_hover'].play()
                     if event.key == pygame.K_DOWN:# or joystick.get_hat()==(0,-1):
                         self.draw(1) #here is the Menu class function
+                        Menu.menu_res['menu_hover'].play()
                     if event.key == pygame.K_RETURN:
                         if self.get_position() == 1:#here is the Menu class function
                             constants.GAME_STATUS="exit"
                             menu_flag = False
                         if self.get_position() == 0:#here is the Menu class function
                             constants.GAME_STATUS="menuSave"
+                            Menu.menu_res['menu_select'].play()
                             menu_flag = False
                     if event.key == pygame.K_ESCAPE:
                         constants.GAME_STATUS="exit"

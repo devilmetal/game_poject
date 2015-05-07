@@ -1,0 +1,23 @@
+Sources of all sounds used for this game:
+
+blobdie.wav
+glass.wav
+jump.wav
+roar.wav
+scream.wav
+
+http://www.freesound.org/people/ThatGuyWithTheBeard/sounds/253478/
+death-1.wav
+
+http://www.freesound.org/people/RutgerMuller/sounds/104036/
+death-2.aif
+
+http://opengameart.org/content/8-bit-platformer-sfx
+fireball.wav
+
+http://jessefreeman.com/game-dev/intro-to-making-sound-effects-for-games/
+hit-hard.wav
+menu-back.wav
+menu-hover.wav
+menu-select.wav
+walking-sound-2.wav
