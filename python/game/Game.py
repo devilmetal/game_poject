@@ -149,7 +149,7 @@ class Game():
                     if self.joystick.get_button(1) == 1:
                         self.character.jump()
                     if self.joystick.get_button(9) == 1:
-                        routines.pause(clock,self.screen,self.joystick)
+                        self.done = routines.pause(clock,self.screen,self.joystick, self.done)
 
                 if event.type == pygame.JOYHATMOTION:
                     hat = self.joystick.get_hat(0)
@@ -180,7 +180,7 @@ class Game():
                     if event.key == pygame.K_UP or event.key == pygame.K_w or event.key == pygame.K_SPACE:
                         self.character.jump()
                     if event.key == pygame.K_p:
-                        routines.pause(clock,self.screen,self.joystick)
+                        self.done = routines.pause(clock,self.screen,self.joystick, self.done)
 
                 if event.type == pygame.KEYUP:
                     if (event.key == pygame.K_LEFT or event.key == pygame.K_a) and self.character.change_x < 0:

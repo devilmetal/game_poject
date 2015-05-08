@@ -67,18 +67,19 @@ class Menu:
         self.dest_surface.blit(menu,self.pos_rect)
         return self.pos_selection
 
-    def create_structure(self):
-        #make title "No More Pixies"
-        font_size_title = 82
-        font_path_title = 'data/coders_crux/coders_crux.ttf'
-        font_title = pygame.font.Font(font_path_title, font_size_title)
-        title = "No More Pixies"
-        text = font_title.render(title, 1, constants.WHITE)
-        screen = self.dest_surface
-        textRect = text.get_rect()
-        textRect.centerx = 500
-        textRect.centery = 100
-        screen.blit(text,textRect)
+    def create_structure(self, default=True):
+        if default:
+            #make title "No More Pixies"
+            font_size_title = 82
+            font_path_title = 'data/coders_crux/coders_crux.ttf'
+            font_title = pygame.font.Font(font_path_title, font_size_title)
+            title = "No More Pixies"
+            text = font_title.render(title, 1, constants.WHITE)
+            screen = self.dest_surface
+            textRect = text.get_rect()
+            textRect.centerx = 500
+            textRect.centery = 100
+            screen.blit(text,textRect)
         actual_posiecie = 0
         self.menu_height = 0
         self.font = pygame.font.Font(self.font_path, self.font_size)
