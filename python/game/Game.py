@@ -54,7 +54,6 @@ class Game():
             self.level = SecondStage(self.character, level_dif)
 
         elif level_nbr == 2:
-            print "initiate level boss"
             if not self.checkpoint:
                 self.start_x = 500
                 self.start_y = HEIGHT - self.character.rect.height
