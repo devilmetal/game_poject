@@ -22,7 +22,7 @@ class Dragon(pygame.sprite.Sprite):
         self.dead = False
         self.hited = False
         self.hit_annimation_counter=0
-        self.fireball_timer = 100
+        self.fireball_timer = 180
         #Instanciation :
         self.image = PNJ_ressources.dragon_ressources['cave'][0]
         self.rect = self.image.get_rect()

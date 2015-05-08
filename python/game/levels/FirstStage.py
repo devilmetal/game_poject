@@ -107,7 +107,7 @@ class FirstStage(Level):
 		#array of horizontal moving platform
 		#[width, height, top-left x, top-left y, left bound, right bound, speed]
 		horiz = [
-				[60, 20, 5100, HEIGHT-300, 5100, 5600, 2],
+				[120, 20, 5100, HEIGHT-300, 5100, 5600, 2],
 				#chain moving platform in the air
 				#see diff part
 
@@ -177,7 +177,8 @@ class FirstStage(Level):
 		#Blobs dummies
 
 		blobs = [[500, HEIGHT-100, 1, 2],
-				[500, HEIGHT-100, -1, 2],
+				[8900, HEIGHT-100, 1, 1],
+				[1200, HEIGHT-100, 1, 2],
 				]
 
 		fairy = [
