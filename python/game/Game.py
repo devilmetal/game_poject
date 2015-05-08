@@ -4,6 +4,7 @@ import routines
 import random
 from levels.FirstStage import FirstStage
 from levels.SecondStage import SecondStage
+from levels.ThirdStage import ThirdStage
 from levels.Boss1 import Boss1
 HEIGHT = constants.SCREEN_HEIGHT-20
 TAUNTS = ["You're still not skilled enough...","Try again, noob !","Come on !","Do you want to have a rest ?","You may need to lower the difficulty... noob !","Even my grandmother is more skilled than you !","What the f**k did you do ?","You know... Maybe you should give up...","You are more dying than playing bro !","Hahahahahaha ! XD","So close... but so far !","Man... seriously ?"]
@@ -52,8 +53,12 @@ class Game():
                 self.start_x = 350
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = SecondStage(self.character, level_dif)
-
         elif level_nbr == 2:
+            if not self.checkpoint:
+                self.start_x = 350
+                self.start_y = HEIGHT - self.character.rect.height
+            self.level = ThirdStage(self.character, level_dif)
+        elif level_nbr == 3:
             print "initiate level boss"
             if not self.checkpoint:
                 self.start_x = 500

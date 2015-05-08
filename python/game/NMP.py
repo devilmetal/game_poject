@@ -107,8 +107,10 @@ def main():
                 choices = ['Level 1']
             elif nmp_data.unlocked_stages == 1:
                 choices = ['Level 1','Level 2']
+            elif nmp_data.unlocked_stages == 2:
+                choices = ['level 1','level 2','level 3']
             else:
-                choices = ['Level 1','Level 2','Level 3']
+                choices = ['Level 1','Level 2','Level 3','boss']
 
             menu.init(choices, screen)
             menu.draw()

@@ -35,6 +35,8 @@ class LevelMenu(Menu):
                             level_nbr = 1
                         if self.get_position() == 2:
                             level_nbr = 2
+                        if self.get_position() == 3:
+                            level_nbr = 3
 
                         constants.GAME_STATUS = "level"
                         return level_nbr
@@ -57,6 +59,8 @@ class LevelMenu(Menu):
                             level_nbr = 1
                         if self.get_position() == 2:
                             level_nbr = 2
+                        if self.get_position() == 3:
+                            level_nbr = 3
 
                         constants.GAME_STATUS = "level"
                         return level_nbr

@@ -32,44 +32,44 @@ class SecondStage(Level):
 		#array of platforms
 		#[width, height, x, y]
 		plats = [
-				[300, HEIGHT, 0, 0],
-				[3500, 20, 0, HEIGHT],
-				#squares for spikes
-				[30, 30, 800, HEIGHT-80],
-				[30, 30, 1200, HEIGHT-120],
-				#rectangle of spikes
-				[150, 30, 1600, HEIGHT-100],
-				#monster arena
-				[100, 250, 2100, HEIGHT-250],
-				[100, 250, 2800, HEIGHT-250],
-				[150, 20, 2425, HEIGHT-300],
-				#first platform in the air (after first round moving plat)
-				[100, 20, 4750, HEIGHT-200],
-				#little square for the moving platform
-				[20, 20, 5300, HEIGHT-220],
-				[20, 20, 5700, HEIGHT-220],
-				#2nd ground platform
-				[1900, 20, 6200, HEIGHT],
-				#wall containing some magma
-				[50, 200, 6650, HEIGHT-200],
-				[50, 70, 7150, HEIGHT-70],
-				[50, 150, 7500, HEIGHT-150],
-				[50, 150, 8000, HEIGHT-150],
-				[50, 300, 8050, HEIGHT-300],
-				#platform in the long magma moving flour
-				[100, 20, 8300, HEIGHT-200],
-				[800, 20, 8600, HEIGHT-100],
-				[100, 20, 9600, HEIGHT-200],
-				[50, 300, 10000, HEIGHT-300],
-				#third ground
-				[2500, 20, 10000, HEIGHT],
-				[30, 30, 11900, HEIGHT-30],
-				[100, 220, 12500, HEIGHT-200],
-				[100, 220, 13800, HEIGHT-200],
-				#last square of spikes
-				[30, 30, 14400, HEIGHT-370],
-				[1500, 20, 15200, HEIGHT]
-			]
+			[300, HEIGHT, 0, 0],
+			[3500, 20, 0, HEIGHT],
+			#squares for spikes
+			[30, 30, 800, HEIGHT-80],
+			[30, 30, 1200, HEIGHT-120],
+			#rectangle of spikes
+			[150, 30, 1600, HEIGHT-100],
+			#monster arena
+			[100, 250, 2100, HEIGHT-250],
+			[100, 250, 2800, HEIGHT-250],
+			[150, 20, 2425, HEIGHT-300],
+			#first platform in the air (after first round moving plat)
+			[100, 20, 4750, HEIGHT-200],
+			#little square for the moving platform
+			[20, 20, 5300, HEIGHT-220],
+			[20, 20, 5700, HEIGHT-220],
+			#2nd ground platform
+			[1900, 20, 6200, HEIGHT],
+			#wall containing some magma
+			[50, 200, 6650, HEIGHT-200],
+			[50, 70, 7150, HEIGHT-70],
+			[50, 150, 7500, HEIGHT-150],
+			[50, 150, 8000, HEIGHT-150],
+			[50, 300, 8050, HEIGHT-300],
+			#platform in the long magma moving flour
+			[100, 20, 8300, HEIGHT-200],
+			[800, 20, 8600, HEIGHT-100],
+			[100, 20, 9600, HEIGHT-200],
+			[50, 300, 10000, HEIGHT-300],
+			#third ground
+			[2500, 20, 10000, HEIGHT],
+			[30, 30, 11900, HEIGHT-30],
+			[100, 220, 12500, HEIGHT-200],
+			[100, 220, 13800, HEIGHT-200],
+			#last square of spikes
+			[30, 30, 14400, HEIGHT-370],
+			[1500, 20, 15200, HEIGHT]
+		]
 
 		# checkpoints
 		#[top-left x, top-left , width, height]
@@ -119,7 +119,7 @@ class SecondStage(Level):
 			[1, 14428, HEIGHT-370],
 			[2, 14400, HEIGHT-342],
 			[3, 14354, HEIGHT-370]
-			]
+		]
 
 
 		#array of special moving platforms
@@ -194,14 +194,14 @@ class SecondStage(Level):
 		#speed up, speed down, speed left, speed right, is moving round, clockwise movement]
 		round_spike=[
 			#moved into block_round_moving : [array of subblock]
-			]
+		]
 
 		#magma platform
 		#[width, height, x, y]
 		magma = [
 			[300, 50, 7200, HEIGHT-50],
 			[1200, 120, 12600, HEIGHT-100]
-			]
+		]
 
 
 		#adding parallax stuff to background along the level
@@ -213,6 +213,10 @@ class SecondStage(Level):
 			front_p.append([x_parallax])
 			x_parallax+=constants.SCREEN_WIDTH
 
+
+
+		###################################################################################
+		###################################################################################
 
 		"""Generation of the standard level's elements"""
 
@@ -344,6 +348,11 @@ class SecondStage(Level):
 			paral = Parallax(x,y,width,height,mode,level)
 			self.back_front_world_list.add(paral)
 
+
+		###################################################################################
+		###################################################################################
+
+
 		"""Specific platform for the difficulty level"""
 
 		#easy
@@ -412,6 +421,9 @@ class SecondStage(Level):
 		]
 
 
+
+
+		###################################################################################
 		#medium
 		#[width, height, x, y]
 		medium_plats = [
@@ -605,6 +617,9 @@ class SecondStage(Level):
 
 
 
+
+
+		###################################################################################
 		#Hard
 		#[widht, height, x, y]
 		hard_plats = [
@@ -795,6 +810,14 @@ class SecondStage(Level):
 			[1900, 270, 8100, HEIGHT, HEIGHT-250, HEIGHT+270, 2, 200]
 		]
 
+
+
+
+
+		###################################################################################
+		###################################################################################
+
+
 		"""Generation of the platform corresponding to the difficulty level"""
 
 		if level_dif == "easy":
@@ -906,6 +929,10 @@ class SecondStage(Level):
 				#CheckPoint is white!
 				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
+
+
+
+		###################################################################################
 
 		elif level_dif == "medium":
 			for plat in medium_plats:
@@ -1068,6 +1095,11 @@ class SecondStage(Level):
 				#CheckPoint is white!
 				block.image.fill(constants.WHITE)
 				self.platform_list.add(block)
+
+
+
+
+		###################################################################################
 
 		elif level_dif == "hard":
 			for plat in hard_plats:
