@@ -53,7 +53,29 @@ class Data():
 STANDARD ACCESS TO DATA SLOT
     FOR SLOT A
 
-    save['A']['easy']['hulk'][0] => is hulk on easy unlocked ?
-    save['A']['easy']['hulk'][1] => List of unlocked levels of hulk in easy difficulty
+    save['A']['easy']['hulk']['unlocked'] => is hulk on easy unlocked ?
+    save['A']['easy']['hulk']['levels'] => List of unlocked levels of hulk in easy difficulty
     save['A']['easy']['unlocked'] => Is the difficulty 'easy' unlocked
+
+    ==================================
+    GENERAL STRUCTURE OF THE SAVE TREE
+    ==================================
+
+    save['A']
+    save['B']
+    save['C']
+        ['used'] #save slot used or free
+            'True'|'False'
+        ['easy']
+            ['unlocked'] # difficulty unlocked
+                'True'|'False'
+            ['hulk']
+                ['unlocked'] # character unlocked or not
+                    'True'|'False'
+                ['levels']
+                    [0,1,2,...]
+            ['bob']
+            ['little_fat']
+        ['medium']
+        ['hard']
 '''
