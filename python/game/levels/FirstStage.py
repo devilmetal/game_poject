@@ -88,7 +88,7 @@ class FirstStage(Level):
 		# checkpoints
 		#[top-left x, top-left , width, height]
 		checkpoints = [
-					[50, 20, 2700, HEIGHT],
+					[50, 20, 2700, HEIGHT-20],
 					[60, 20, 5750, HEIGHT-300],
 					[50, 20, 8400, HEIGHT-20]
 					]
