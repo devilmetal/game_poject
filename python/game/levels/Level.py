@@ -1,5 +1,6 @@
 import pygame
 import constants
+from CrossFade import CrossFade
 
 class Level():
     """ This is a generic super-class used to define a level.
@@ -23,6 +24,7 @@ class Level():
 
     next_level = 0
     end_level = False
+    start_level = True #used to know when to apply fade in effect
 
     def __init__(self, player):
         """ Constructor. Pass in a handle to player. Needed for when moving
@@ -90,6 +92,11 @@ class Level():
                     screen.blit(block.image,block.rect)
                     screen.blit(elem.image,elem.rect)
         self.player.interface.draw(screen, self.player.lives)
+
+        if self.start_level:
+            fade = CrossFade(screen)
+            fade.fadein(screen, 5)
+            self.start_level = False
 
     def shift_world(self, shift_x):
         """ When the user moves left/right and we need to scroll everything: """
