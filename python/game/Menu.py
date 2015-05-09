@@ -75,11 +75,11 @@ class Menu:
             font_title = pygame.font.Font(font_path_title, font_size_title)
             title = "No More Pixies"
             text = font_title.render(title, 1, constants.WHITE)
-            screen = self.dest_surface
+            # screen = self.dest_surface
             textRect = text.get_rect()
             textRect.centerx = 500
             textRect.centery = 100
-            screen.blit(text,textRect)
+            self.dest_surface.blit(text,textRect)
         actual_posiecie = 0
         self.menu_height = 0
         self.font = pygame.font.Font(self.font_path, self.font_size)

@@ -24,6 +24,7 @@ import os
 import constants
 import sys
 from Data import Data
+from CrossFade import CrossFade
 
 constants.GAME_STATUS = "menu" #menu, char_select, level_selct, level
 pygame.joystick.init()
@@ -43,7 +44,7 @@ def main():
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption("(Alpha) No More Pixies")
+    pygame.display.set_caption("(Beta) No More Pixies")
     main_loop = True
     first = True
     level_dif = "" #difficulty level chosen
@@ -72,6 +73,8 @@ def main():
 
             menu.init(choices, screen)
             menu.draw()
+            fade = CrossFade(screen)
+            fade.fade(screen, 20)
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
             level_dif = menu.run(joystick)
@@ -85,6 +88,8 @@ def main():
 
             #CHARACTER SELECTION MENU
             menu = CharacterMenu(screen,nmp_data)
+            fade = CrossFade(screen)
+            fade.fade(screen, 20)
             selected = menu.run(joystick)
             # player = None
             if selected == 0:
@@ -119,6 +124,8 @@ def main():
             pygame.display.update()
             menu_position = None
             menu_position = menu.run(joystick)
+            fade = CrossFade(screen)
+            fade.fadeout(screen, 15)
             if not menu_position == None:
                 level_nbr = nmp_data.save[nmp_data.selected_slot][nmp_data.selected_diff][nmp_data.selected_char]['levels'][menu_position]
 
@@ -142,6 +149,8 @@ def main():
             #menu.init(['Slot A','Slot B','Slot C'], screen)
             menu.init(slot_list, screen)
             menu.draw()
+            fade = CrossFade(screen)
+            fade.fade(screen, 20)
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
             slot = menu.run(joystick)
@@ -157,6 +166,8 @@ def main():
             menu = Menu()
             menu.init(['Start','Quit'], screen)
             menu.draw()
+            fade = CrossFade(screen)
+            fade.fade(screen, 20)
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
             menu.run(joystick)

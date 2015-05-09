@@ -5,6 +5,7 @@ import random
 from levels.FirstStage import FirstStage
 from levels.SecondStage import SecondStage
 from levels.Boss1 import Boss1
+from CrossFade import CrossFade
 HEIGHT = constants.SCREEN_HEIGHT-20
 TAUNTS = ["You're still not skilled enough...","Try again, noob !","Come on !","Do you want to have a rest ?","You may need to lower the difficulty... noob !","Even my grandmother is more skilled than you !","What the f**k did you do ?","You know... Maybe you should give up...","You are more dying than playing bro !","Hahahahahaha ! XD","So close... but so far !","Man... seriously ?"]
 class Game():
@@ -99,6 +100,8 @@ class Game():
                 if len(self.taunts)==1:
                     self.taunts = TAUNTS
                 taunt = self.taunts.pop(self.taunts.index(taunt))
+                fade = CrossFade(self.screen)
+                fade.fadeout(self.screen, 15)
                 routines.death_menu(clock, self.screen,taunt)
 
             # If the self.character gets near the right side, shift the world left (-x)
@@ -149,6 +152,8 @@ class Game():
                         self.character.jump()
                     if self.joystick.get_button(9) == 1:
                         self.done = routines.pause(clock,self.screen,self.joystick, self.done)
+                        if self.done:
+                            pygame.mixer.music.fadeout(1000)
 
                 if event.type == pygame.JOYHATMOTION:
                     hat = self.joystick.get_hat(0)
@@ -180,6 +185,8 @@ class Game():
                         self.character.jump()
                     if event.key == pygame.K_p:
                         self.done = routines.pause(clock,self.screen,self.joystick, self.done)
+                        if self.done:
+                            pygame.mixer.music.fadeout(1000)
 
                 if event.type == pygame.KEYUP:
                     if (event.key == pygame.K_LEFT or event.key == pygame.K_a) and self.character.change_x < 0:
