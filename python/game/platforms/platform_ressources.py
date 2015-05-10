@@ -2,6 +2,7 @@ import routines
 
 spikes_ressources = {}
 platform_ressources = {}
+checkpoint_ressources = {}
 
 def init_spikes_ressources():
     if spikes_ressources == {}:
@@ -14,3 +15,8 @@ def init_platform_ressources():
     if platform_ressources == {}:
         platform_ressources['scratch'] = routines.load_png('world/platforms/scratch.png')
         platform_ressources['grass'] = routines.load_png('world/platforms/grass.png')
+
+def init_checkpoint_ressources():
+    if checkpoint_ressources == {}:
+        checkpoint_ressources['flag'] = routines.load_png('world/platforms/flag.png')
+        checkpoint_ressources['bar'] = routines.load_png('world/platforms/bar.png')
