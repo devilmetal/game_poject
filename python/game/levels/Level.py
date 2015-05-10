@@ -1,6 +1,8 @@
 import pygame
 import constants
+from platforms import CheckPoint
 from CrossFade import CrossFade
+import routines
 
 class Level():
     """ This is a generic super-class used to define a level.
@@ -76,6 +78,14 @@ class Level():
         #self.platform_list.draw(screen)
         for elem in self.platform_list:
             if not(screen.get_rect().collidelist([elem])):
+                # screen.blit(elem.image,elem.rect)
+                if isinstance(elem, CheckPoint.CheckPoint) and (elem.checked or elem.camp):
+                    bg, v = elem.draw_camp()
+                    # print v[1]
+                    screen.blit(bg, (elem.rect.x,v[1]))
+                #     bg, bg_rect = routines.load_png('world/checkpoints/checkpoint.png')
+                #     screen.blit(bg, (elem.rect.x,elem.rect.y-80))
+
                 screen.blit(elem.image,elem.rect)
         #pygame.sprite.spritecollide(screen, self.platform_list, False).draw(screen)
         #self.magma_list.draw(screen)
