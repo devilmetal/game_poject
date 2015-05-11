@@ -34,14 +34,63 @@ class ThirdStage(Level):
 		#[width, height, x, y]
 		platforms = [
 			#ground platform
-			[2600, 20, 0, HEIGHT]
+			[2600, 20, 0, HEIGHT],
+			#obstacles
+			[100, 300, 1200, HEIGHT-300],
+			[550, 20, 550, HEIGHT-100],
+			[20, 420, 530, HEIGHT-500],
+			[550, 20, 650, HEIGHT-200],
+			[50, 50, 700, HEIGHT-250],
+			[50, 50, 900, HEIGHT-250],
+			[50, 50, 1100, HEIGHT-250],
+			#second obstacles
+			[20, HEIGHT-80, 1500, 0],
+			[20, 300, 1700, HEIGHT-300],
+			[50, 20, 1650, HEIGHT-50],
+			[50, 20, 1520, HEIGHT-100],
+			[50, 20, 1650, HEIGHT-150],
+			[50, 20, 1520, HEIGHT-200],
+			[50, 20, 1650, HEIGHT-250],
+			#third obstacles
+			[20, HEIGHT-80, 1850, 0],
+			#air platform
+			[100, 20, 3250, HEIGHT-150],
+			[30, 30, 3685, HEIGHT-165],
+			#second ground platform
+			[2000, 20, 4300, HEIGHT],
 		]
+
+		#some standard spikes
+		#[orientation, x, y]
+		spikes = [
+			[0, 2000, HEIGHT-45],
+			[0, 2200, HEIGHT-45],
+			[0, 2400, HEIGHT-45],
+			[0, 3685, HEIGHT-208],
+			[1, 3712, HEIGHT-165],
+			[2, 3685, HEIGHT-138],
+			[3, 3640, HEIGHT-165]
+		]
+
+		#checkpoints
+		#[widht, height, x, y]
+		checkpoints = [
+			[80, 20, 4050, HEIGHT-150]
+		]
+
+		#array of diag moving plat
+		#[widght, height, x, y, left bound, right bound, top bound, bottom bound, speed]
+		diag = [
+			[100, 20, 2700, HEIGHT-150, 2700, 3000, HEIGHT-300, HEIGHT+20, 1],
+			[100, 20, 3500, HEIGHT-150, 3500, 3800, HEIGHT-300, HEIGHT+20, 1]
+		]
+
 
 		#death moving wall
 		#[width, height, x, y, left bound, right bound, speed right, speed left, pause right, pause left,
 		#[[Array of magma subblock]]]
 		horiz_mov_wall = [
-			[400, HEIGHT, -300, 0, -300, 2000, 1, 0, 60, 60,
+			[500, HEIGHT, -400, 0, -400, 2000, 1, 0, 60, 60,
 				[[20, HEIGHT, 100, 0, 100, 2400, 1, 0, 60, 60]]
 			]
 		]
@@ -74,6 +123,39 @@ class ThirdStage(Level):
 			block.player = self.player
 			block.level = self
 			self.platform_list.add(block)
+
+		for spike in spikes:
+			block = Spike(spike[0])
+			block.rect.x = spike[1]
+			block.rect.y = spike[2]
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
+
+		for plat in checkpoints:
+			block = CheckPoint(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.player = self.player
+			block.level = self
+			#CheckPoint is white!
+			block.image.fill(constants.WHITE)
+			self.platform_list.add(block)
+
+		for plat in diag:
+			block = MovingPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.boundary_left = plat[4]
+			block.boundary_right = plat[5]
+			block.boundary_top = plat[6]
+			block.boundary_bottom = plat[7]
+			block.change_x = plat[8]
+			block.change_y = plat[8]
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
+
 
 		for wall in horiz_mov_wall:
 			block = SpecialPlatform(wall[0], wall[1])
