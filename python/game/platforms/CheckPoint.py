@@ -26,18 +26,6 @@ class CheckPoint(Platform):
     def draw_camp(self):
 
         #So the checkpoint is validate even if the player left the platform before the annimation end.
-        self.player.rect.y += 2
-        hit = pygame.sprite.collide_rect(self.player, self) and not self.player.hit
-        self.player.rect.y -= 2
-        if hit:
-            tmp_x = self.rect.x+int((self.rect.width-self.player.rect.width)/2)-self.level.world_shift
-            tmp_y = self.rect.y-self.player.rect.height
-            if self.level.game.start_x != tmp_x and self.level.game.start_y != tmp_y:
-                #new checkpoint encountered!
-                self.level.game.start_x = tmp_x
-                self.level.game.start_y = tmp_y
-                self.level.game.checkpoint = True
-
         if self.y == 0:
             self.y = self.rect.y
         HEIGHT = constants.SCREEN_HEIGHT-20

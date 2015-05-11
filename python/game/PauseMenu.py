@@ -15,6 +15,7 @@ class PauseMenu(Menu):
 
 
     def run(self,joystick):
+        pygame.mixer.music.pause()
         menu_flag = True
         selected = ''
         while menu_flag:
@@ -41,6 +42,7 @@ class PauseMenu(Menu):
 
                         # constants.GAME_STATUS = "menuDiff"
                         Menu.menu_res['menu_select'].play()
+                        pygame.mixer.music.unpause()
                         return selected
 
                     if joystick.get_button(2) == 1:#O button
@@ -67,6 +69,7 @@ class PauseMenu(Menu):
 
                         # constants.GAME_STATUS = "menuDiff"
                         Menu.menu_res['menu_select'].play()
+                        pygame.mixer.music.unpause()
                         return selected
 
                     if event.key == pygame.K_BACKSPACE:

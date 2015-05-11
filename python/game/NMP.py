@@ -43,7 +43,8 @@ def main():
     # Set the height and width of the screen
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
-
+    pygame.mixer.music.load('data/sound/menu.wav')
+    pygame.mixer.music.play(-1)
     pygame.display.set_caption("(Beta) No More Pixies")
     main_loop = True
     first = True
@@ -106,6 +107,7 @@ def main():
             #LEVEL SELECTION MENU
             from LevelMenu import LevelMenu
             background_image = pygame.image.load("data/back.jpg").convert()
+            background_image= pygame.transform.scale(background_image, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
             screen.blit(background_image, [0, 0])
             menu = LevelMenu()
 

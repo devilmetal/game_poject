@@ -65,8 +65,10 @@ g6
 (dp27
 g8
 (lp28
-sg10
-I00
+I0
+aI1
+asg10
+I01
 ssg11
 (dp29
 g8

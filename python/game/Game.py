@@ -23,6 +23,7 @@ class Game():
     checkpoint = False
     joystick=None
     level_dif = "easy"
+    mixer_level = None
 
     def __init__(self, character, level_nbr, level_dif, screen, joystick, nmp_data):
         self.screen = screen
@@ -48,17 +49,32 @@ class Game():
                 self.start_x = 350
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = FirstStage(self.character, level_dif)
+            if not self.mixer_level == 0:
+                pygame.mixer.music.fadeout(1000)
+                pygame.mixer.music.load('data/sound/main_level.wav')
+                pygame.mixer.music.play(-1)
+                self.mixer_level = 0
         elif level_nbr == 1:
             if not self.checkpoint:
                 self.start_x = 350
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = SecondStage(self.character, level_dif)
+            if not self.mixer_level == 1:
+                pygame.mixer.music.fadeout(1000)
+                pygame.mixer.music.load('data/sound/bob_level.wav')
+                pygame.mixer.music.play(-1)
+                self.mixer_level = 1
 
         elif level_nbr == 2:
             if not self.checkpoint:
                 self.start_x = 500
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = Boss1(self.character, level_dif)
+            if not self.mixer_level == 2:
+                pygame.mixer.music.fadeout(1000)
+                pygame.mixer.music.load('data/sound/boss_level.ogg')
+                pygame.mixer.music.play(-1)
+                self.mixer_level = 2
 
         self.level.start_x = self.start_x
         self.level.start_y = self.start_y
@@ -77,8 +93,7 @@ class Game():
         # Used to manage how fast the screen updates
         clock = pygame.time.Clock()
         #Play audio stuff
-        pygame.mixer.music.load('data/sound/music.wav')
-        pygame.mixer.music.play(-1)
+
         # -------- Main Program Loop -----------
         while not self.done:
 

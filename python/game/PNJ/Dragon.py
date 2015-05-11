@@ -66,7 +66,7 @@ class Dragon(pygame.sprite.Sprite):
             if self.fireball_timer>0:
                 self.fireball_timer-=1
             else:
-                self.fireball_timer=80
+                self.fireball_timer=180
                 x_fireball = self.rect.x+self.head_down[0]
                 y_fireball = self.rect.y+self.head_down[1]
                 speed_fireball = 5
