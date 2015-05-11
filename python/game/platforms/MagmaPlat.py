@@ -16,6 +16,7 @@ class MagmaPlat(SpecialPlatform):
 		self.image.blit(magma_texture, (0, 0))
 		self.rect = self.image.get_rect()
 
+		self.subblock = pygame.sprite.Group()
 
 	def update(self):
 

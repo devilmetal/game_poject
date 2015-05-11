@@ -58,6 +58,32 @@ class ThirdStage(Level):
 			[30, 30, 3685, HEIGHT-165],
 			#second ground platform
 			[2000, 20, 4300, HEIGHT],
+			[400, HEIGHT-50, 4400, 0],
+			[400, HEIGHT-150, 4850, 0],
+			[400, 100, 4850, HEIGHT-100],
+			[100, HEIGHT-50, 5300, 0],
+			[130, HEIGHT-100, 5400, 0],
+			[120, HEIGHT-50, 5530, 0],
+			[130, HEIGHT-100, 5650, 0],
+			[220, HEIGHT-50, 5780, 0],
+			[30, 50, 5450, HEIGHT-50],
+			[30, 20, 5700, HEIGHT-50],
+			[50, 20, 6400, HEIGHT-100],
+			[50, 20, 6600, HEIGHT-20],
+			[50, 20, 6800, HEIGHT-120],
+			[50, 20, 7000, HEIGHT-20],
+			#second part of the level
+			[5000, 20, 7200, HEIGHT-100],
+			#platforms between top & bott. moving platforms
+			[50, 20, 7400, HEIGHT-200],
+			[50, 20, 7600, HEIGHT-200],
+			[50, HEIGHT-150, 7750, -50],
+			[90, 20, 8200, HEIGHT-200],
+			[50, 270, 8900, HEIGHT-350],
+			[50, 300, 8600, HEIGHT-500],
+			[50, 20, 8850, HEIGHT-200],
+			[50, 20, 8650, HEIGHT-250],
+			[50, 20, 8950, HEIGHT-200]
 		]
 
 		#some standard spikes
@@ -69,13 +95,40 @@ class ThirdStage(Level):
 			[0, 3685, HEIGHT-208],
 			[1, 3712, HEIGHT-165],
 			[2, 3685, HEIGHT-138],
-			[3, 3640, HEIGHT-165]
+			[3, 3640, HEIGHT-165],
+			#spikes between the 2 vert moving platforms with magma
+			[0, 7900, HEIGHT-145],
+			[0, 7930, HEIGHT-145],
+			[0, 7960, HEIGHT-145],
+			[1, 8245, HEIGHT-180],
+			[3, 8200, HEIGHT-180],
+			[1, 8245, HEIGHT-150],
+			[3, 8200, HEIGHT-150],
+			[1, 8245, HEIGHT-120],
+			[3, 8200, HEIGHT-120],
+			[1, 8445, HEIGHT-180],
+			[3, 8400, HEIGHT-180],
+			[1, 8445, HEIGHT-210],
+			[3, 8400, HEIGHT-210],
+			[1, 8445, HEIGHT-240],
+			[3, 8400, HEIGHT-240],
+			[1, 8445, HEIGHT-270],
+			[3, 8400, HEIGHT-270],
+			[1, 8445, HEIGHT-300],
+			[3, 8400, HEIGHT-300],
+			[1, 8445, HEIGHT-330],
+			[3, 8400, HEIGHT-330],
+			[1, 8445, HEIGHT-360],
+			[3, 8400, HEIGHT-360],
+			[1, 8445, HEIGHT-390],
+			[3, 8400, HEIGHT-390],
 		]
 
 		#checkpoints
 		#[widht, height, x, y]
 		checkpoints = [
-			[80, 20, 4050, HEIGHT-150]
+			[80, 20, 4050, HEIGHT-150],
+			[100, 20, 7100, HEIGHT-100]
 		]
 
 		#array of diag moving plat
@@ -85,20 +138,79 @@ class ThirdStage(Level):
 			[100, 20, 3500, HEIGHT-150, 3500, 3800, HEIGHT-300, HEIGHT+20, 1]
 		]
 
+		#vertical moving spikes
+		#[orientation, x, y, top bound, bottome bound, speed]
+		vert_spikes = [
+			[0, 4810, HEIGHT-90, HEIGHT-300, HEIGHT-44, 2],
+			[2, 4810, HEIGHT-45, HEIGHT-255, HEIGHT+1, 2],
+			[0, 5260, HEIGHT-90, HEIGHT-300, HEIGHT-44, 2],
+			[2, 5260, HEIGHT-45, HEIGHT-255, HEIGHT+1, 2]
+		]
+
+		#horizontal moving spikes
+		#[orientation, x, y, left bound, right bound, speed, [subblock]]
+		horiz_spikes = [
+			[1, 5545, HEIGHT-30, 5545, 5995, 5, [3, 5500, HEIGHT-30, 5500, 5950, 5]],
+		]
+
 
 		#death moving wall
 		#[width, height, x, y, left bound, right bound, speed right, speed left, pause right, pause left,
 		#[[Array of magma subblock]]]
 		horiz_mov_wall = [
 			[500, HEIGHT, -400, 0, -400, 2000, 1, 0, 60, 60,
+				#[width, height, x, y, left bound, right bound, speed right, speed left, pause right, pause left]
 				[[20, HEIGHT, 100, 0, 100, 2400, 1, 0, 60, 60]]
 			]
 		]
 
-		#[width, height, x, y, left bound, right bound, speed right, speed left, pause right, pause left]
-		horiz_magma_wall = [
-			[20, HEIGHT, 100, 0, 100, 2400, 1, 0, 60, 60]
+		###/!\/!\/!\ I had to split the platform into subarray in order to make it still move if
+		#plat.rect.x is out of the limit (i.e. abs(plat.rect.x - self.rect.x) < screen.width*3)
+
+		#vertical moving platform
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up,
+		#	[[subbaray of the same kind]]]
+		vert_plat = [
+			[900, 300, 7300, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300,
+				[
+				[1000, 300, 8200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
+				[1000, 300, 9200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
+				[1000, 300, 10200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
+				[1000, 300, 11200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300]
+				]
+			],
+			[4900, HEIGHT-100, 7300, -180, -360, HEIGHT-280, 1, 1, 300, 300,
+				[
+				[1000, HEIGHT-100, 8200, -180, -360, HEIGHT-280, 1, 1, 300, 300],
+				[1000, HEIGHT-100, 9200, -180, -360, HEIGHT-280, 1, 1, 300, 300],
+				[1000, HEIGHT-100, 10200, -180, -360, HEIGHT-280, 1, 1, 300, 300],
+				[1000, HEIGHT-100, 11200, -180, -360, HEIGHT-280, 1, 1, 300, 300]
+				]
+			]
 		]
+
+		#vertical moving magma
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
+		vert_magma = [
+			[900, 40, 7300, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300,
+				[
+				[1000, 40, 8200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
+				[1000, 40, 9200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
+				[1000, 40, 10200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
+				[1000, 40, 11200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300]
+				]
+			],
+			[900, 40, 7300, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300,
+				[
+				[1000, 40, 8200, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300],
+				[1000, 40, 9200, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300],
+				[1000, 40, 10200, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300],
+				[1000, 40, 11200, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300]
+				]
+			]
+		]
+		
+		
 
 
 		#adding parallax stuff to background along the level
@@ -156,6 +268,38 @@ class ThirdStage(Level):
 			block.level = self
 			self.platform_list.add(block)
 
+		for spike in vert_spikes:
+			block = MovingSpike(spike[0])
+			block.rect.x = spike[1]
+			block.rect.y = spike[2]
+			block.boundary_top = spike[3]
+			block.boundary_bottom = spike[4]
+			block.change_y = spike[5]
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
+
+		for spike in horiz_spikes:
+			block = MovingSpike(spike[0])
+			block.rect.x = spike[1]
+			block.rect.y = spike[2]
+			block.boundary_left = spike[3]
+			block.boundary_right = spike[4]
+			block.change_x = spike[5]
+			block.player = self.player
+			block.level = self
+			
+			subspike = MovingSpike(spike[6][0])
+			subspike.rect.x = spike[6][1]
+			subspike.rect.y = spike[6][2]
+			subspike.boundary_left = spike[6][3]
+			subspike.boundary_right = spike[6][4]
+			subspike.change_x = spike[6][5]
+			subspike.player = self.player
+			subspike.level = self
+			block.subblock.add(subspike)
+			
+			self.mov_plat_list.add(block)
 
 		for wall in horiz_mov_wall:
 			block = SpecialPlatform(wall[0], wall[1])
@@ -188,6 +332,65 @@ class ThirdStage(Level):
 
 			self.mov_plat_list.add(block)
 
+
+		for plat in vert_plat:
+			block = SpecialPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.boundary_top = plat[4]
+			block.boundary_bottom = plat[5]
+			block.change_y = plat[6]
+			block.change_y_d = plat[6]
+			block.change_y_u = -plat[7]
+			block.pause_down = plat[8]
+			block.pause_up = plat[9]
+			block.player = self.player
+			block.level = self
+			for sub in plat[10]:
+				subblock = SpecialPlatform(sub[0], sub[1])
+				subblock.rect.x = sub[2]
+				subblock.rect.y = sub[3]
+				subblock.boundary_top = sub[4]
+				subblock.boundary_bottom = sub[5]
+				subblock.change_y = sub[6]
+				subblock.change_y_d = sub[6]
+				subblock.change_y_u = -sub[7]
+				subblock.pause_down = sub[8]
+				subblock.pause_up = sub[9]
+				subblock.player = self.player
+				subblock.level = self
+				block.subblock.add(subblock)
+			self.mov_plat_list.add(block)
+
+
+		for plat in vert_magma:
+			block = MagmaPlat(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.boundary_top = plat[4]
+			block.boundary_bottom = plat[5]
+			block.change_y = plat[6]
+			block.change_y_d = plat[6]
+			block.change_y_u = -plat[7]
+			block.pause_down = plat[8]
+			block.pause_up = plat[9]
+			block.player = self.player
+			block.level = self
+			for sub in plat[10]:
+				subblock = MagmaPlat(sub[0], sub[1])
+				subblock.rect.x = sub[2]
+				subblock.rect.y = sub[3]
+				subblock.boundary_top = sub[4]
+				subblock.boundary_bottom = sub[5]
+				subblock.change_y = sub[6]
+				subblock.change_y_d = sub[6]
+				subblock.change_y_u = -sub[7]
+				subblock.pause_down = sub[8]
+				subblock.pause_up = sub[9]
+				subblock.player = self.player
+				subblock.level = self
+				block.subblock.add(subblock)
+			self.magma_list.add(block)
 
 		#Parallax background
 		for elem in back_p:
