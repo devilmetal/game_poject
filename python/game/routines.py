@@ -2,6 +2,7 @@ import os
 import pygame
 import constants
 import random
+from PauseMenu import PauseMenu
 def load_png(name):
         """ Load image and return image object"""
         fullname = os.path.join('data', name)
@@ -73,39 +74,60 @@ def game_over_screen(clock, screen):
     pygame.time.delay(4000)
 
 
-def pause(clock,screen,joystick):
+def pause(clock,screen,joystick, game_loop):
     """ Pausing the game """
     pause_flag = True
     font = "data/coders_crux/coders_crux.ttf"
     bgw = constants.SCREEN_WIDTH - 100
-    bgh = constants.SCREEN_HEIGHT/3
+    # bgh = constants.SCREEN_HEIGHT/3
+    bgh = constants.SCREEN_HEIGHT/2
     bg = draw_rectangle(bgw, bgh, constants.BLACK)
-    txt1 = draw_text("Paused", bgw/2, bgh/2 - 30, 52, font, constants.WHITE)
-    txt2 = draw_text("Continue (c) or A or Quit (q) ?", bgw/2, bgh/2 + 30, 42, font, constants.WHITE)
+    # txt1 = draw_text("Paused", bgw/2, bgh/2 - 30, 52, font, constants.WHITE)
+    # txt2 = draw_text("Continue (c) or A or Quit (q) ?", bgw/2, bgh/2 + 30, 42, font, constants.WHITE)
+    #
+    # bg.blit(txt1[0], txt1[1])
+    # bg.blit(txt2[0], txt2[1])
 
-    bg.blit(txt1[0], txt1[1])
-    bg.blit(txt2[0], txt2[1])
+    screen.blit(bg, (50, constants.SCREEN_HEIGHT/3 + 30))
+    menu = PauseMenu()
+    menu.init(['Continue','Back to menu', 'Quit'], screen)
+    menu.draw()
+    pygame.key.set_repeat(199,69)#(delay,interval)
+    pygame.display.update()
+    selected = menu.run(joystick)
 
-    screen.blit(bg, (50, constants.SCREEN_HEIGHT/3))
+    if selected == 'c':
+        pass
+    if selected == 'm':
+        game_loop = True
+        constants.GAME_STATUS = 'menu'
+    if selected == 'q':
+        constants.GAME_STATUS = 'exit'
+        game_loop = True
+        # pygame.quit()
+        # quit()
     pygame.display.update()
 
-    while pause_flag:
-        for event in pygame.event.get():
+    return game_loop
 
-            if event.type == pygame.JOYBUTTONDOWN:
-                if joystick.get_button(1) == 1:#X button
-                    pause_flag = False
-                if joystick.get_button(2) == 1:#O button
-                    pygame.quit()
-                    quit()
 
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_c:
-                    pause_flag = False
-                elif event.key == pygame.K_q:
-                    pygame.quit()
-                    quit()
+    # while pause_flag:
+    #     for event in pygame.event.get():
+    #
+    #         if event.type == pygame.JOYBUTTONDOWN:
+    #             if joystick.get_button(1) == 1:#X button
+    #                 pause_flag = False
+    #             if joystick.get_button(2) == 1:#O button
+    #                 pygame.quit()
+    #                 quit()
+    #
+    #         if event.type == pygame.QUIT:
+    #             pygame.quit()
+    #             quit()
+    #         if event.type == pygame.KEYDOWN:
+    #             if event.key == pygame.K_c:
+    #                 pause_flag = False
+    #             elif event.key == pygame.K_q:
+    #                 pygame.quit()
+    #                 quit()
         #clock.tick(60)

@@ -6,6 +6,7 @@ from levels.FirstStage import FirstStage
 from levels.SecondStage import SecondStage
 from levels.ThirdStage import ThirdStage
 from levels.Boss1 import Boss1
+from CrossFade import CrossFade
 HEIGHT = constants.SCREEN_HEIGHT-20
 TAUNTS = ["You're still not skilled enough...","Try again, noob !","Come on !","Do you want to have a rest ?","You may need to lower the difficulty... noob !","Even my grandmother is more skilled than you !","What the f**k did you do ?","You know... Maybe you should give up...","You are more dying than playing bro !","Hahahahahaha ! XD","So close... but so far !","Man... seriously ?"]
 class Game():
@@ -23,6 +24,7 @@ class Game():
     checkpoint = False
     joystick=None
     level_dif = "easy"
+    mixer_level = None
 
     def __init__(self, character, level_nbr, level_dif, screen, joystick, nmp_data):
         self.screen = screen
@@ -48,22 +50,39 @@ class Game():
                 self.start_x = 350
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = FirstStage(self.character, level_dif)
+            if not self.mixer_level == 0:
+                pygame.mixer.music.fadeout(1000)
+                pygame.mixer.music.load('data/sound/main_level.wav')
+                pygame.mixer.music.play(-1)
+                self.mixer_level = 0
+
         elif level_nbr == 1:
             if not self.checkpoint:
                 self.start_x = 350
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = SecondStage(self.character, level_dif)
+            if not self.mixer_level == 1:
+                pygame.mixer.music.fadeout(1000)
+                pygame.mixer.music.load('data/sound/bob_level.wav')
+                pygame.mixer.music.play(-1)
+                self.mixer_level = 1
+
         elif level_nbr == 2:
             if not self.checkpoint:
                 self.start_x = 8500
                 self.start_y = HEIGHT - 100 - self.character.rect.height
             self.level = ThirdStage(self.character, level_dif)
+            
         elif level_nbr == 3:
-            print "initiate level boss"
             if not self.checkpoint:
                 self.start_x = 500
                 self.start_y = HEIGHT - self.character.rect.height
             self.level = Boss1(self.character, level_dif)
+            if not self.mixer_level == 2:
+                pygame.mixer.music.fadeout(1000)
+                pygame.mixer.music.load('data/sound/boss_level.ogg')
+                pygame.mixer.music.play(-1)
+                self.mixer_level = 2
 
         self.level.start_x = self.start_x
         self.level.start_y = self.start_y
@@ -77,24 +96,12 @@ class Game():
         self.character.rect.y = self.level.start_y
         self.active_sprite_list.add(self.character)
 
-        #Save game progress (unlocked things + lives)
-        if level_nbr > self.nmp_data.unlocked_stages:
-            self.nmp_data.unlocked_stages = level_nbr
-        if self.level_dif_nbr > self.nmp_data.unlocked_skills:
-            self.nmp_data.unlocked_skills = self.level_dif_nbr
-        if self.character.id > self.nmp_data.unlocked_chars:
-            self.nmp_data.unlocked_chars = self.character.id
-        self.nmp_data.remaining_lives = self.character.lives
-        self.nmp_data.save_data()
-
-
     def run(self):
         #Loop until the user clicks the close button.
         # Used to manage how fast the screen updates
         clock = pygame.time.Clock()
         #Play audio stuff
-        pygame.mixer.music.load('data/sound/music.wav')
-        pygame.mixer.music.play(-1)
+
         # -------- Main Program Loop -----------
         while not self.done:
 
@@ -116,6 +123,8 @@ class Game():
                 if len(self.taunts)==1:
                     self.taunts = TAUNTS
                 taunt = self.taunts.pop(self.taunts.index(taunt))
+                fade = CrossFade(self.screen)
+                fade.fadeout(self.screen, 15)
                 routines.death_menu(clock, self.screen,taunt)
 
             # If the self.character gets near the right side, shift the world left (-x)
@@ -165,7 +174,9 @@ class Game():
                     if self.joystick.get_button(1) == 1:
                         self.character.jump()
                     if self.joystick.get_button(9) == 1:
-                        routines.pause(clock,self.screen,self.joystick)
+                        self.done = routines.pause(clock,self.screen,self.joystick, self.done)
+                        if self.done:
+                            pygame.mixer.music.fadeout(1000)
 
                 if event.type == pygame.JOYHATMOTION:
                     hat = self.joystick.get_hat(0)
@@ -196,7 +207,9 @@ class Game():
                     if event.key == pygame.K_UP or event.key == pygame.K_w or event.key == pygame.K_SPACE:
                         self.character.jump()
                     if event.key == pygame.K_p:
-                        routines.pause(clock,self.screen,self.joystick)
+                        self.done = routines.pause(clock,self.screen,self.joystick, self.done)
+                        if self.done:
+                            pygame.mixer.music.fadeout(1000)
 
                 if event.type == pygame.KEYUP:
                     if (event.key == pygame.K_LEFT or event.key == pygame.K_a) and self.character.change_x < 0:

@@ -22,7 +22,7 @@ class Dragon(pygame.sprite.Sprite):
         self.dead = False
         self.hited = False
         self.hit_annimation_counter=0
-        self.fireball_timer = 80
+        self.fireball_timer = 180
         #Instanciation :
         self.image = PNJ_ressources.dragon_ressources['cave'][0]
         self.rect = self.image.get_rect()
@@ -66,7 +66,7 @@ class Dragon(pygame.sprite.Sprite):
             if self.fireball_timer>0:
                 self.fireball_timer-=1
             else:
-                self.fireball_timer=80
+                self.fireball_timer=180
                 x_fireball = self.rect.x+self.head_down[0]
                 y_fireball = self.rect.y+self.head_down[1]
                 speed_fireball = 5
@@ -110,6 +110,7 @@ class Dragon(pygame.sprite.Sprite):
             self.head_down = [head_x-105,30+head_y]
             self.head_up = [head_x-105,head_y-20]
     def hit(self):
+        PNJ_ressources.dragon_ressources['hit_sound'].play()
         PNJ_ressources.dragon_ressources['roar'].play()
         if len(self.body_array) == 1:
             #kill the dragon.

@@ -24,8 +24,10 @@ class LevelMenu(Menu):
                     hat = joystick.get_hat(0)
                     if (0, 1) == hat:
                         self.draw(-1)
+                        Menu.menu_res['menu_hover'].play()
                     if (0, -1) == hat:
                         self.draw(1)
+                        Menu.menu_res['menu_hover'].play()
                     pygame.display.update()
                 if event.type == pygame.JOYBUTTONDOWN:
                     if joystick.get_button(1) == 1:#X button
@@ -39,10 +41,12 @@ class LevelMenu(Menu):
                             level_nbr = 3
 
                         constants.GAME_STATUS = "level"
+                        Menu.menu_res['menu_select'].play()
                         return level_nbr
 
                     if joystick.get_button(2) == 1:#O button
                         constants.GAME_STATUS = "menuChar"
+                        Menu.menu_res['menu_back'].play()
                         menu_flag = False
 
 
@@ -50,8 +54,10 @@ class LevelMenu(Menu):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         self.draw(-1)
+                        Menu.menu_res['menu_hover'].play()
                     if event.key == pygame.K_DOWN:
                         self.draw(1)
+                        Menu.menu_res['menu_hover'].play()
                     if event.key == pygame.K_RETURN:
                         if self.get_position() == 0:
                             level_nbr = 0
@@ -63,10 +69,12 @@ class LevelMenu(Menu):
                             level_nbr = 3
 
                         constants.GAME_STATUS = "level"
+                        Menu.menu_res['menu_select'].play()
                         return level_nbr
 
                     if event.key == pygame.K_BACKSPACE:
                         constants.GAME_STATUS = "menuChar"
+                        Menu.menu_res['menu_back'].play()
                         menu_flag = False
                     if event.key == pygame.K_ESCAPE:
                         constants.GAME_STATUS="exit"

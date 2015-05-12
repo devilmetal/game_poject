@@ -87,18 +87,19 @@ class FirstStage(Level):
 
 		#if we are on a platform that should make us go to the next level
 		#[width, height, top-left x, top-left y, next level]
-		end_plat = [
-			[120, 20, 14380, HEIGHT-350, 1],
-			[120, 20, 15000, HEIGHT, 3],
-			[120, 20, 15000, HEIGHT+60, 2]
-		]
+
+		end_plat = []
+		end_plat.append([120, 20, 14380, HEIGHT-350, 1, 'bob'])
+		end_plat.append([120, 20, 15000, HEIGHT, 3, player.name])
+		end_plat.append([120, 20, 15000, HEIGHT+60, 2, 'little_fat'])
+
 		# checkpoints
 		#[top-left x, top-left , width, height]
 		checkpoints = [
-			[50, 20, 2700, HEIGHT],
+			[50, 20, 2700, HEIGHT-20],
 			[60, 20, 5750, HEIGHT-300],
 			[50, 20, 8400, HEIGHT-20]
-		]
+			]
 
 
 		"""Simple moving platforms"""
@@ -114,7 +115,7 @@ class FirstStage(Level):
 		#array of horizontal moving platform
 		#[width, height, top-left x, top-left y, left bound, right bound, speed]
 		horiz = [
-			[60, 20, 5100, HEIGHT-300, 5100, 5600, 2],
+			[120, 20, 5000, HEIGHT-300, 5000, 5600, 3],
 			#chain moving platform in the air
 			#see diff part
 
@@ -183,8 +184,10 @@ class FirstStage(Level):
 		#TODO: REMOVE
 		#Blobs dummies
 
-		blobs = [[500, HEIGHT-100, 1, 2],
-			[500, HEIGHT-100, -1, 2],
+		blobs = [
+			[500, HEIGHT-100, 1, 2],
+			[8900, HEIGHT-100, 1, 1],
+			[1200, HEIGHT-100, 1, 2],
 		]
 
 		fairy = [
@@ -305,6 +308,7 @@ class FirstStage(Level):
 			block.player = self.player
 			block.level = self
 			block.level_pointer = plat[4]
+			block.character_pointer = plat[5]
 			self.platform_list.add(block)
 
 		#Parallax background
@@ -692,7 +696,7 @@ class FirstStage(Level):
 						sub.player = self.player
 						sub.level = self
 						block.subblock.add(sub)
-				
+
 				self.mov_plat_list.add(block)
 
 			for spike in medium_spikes:

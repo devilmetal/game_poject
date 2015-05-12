@@ -17,7 +17,7 @@ class Bob(Character):
     def __init__(self):
         """ Constructor function """
         Character.__init__(self)
-
+        self.name = 'bob'
         #Load images and rectangles
         self.jump_l_image, self.jump_l_image_rect =  routines.load_png('hero_3/jump_l.png')
         self.jump_r_image, self.jump_r_image_rect =  routines.load_png('hero_3/jump_r.png')

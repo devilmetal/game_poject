@@ -13,7 +13,7 @@ class Character(pygame.sprite.Sprite):
     def __init__(self):
         """ Constructor function """
         super(Character, self).__init__()
-
+        self.name=None
         self.interface = PlayerInterface()
 
         #personnal aptitudes
@@ -23,7 +23,7 @@ class Character(pygame.sprite.Sprite):
 
         #Physics stuff
         self.gravity_a = .35
-
+        self.sound_effect = True
 
         self.image = None
         self.rect = None
@@ -97,8 +97,14 @@ class Character(pygame.sprite.Sprite):
         self.lives_interface()
 
     def calc_image(self):
+        if self.hit == False:
+            self.sound_effect = True
         if self.hit == True:
             self.image = self.dead_image
+            if (self.sound_effect):
+                self.sound_effect = False
+                pygame.mixer.Sound('data/sound/death-1.wav').play()
+                # pygame.mixer.Sound('data/sound/death-2.aif').play()
         elif self.location == 'air':
             if self.status == 'move_r' or self.status == 'idle_r' :
                 self.image = self.jump_r_image
