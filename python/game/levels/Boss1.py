@@ -74,7 +74,7 @@ class Boss1(Level):
             self.platform_list.add(block)
 
         end_plat = []
-        end_plat.append([120, 20, 2000, HEIGHT-20, 0])
+        end_plat.append([120, 20, 2000, HEIGHT, 0])
 
         #Parallax background
         for elem in back_p:
