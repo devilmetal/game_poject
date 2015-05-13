@@ -81,7 +81,7 @@ def pause(clock,screen,joystick, game_loop):
     bgw = constants.SCREEN_WIDTH - 100
     # bgh = constants.SCREEN_HEIGHT/3
     bgh = constants.SCREEN_HEIGHT/2
-    bg = draw_rectangle(bgw, bgh, constants.BLACK)
+    bg = draw_rectangle(bgw, bgh, (51,51,51))
     # txt1 = draw_text("Paused", bgw/2, bgh/2 - 30, 52, font, constants.WHITE)
     # txt2 = draw_text("Continue (c) or A or Quit (q) ?", bgw/2, bgh/2 + 30, 42, font, constants.WHITE)
     #

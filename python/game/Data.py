@@ -15,19 +15,15 @@ class Data():
                 data={}
                 for diff in ['easy','medium','hard']:
                     data[diff] = {}
-                    data[diff]['unlocked'] = True
+                    data[diff]['unlocked'] = False
                     for c in ['hulk', 'bob', 'little_fat']:
                         data[diff][c]={}
-                        data[diff][c]['unlocked'] = True
+                        data[diff][c]['unlocked'] = False
                         data[diff][c]['levels'] = []
-                        data[diff][c]['levels'].append(0)
-                        data[diff][c]['levels'].append(1)
-                        data[diff][c]['levels'].append(2)
-                        data[diff][c]['levels'].append(3)
                     #Hulk is available by default
-                    #data[diff]['hulk']['unlocked'] = True
+                    data[diff]['hulk']['unlocked'] = True
                     #Hulk has level 0 unlocked
-                    #data[diff]['hulk']['levels'].append(0)
+                    data[diff]['hulk']['levels'].append(0)
                 self.save[slot] = data
                 #'easy' is always unlocked
                 self.save[slot]['used'] = False
