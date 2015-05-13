@@ -19,7 +19,7 @@ class CheckPoint(Platform):
     #img2 = img2.convert()
     #img.fill((0, 0, 0))
     #img2.fill((255,255,0))
-    speed = 2
+    speed = 4
     camp = False
     finished = False
 
@@ -38,7 +38,8 @@ class CheckPoint(Platform):
             if self.y >= self.rect.y-self.img.get_height():
                 self.y -= self.speed
             else:
-                self.finished = True
+                self.checked = False
+            self.finished = True
 
         return self.img, (self.x,self.y)
 
@@ -52,7 +53,6 @@ class CheckPoint(Platform):
             platform shoves a player into another object. Make sure
             moving platforms have clearance to push the player around
             or add code to handle what happens if they don't. """
-
 
         #check if the player is on top of a lateral moving platform and make it move with it.
         self.player.rect.y += 2
@@ -73,5 +73,4 @@ class CheckPoint(Platform):
                     self.finished = False
 
             else:
-                self.checked = False
                 self.camp = True

@@ -33,6 +33,7 @@ class Level():
             platforms collide with the player. """
         self.platform_list = pygame.sprite.Group()
         self.mov_plat_list = pygame.sprite.Group()
+        self.sub_plat_list = pygame.sprite.Group()
         self.pnj_list = pygame.sprite.Group()
         self.back_world_list = pygame.sprite.Group()
         self.back_front_world_list = pygame.sprite.Group()
@@ -42,23 +43,49 @@ class Level():
     # Update everythign on this level
     def update(self):
         """ Update everything in this level."""
-        #self.magma_list.update()
-        for elem in self.magma_list:
-            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
-                elem.update()
         #self.platform_list.update()
+        toUpdatePlat = False
+        toUpdateMagm = False
+
         for elem in self.platform_list:
             if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
                 elem.update()
+
         #self.pnj_list.update()
         for elem in self.pnj_list:
             if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 2:
                 elem.update()
         for elem in self.mov_plat_list:
-            if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
+            if len(elem.subblock)>0:
                 for block in elem.subblock:
-                    block.update()
-                elem.update()
+                    if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3 or abs(block.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
+                        toUpdatePlat = True
+                        break
+                    else:
+                        toUpdatePlat = False
+                if toUpdatePlat:
+                    for block in elem.subblock:
+                        block.update()
+                    elem.update()
+            else:
+                if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
+                    elem.update()
+        #self.magma_list.update()
+        for elem in self.magma_list:
+            if len(elem.subblock)>0:
+                for block in elem.subblock:
+                    if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3 or abs(block.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
+                        toUpdateMagm = True
+                        break
+                    else:
+                        toUpdateMagm = False
+                if toUpdateMagm:
+                    for block in elem.subblock:
+                        block.update()
+                    elem.update()
+            else:
+                if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
+                    elem.update()
 
     def draw(self, screen):
         """ Draw everything on this level. """
@@ -88,19 +115,24 @@ class Level():
 
                 screen.blit(elem.image,elem.rect)
         #pygame.sprite.spritecollide(screen, self.platform_list, False).draw(screen)
-        #self.magma_list.draw(screen)
-        for elem in self.magma_list:
-            if not(screen.get_rect().collidelist([elem])):
-                screen.blit(elem.image,elem.rect)
         #self.pnj_list.draw(screen)
         for elem in self.pnj_list:
             if not(screen.get_rect().collidelist([elem])):
                 screen.blit(elem.image,elem.rect)
         for elem in self.mov_plat_list:
+            if not(screen.get_rect().collidelist([elem])):
+                screen.blit(elem.image, elem.rect)
             for block in elem.subblock:
-                if not(screen.get_rect().collidelist([elem])) or not(screen.get_rect().collidelist([block])):
+                if not(screen.get_rect().collidelist([block])):
                     screen.blit(block.image,block.rect)
-                    screen.blit(elem.image,elem.rect)
+        #self.magma_list.draw(screen)
+        for elem in self.magma_list:
+            if not(screen.get_rect().collidelist([elem])):
+                screen.blit(elem.image,elem.rect)
+            for block in elem.subblock:
+                if not(screen.get_rect().collidelist([block])):
+                    screen.blit(block.image,block.rect)
+
         self.player.interface.draw(screen, self.player.lives)
 
         if self.start_level:
@@ -118,6 +150,8 @@ class Level():
             platform.rect.x += shift_x
 
         for plat in self.magma_list:
+            for block in plat.subblock:
+                block.rect.x += shift_x
             plat.rect.x += shift_x
 
         for pnj in self.pnj_list:
@@ -131,5 +165,5 @@ class Level():
 
         for item in self.mov_plat_list:
             for block in item.subblock:
-                    block.rect.x += shift_x
+                block.rect.x += shift_x
             item.rect.x += shift_x

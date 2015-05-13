@@ -4,6 +4,7 @@ import routines
 import random
 from levels.FirstStage import FirstStage
 from levels.SecondStage import SecondStage
+from levels.ThirdStage import ThirdStage
 from levels.Boss1 import Boss1
 from CrossFade import CrossFade
 HEIGHT = constants.SCREEN_HEIGHT-20
@@ -54,6 +55,7 @@ class Game():
                 pygame.mixer.music.load('data/sound/main_level.wav')
                 pygame.mixer.music.play(-1)
                 self.mixer_level = 0
+
         elif level_nbr == 1:
             if not self.checkpoint:
                 self.start_x = 350
@@ -66,6 +68,12 @@ class Game():
                 self.mixer_level = 1
 
         elif level_nbr == 2:
+            if not self.checkpoint:
+                self.start_x = 350
+                self.start_y = HEIGHT - 100 - self.character.rect.height
+            self.level = ThirdStage(self.character, level_dif)
+
+        elif level_nbr == 3:
             if not self.checkpoint:
                 self.start_x = 500
                 self.start_y = HEIGHT - self.character.rect.height

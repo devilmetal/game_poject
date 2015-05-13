@@ -120,6 +120,8 @@ def main():
                 if l_choice == 1:
                     choices.append('Stage 2')
                 if l_choice == 2:
+                    choices.append('Stage 3')
+                if l_choice == 3:
                     choices.append('Dragon')
             menu.init(choices, screen)
             menu.draw()

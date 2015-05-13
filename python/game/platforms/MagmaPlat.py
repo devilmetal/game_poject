@@ -16,6 +16,7 @@ class MagmaPlat(SpecialPlatform):
 		self.image.blit(magma_texture, (0, 0))
 		self.rect = self.image.get_rect()
 
+		self.subblock = pygame.sprite.Group()
 
 	def update(self):
 
@@ -30,6 +31,22 @@ class MagmaPlat(SpecialPlatform):
 		self.player.rect.y -= 2
 		hit = not(self.player.rect.collidelist([self.rect]))
 		self.player.rect.y += 2
+
+		if hit and not self.player.hit:
+			self.player.hit = True
+			self.player.change_y = -10
+
+		self.player.rect.x -= 2
+		hit = not(self.player.rect.collidelist([self.rect]))
+		self.player.rect.x += 2
+
+		if hit and not self.player.hit:
+			self.player.hit = True
+			self.player.change_y = -10
+
+		self.player.rect.y += 2
+		hit = not(self.player.rect.collidelist([self.rect]))
+		self.player.rect.y -= 2
 
 		if hit and not self.player.hit:
 			self.player.hit = True

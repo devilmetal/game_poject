@@ -15,15 +15,19 @@ class Data():
                 data={}
                 for diff in ['easy','medium','hard']:
                     data[diff] = {}
-                    data[diff]['unlocked'] = False
+                    data[diff]['unlocked'] = True
                     for c in ['hulk', 'bob', 'little_fat']:
                         data[diff][c]={}
-                        data[diff][c]['unlocked'] = False
+                        data[diff][c]['unlocked'] = True
                         data[diff][c]['levels'] = []
+                        data[diff][c]['levels'].append(0)
+                        data[diff][c]['levels'].append(1)
+                        data[diff][c]['levels'].append(2)
+                        data[diff][c]['levels'].append(3)
                     #Hulk is available by default
-                    data[diff]['hulk']['unlocked'] = True
+                    #data[diff]['hulk']['unlocked'] = True
                     #Hulk has level 0 unlocked
-                    data[diff]['hulk']['levels'].append(0)
+                    #data[diff]['hulk']['levels'].append(0)
                 self.save[slot] = data
                 #'easy' is always unlocked
                 self.save[slot]['used'] = False
@@ -40,7 +44,7 @@ class Data():
         self.save = pickle.load(open(self.file,'rb'))
 
     def stats(self,slot):
-        total = 21.0
+        total = 24.0
         unlocked = 0.0
         for diff in ['easy','medium','hard']:
             if self.save[slot][diff]['unlocked']:
