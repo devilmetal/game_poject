@@ -62,6 +62,7 @@ def main():
 
             #DIFFICULTY SELECTION MENU
             background_image = pygame.image.load("data/back.jpg").convert()
+            background_image= pygame.transform.scale(background_image, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
             screen.blit(background_image, [0, 0])
             menu = DifficultyMenu()
             choices=[]
@@ -140,6 +141,7 @@ def main():
         elif constants.GAME_STATUS == "menuSave":
             from SaveMenu import SaveMenu
             background_image = pygame.image.load("data/back.jpg").convert()
+            background_image= pygame.transform.scale(background_image, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
             screen.blit(background_image, [0, 0])
             menu = SaveMenu()
             slot_list = []
@@ -164,6 +166,7 @@ def main():
         elif constants.GAME_STATUS == "menu":
             from Menu import Menu
             background_image = pygame.image.load("data/back.jpg").convert()
+            background_image= pygame.transform.scale(background_image, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
             screen.blit(background_image, [0, 0])
             menu = Menu()
             menu.init(['Start','Quit'], screen)

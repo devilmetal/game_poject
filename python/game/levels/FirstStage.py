@@ -10,6 +10,7 @@ from platforms.EndPlatform import EndPlatform
 from platforms.CheckPoint import CheckPoint
 from platforms.MagmaPlat import MagmaPlat
 from world.Parallax import Parallax
+from world.Sign import Sign
 from PNJ.Blob import Blob
 from PNJ.Fairy import Fairy
 import constants
@@ -84,7 +85,10 @@ class FirstStage(Level):
 		end_plat = []
 		end_plat.append([120, 20, 14380, HEIGHT-350, 1, 'bob'])
 		end_plat.append([120, 20, 15000, HEIGHT, 2, player.name])
-
+		signs = [
+			[14380, HEIGHT-350,"Level 2"],
+			[15000, HEIGHT, "Boss"]
+		]
 		# checkpoints
 		#[top-left x, top-left , width, height]
 		checkpoints = [
@@ -184,6 +188,8 @@ class FirstStage(Level):
 		fairy = [
 			[520,HEIGHT-95,player]
 			]
+
+
 
 		#adding parallax stuff to background along the level
 		x_parallax=0
@@ -327,6 +333,10 @@ class FirstStage(Level):
 			pixie = Fairy(pnj[0],pnj[1],pnj[2])
 			self.pnj_list.add(pixie)
 
+		for elem in signs:
+			#elem[0]=x,elem[1]=y,elem[2]=text
+			sign = Sign(elem[0],elem[1],elem[2])
+			self.pnj_list.add(sign)
 
 
 		if self.id == 2:
