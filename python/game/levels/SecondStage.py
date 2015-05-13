@@ -8,6 +8,7 @@ from platforms.MagmaPlat import MagmaPlat
 from world.Parallax import Parallax
 from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
+from platforms.EndPlatform import EndPlatform
 from PNJ.Blob import Blob
 from platforms.CheckPoint import CheckPoint
 
@@ -24,7 +25,7 @@ class SecondStage(Level):
 
 		Level.__init__(self, player)
 
-		self.level_limit = -15500
+		self.level_limit = -16000
 		next_level = 1
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
@@ -204,6 +205,12 @@ class SecondStage(Level):
 		]
 
 
+		#if we are on a platform that should make us go to the next level
+		#[width, height, top-left x, top-left y, next level]
+		end_plat = []
+		end_plat.append([120, 20, 16100, HEIGHT, 3, 'bob'])
+
+
 		#adding parallax stuff to background along the level
 		x_parallax=0
 		back_p=[]
@@ -326,6 +333,17 @@ class SecondStage(Level):
 			#CheckPoint is white!
 			block.image.fill(constants.WHITE)
 			self.platform_list.add(block)
+
+		for plat in end_plat:
+			block = EndPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.player = self.player
+			block.level = self
+			block.level_pointer = plat[4]
+			block.character_pointer = plat[5]
+			self.platform_list.add(block)
+
 
 		#Parallax background
 		for elem in back_p:

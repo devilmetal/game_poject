@@ -98,10 +98,10 @@ class ThirdStage(Level):
 			[1050, HEIGHT-290, 12000, -40],
 			[150, 230, 12650, HEIGHT-210],
 			[50, 20, 12700, HEIGHT-280],
-			[200, 230, 12800, HEIGHT-280],
+			[200, 300, 12800, HEIGHT-280],
 			[1000, 120, 13050, HEIGHT-100],
 			[1000, HEIGHT-110, 13050, -40],
-			[1000, HEIGHT, 14050, 20]
+			[1000, 20, 14050, HEIGHT]
 
 		]
 
@@ -241,8 +241,11 @@ class ThirdStage(Level):
 				]
 			]
 		]
-		
-		
+
+		#if we are on a platform that should make us go to the next level
+		#[width, height, top-left x, top-left y, next level]
+		end_plat = []
+		end_plat.append([120, 20, 14500, HEIGHT, 3, 'little_fat'])
 
 
 		#adding parallax stuff to background along the level
@@ -427,6 +430,17 @@ class ThirdStage(Level):
 				self.sub_plat_list.add(subblock)
 
 			self.magma_list.add(block)
+
+
+		for plat in end_plat:
+			block = EndPlatform(plat[0], plat[1])
+			block.rect.x = plat[2]
+			block.rect.y = plat[3]
+			block.player = self.player
+			block.level = self
+			block.level_pointer = plat[4]
+			block.character_pointer = plat[5]
+			self.platform_list.add(block)
 
 		#Parallax background
 		for elem in back_p:

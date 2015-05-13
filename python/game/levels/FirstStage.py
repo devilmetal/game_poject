@@ -28,7 +28,7 @@ class FirstStage(Level):
 		next_level = 0
 		self.level_limit = -15000
 
-		self.id = player.id
+		self.name = player.name
 
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
@@ -74,10 +74,8 @@ class FirstStage(Level):
 			[130, 20, 10580, HEIGHT-200],
 			[130, 20, 10740, HEIGHT-320],
 			#last ground part
-			[2450, 20, 12100, HEIGHT],
+			[4000, 20, 12100, HEIGHT],
 			#underground platforms
-			[20, 100, 14530, HEIGHT+20],
-			[450, 20, 14550, HEIGHT+60],
 			#final high platform
 			[120, 60, 14500, HEIGHT-100],
 			[20, 120, 14620, HEIGHT-100],
@@ -90,8 +88,8 @@ class FirstStage(Level):
 
 		end_plat = []
 		end_plat.append([120, 20, 14380, HEIGHT-350, 1, 'bob'])
-		end_plat.append([120, 20, 15000, HEIGHT, 3, player.name])
-		end_plat.append([120, 20, 15000, HEIGHT+60, 2, 'little_fat'])
+		end_plat.append([300, 20, 15000, HEIGHT, 3, 'hulk'])
+		end_plat.append([40, 20, 14580, HEIGHT, 2, 'little_fat'])
 
 		# checkpoints
 		#[top-left x, top-left , width, height]
@@ -216,8 +214,6 @@ class FirstStage(Level):
 
 
 
-
-
 		###################################################################################
 		###################################################################################
 
@@ -338,7 +334,7 @@ class FirstStage(Level):
 
 
 
-		if self.id == 2:
+		if self.name == "little_fat":
 			for plat in fat_plat:
 				block = Platform(plat[0], plat[1])
 				block.rect.x = plat[2]
@@ -346,6 +342,16 @@ class FirstStage(Level):
 				block.player = self.player
 				block.level = self
 				self.platform_list.add(block)
+
+		"""Obstacle for other character than Hulk"""
+
+		if self.name == "bob" or self.name == "little_fat":
+			block = Platform(50, HEIGHT)
+			block.rect.x = 14700
+			block.rect.y = 0
+			block.player = self.player
+			block.level = self
+			self.platform_list.add(block)
 
 
 
@@ -774,7 +780,7 @@ class FirstStage(Level):
 
 			"""ADDITIONNAL PART FOR FAT GUY"""
 
-			if self.id == 2:
+			if self.name == "little_fat":
 				for plat in fat_med_plat:
 					block = Platform(plat[0], plat[1])
 					block.rect.x = plat[2]
@@ -958,7 +964,7 @@ class FirstStage(Level):
 
 			"""ADDITIONNAL PART FOR FAT GUY"""
 
-			if self.id == 2:
+			if self.name == "little_fat":
 				for plat in fat_hard_plat:
 					block = Platform(plat[0], plat[1])
 					block.rect.x = plat[2]
