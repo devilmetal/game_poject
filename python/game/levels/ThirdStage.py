@@ -73,7 +73,7 @@ class ThirdStage(Level):
 			[50, 20, 6800, HEIGHT-120],
 			[50, 20, 7000, HEIGHT-20],
 			#second part of the level
-			[5000, 20, 7200, HEIGHT-100],
+			[1900, 20, 7200, HEIGHT-100],
 			#platforms between top & bott. moving platforms
 			[50, 20, 7400, HEIGHT-200],
 			[50, 20, 7600, HEIGHT-200],
@@ -83,7 +83,17 @@ class ThirdStage(Level):
 			[50, 300, 8600, HEIGHT-500],
 			[50, 20, 8850, HEIGHT-200],
 			[50, 20, 8650, HEIGHT-250],
-			[50, 20, 8950, HEIGHT-200]
+			[50, 20, 8950, HEIGHT-200],
+			#part without ground
+			[50, 20, 9200, HEIGHT-200],
+			[50, 20, 9400, HEIGHT-250],
+			[50, 20, 9600, HEIGHT-250],
+			[50, 20, 9900, HEIGHT-200],
+			[500, 20, 10000, HEIGHT-100],
+			[500, 20, 10700, HEIGHT-200],
+			#last part of the level. Cave + moving ground
+			[600, 120, 11400, HEIGHT-100],
+			[400, HEIGHT-110, 11600, -40]
 		]
 
 		#some standard spikes
@@ -128,7 +138,8 @@ class ThirdStage(Level):
 		#[widht, height, x, y]
 		checkpoints = [
 			[80, 20, 4050, HEIGHT-150],
-			[100, 20, 7100, HEIGHT-100]
+			[100, 20, 7100, HEIGHT-100],
+			[80, 20, 11200, HEIGHT-200]
 		]
 
 		#array of diag moving plat
@@ -144,7 +155,10 @@ class ThirdStage(Level):
 			[0, 4810, HEIGHT-90, HEIGHT-300, HEIGHT-44, 2],
 			[2, 4810, HEIGHT-45, HEIGHT-255, HEIGHT+1, 2],
 			[0, 5260, HEIGHT-90, HEIGHT-300, HEIGHT-44, 2],
-			[2, 5260, HEIGHT-45, HEIGHT-255, HEIGHT+1, 2]
+			[2, 5260, HEIGHT-45, HEIGHT-255, HEIGHT+1, 2],
+			#spikes between moving magma platforms
+			[0, 10585, HEIGHT-100, HEIGHT-400, HEIGHT-54, 5],
+			[2, 10585, HEIGHT-55, HEIGHT-355, HEIGHT-9, 5],
 		]
 
 		#horizontal moving spikes
@@ -176,15 +190,21 @@ class ThirdStage(Level):
 				[1000, 300, 8200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
 				[1000, 300, 9200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
 				[1000, 300, 10200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
-				[1000, 300, 11200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300]
+				#[1000, 300, 11200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300]
 				]
 			],
-			[4900, HEIGHT-100, 7300, -180, -360, HEIGHT-280, 1, 1, 300, 300,
+			[900, HEIGHT-100, 7300, -180, -360, HEIGHT-280, 1, 1, 300, 300,
 				[
 				[1000, HEIGHT-100, 8200, -180, -360, HEIGHT-280, 1, 1, 300, 300],
 				[1000, HEIGHT-100, 9200, -180, -360, HEIGHT-280, 1, 1, 300, 300],
 				[1000, HEIGHT-100, 10200, -180, -360, HEIGHT-280, 1, 1, 300, 300],
-				[1000, HEIGHT-100, 11200, -180, -360, HEIGHT-280, 1, 1, 300, 300]
+				#[1000, HEIGHT-100, 11200, -180, -360, HEIGHT-280, 1, 1, 300, 300]
+				]
+			],
+			#last vertical ground that can kill if stuck in a tunnel
+			[1000, 600, 11600, HEIGHT-50, HEIGHT-300, HEIGHT+550, 1, 1, 300, 300,
+				[
+				
 				]
 			]
 		]
@@ -197,7 +217,7 @@ class ThirdStage(Level):
 				[1000, 40, 8200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
 				[1000, 40, 9200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
 				[1000, 40, 10200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
-				[1000, 40, 11200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300]
+				#[1000, 40, 11200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300]
 				]
 			],
 			[900, 40, 7300, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300,
@@ -205,7 +225,7 @@ class ThirdStage(Level):
 				[1000, 40, 8200, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300],
 				[1000, 40, 9200, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300],
 				[1000, 40, 10200, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300],
-				[1000, 40, 11200, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300]
+				#[1000, 40, 11200, HEIGHT-320, HEIGHT-500, HEIGHT-280, 1, 1, 300, 300]
 				]
 			]
 		]
@@ -329,6 +349,7 @@ class ThirdStage(Level):
 				subblock.player = self.player
 				subblock.level = self
 				block.subblock.add(subblock)
+				self.sub_plat_list.add(subblock)
 
 			self.mov_plat_list.add(block)
 
@@ -360,6 +381,7 @@ class ThirdStage(Level):
 				subblock.player = self.player
 				subblock.level = self
 				block.subblock.add(subblock)
+				self.sub_plat_list.add(subblock)
 			self.mov_plat_list.add(block)
 
 
@@ -390,6 +412,8 @@ class ThirdStage(Level):
 				subblock.player = self.player
 				subblock.level = self
 				block.subblock.add(subblock)
+				self.sub_plat_list.add(subblock)
+
 			self.magma_list.add(block)
 
 		#Parallax background

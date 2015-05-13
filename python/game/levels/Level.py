@@ -33,6 +33,7 @@ class Level():
             platforms collide with the player. """
         self.platform_list = pygame.sprite.Group()
         self.mov_plat_list = pygame.sprite.Group()
+        self.sub_plat_list = pygame.sprite.Group()
         self.pnj_list = pygame.sprite.Group()
         self.back_world_list = pygame.sprite.Group()
         self.back_front_world_list = pygame.sprite.Group()
@@ -49,7 +50,7 @@ class Level():
         for elem in self.platform_list:
             if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 3:
                 elem.update()
-                
+
         #self.pnj_list.update()
         for elem in self.pnj_list:
             if abs(elem.rect.x - self.player.rect.x) < constants.SCREEN_WIDTH * 2:
