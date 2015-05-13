@@ -93,7 +93,16 @@ class ThirdStage(Level):
 			[500, 20, 10700, HEIGHT-200],
 			#last part of the level. Cave + moving ground
 			[600, 120, 11400, HEIGHT-100],
-			[400, HEIGHT-110, 11600, -40]
+			[400, HEIGHT-110, 11600, -40],
+			[600, 300, 12050, HEIGHT-280],
+			[1050, HEIGHT-290, 12000, -40],
+			[150, 230, 12650, HEIGHT-210],
+			[50, 20, 12700, HEIGHT-280],
+			[200, 230, 12800, HEIGHT-280],
+			[1000, 120, 13050, HEIGHT-100],
+			[1000, HEIGHT-110, 13050, -40],
+			[1000, HEIGHT, 14050, 20]
+
 		]
 
 		#some standard spikes
@@ -165,6 +174,8 @@ class ThirdStage(Level):
 		#[orientation, x, y, left bound, right bound, speed, [subblock]]
 		horiz_spikes = [
 			[1, 5545, HEIGHT-30, 5545, 5995, 5, [3, 5500, HEIGHT-30, 5500, 5950, 5]],
+			#spikes in the last part of the stage
+			[1, 12545, HEIGHT-310, 12545, 12895, 4, [3,12500, HEIGHT-310, 12500, 12850, 4]]
 		]
 
 
@@ -202,9 +213,10 @@ class ThirdStage(Level):
 				]
 			],
 			#last vertical ground that can kill if stuck in a tunnel
-			[1000, 600, 11600, HEIGHT-50, HEIGHT-300, HEIGHT+550, 1, 1, 300, 300,
+			[1000, 600, 11600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 300,
 				[
-				
+				[1000, 600, 12600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 300],
+				[450, 600, 13600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 300]
 				]
 			]
 		]
