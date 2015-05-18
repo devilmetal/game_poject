@@ -28,6 +28,18 @@ class Data():
                 #'easy' is always unlocked
                 self.save[slot]['used'] = False
                 data['easy']['unlocked'] = True
+            #SPECIAL DEVLOPPER SAVE !
+            for slot in ['D']:
+                data={}
+                for diff in ['easy','medium','hard']:
+                    data[diff] = {}
+                    data[diff]['unlocked'] = True
+                    for c in ['hulk', 'bob', 'little_fat']:
+                        data[diff][c]={}
+                        data[diff][c]['unlocked'] = True
+                        data[diff][c]['levels'] = [0,1,2,3]
+                self.save[slot] = data
+                self.save[slot]['used'] = True
 
             self.save_data()
         else:

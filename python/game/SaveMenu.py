@@ -37,6 +37,8 @@ class SaveMenu(Menu):
                             selected_slot = 'B'
                         if self.get_position() == 2:
                             selected_slot = 'C'
+                        if self.get_position() == 3:
+                            selected_slot = 'D'
 
                         constants.GAME_STATUS = "menuDiff"
                         Menu.menu_res['menu_select'].play()
@@ -63,6 +65,8 @@ class SaveMenu(Menu):
                             selected_slot = 'B'
                         if self.get_position() == 2:
                             selected_slot = 'C'
+                        if self.get_position() == 3:
+                            selected_slot = 'D'
 
                         constants.GAME_STATUS = "menuDiff"
                         Menu.menu_res['menu_select'].play()

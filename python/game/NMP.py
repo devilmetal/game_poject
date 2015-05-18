@@ -147,11 +147,14 @@ def main():
             screen.blit(background_image, [0, 0])
             menu = SaveMenu()
             slot_list = []
-            for key in ['A','B','C']:
+            for key in ['A','B','C','D']:
                 if not nmp_data.save[key]['used']:
                     slot_list.append("Slot "+key)
                 else:
-                    slot_list.append("Progress : "+nmp_data.stats(key)+"%")
+                    if key == 'D':
+                        slot_list.append("Dev Save")
+                    else:
+                        slot_list.append("Progress : "+nmp_data.stats(key)+"%")
             #menu.init(['Slot A','Slot B','Slot C'], screen)
             menu.init(slot_list, screen)
             menu.draw()
