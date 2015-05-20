@@ -14,6 +14,7 @@ def init_parallax_ressources(width,height):
     if parallax_ressources == {}:
         parallax_ressources['back'] = pygame.transform.scale(routines.load_png('world/trees/far-background.png')[0],(width,height))
         parallax_ressources['front'] = pygame.transform.scale(routines.load_png('world/trees/near-background.png')[0],(width,height))
+        parallax_ressources['cave'] = pygame.transform.scale(routines.load_png('world/cave/background_cave.png')[0],(width,height))
 
 def init_sign_ressources():
     if sign_ressources == {}:

@@ -29,7 +29,7 @@ class ThirdStage(Level):
 
 
 		"""static platforms"""
-		
+
 		#static platforms
 		#[width, height, x, y]
 		platforms = [
@@ -250,10 +250,8 @@ class ThirdStage(Level):
 
 		#adding parallax stuff to background along the level
 		x_parallax=0
-		back_p=[]
 		front_p=[]
 		while x_parallax < -self.level_limit + constants.SCREEN_WIDTH:
-			back_p.append([x_parallax])
 			front_p.append([x_parallax])
 			x_parallax+=constants.SCREEN_WIDTH
 
@@ -269,6 +267,7 @@ class ThirdStage(Level):
 			block.rect.y = plat[3]
 			block.player = self.player
 			block.level = self
+			block.setcave()
 			self.platform_list.add(block)
 
 		for spike in spikes:
@@ -301,6 +300,7 @@ class ThirdStage(Level):
 			block.change_y = plat[8]
 			block.player = self.player
 			block.level = self
+			block.setcave()
 			self.platform_list.add(block)
 
 		for spike in vert_spikes:
@@ -323,7 +323,7 @@ class ThirdStage(Level):
 			block.change_x = spike[5]
 			block.player = self.player
 			block.level = self
-			
+
 			subspike = MovingSpike(spike[6][0])
 			subspike.rect.x = spike[6][1]
 			subspike.rect.y = spike[6][2]
@@ -333,7 +333,7 @@ class ThirdStage(Level):
 			subspike.player = self.player
 			subspike.level = self
 			block.subblock.add(subspike)
-			
+
 			self.mov_plat_list.add(block)
 
 		for wall in horiz_mov_wall:
@@ -349,6 +349,7 @@ class ThirdStage(Level):
 			block.pause_left = wall[9]
 			block.player = self.player
 			block.level = self
+			block.setcave()
 
 			for magma in wall[10]:
 				subblock = MagmaPlat(magma[0], magma[1])
@@ -382,6 +383,7 @@ class ThirdStage(Level):
 			block.pause_up = plat[9]
 			block.player = self.player
 			block.level = self
+			block.setcave()
 			for sub in plat[10]:
 				subblock = SpecialPlatform(sub[0], sub[1])
 				subblock.rect.x = sub[2]
@@ -395,6 +397,7 @@ class ThirdStage(Level):
 				subblock.pause_up = sub[9]
 				subblock.player = self.player
 				subblock.level = self
+				subblock.setcave()
 				block.subblock.add(subblock)
 				self.sub_plat_list.add(subblock)
 			self.mov_plat_list.add(block)
@@ -413,6 +416,7 @@ class ThirdStage(Level):
 			block.pause_up = plat[9]
 			block.player = self.player
 			block.level = self
+			block.setcave()
 			for sub in plat[10]:
 				subblock = MagmaPlat(sub[0], sub[1])
 				subblock.rect.x = sub[2]
@@ -426,6 +430,7 @@ class ThirdStage(Level):
 				subblock.pause_up = sub[9]
 				subblock.player = self.player
 				subblock.level = self
+				subblock.setcave()
 				block.subblock.add(subblock)
 				self.sub_plat_list.add(subblock)
 
@@ -440,25 +445,16 @@ class ThirdStage(Level):
 			block.level = self
 			block.level_pointer = plat[4]
 			block.character_pointer = plat[5]
+			block.setcave()
 			self.platform_list.add(block)
 
 		#Parallax background
-		for elem in back_p:
-			x = elem[0]
-			y = 0
-			width = constants.SCREEN_WIDTH
-			height = constants.SCREEN_HEIGHT
-			mode = "back"
-			level = self
-			paral = Parallax(x,y,width,height,mode,level)
-			self.back_world_list.add(paral)
-
 		for elem in front_p:
 			x = elem[0]
 			y = 0
 			width = constants.SCREEN_WIDTH
 			height = constants.SCREEN_HEIGHT
-			mode = "front"
+			mode = "cave_p"
 			level = self
 			paral = Parallax(x,y,width,height,mode,level)
 			self.back_front_world_list.add(paral)

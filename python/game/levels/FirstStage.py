@@ -91,12 +91,12 @@ class FirstStage(Level):
 		end_plat.append([120, 20, 14380, HEIGHT-350, 1, 'bob'])
 		end_plat.append([300, 20, 15000, HEIGHT, 3, 'hulk'])
 		end_plat.append([40, 20, 14580, HEIGHT, 2, 'little_fat'])
-		
+
 		signs = [
 			[14380, HEIGHT-350,"Level 2"],
 			[15000, HEIGHT, "Boss"]
 		]
-		
+
 		# checkpoints
 		#[top-left x, top-left , width, height]
 		checkpoints = [
@@ -805,7 +805,7 @@ class FirstStage(Level):
 
 
 		###################################################################################
-		
+
 		elif level_dif == "hard":
 			for plat in hard_plat:
 				block = Platform(plat[0], plat[1])

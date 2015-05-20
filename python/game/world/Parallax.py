@@ -17,8 +17,11 @@ class Parallax(pygame.sprite.Sprite):
         if mode == "back":
             self.image = world_ressources.parallax_ressources['back']
             self.rect = self.image.get_rect().copy()
-        else:
+        elif mode == "front":
             self.image = world_ressources.parallax_ressources['front']
+            self.rect = self.image.get_rect().copy()
+        elif mode == "cave_p":
+            self.image = world_ressources.parallax_ressources['cave']
             self.rect = self.image.get_rect().copy()
         self.rect.x = x
         self.rect.y = y
