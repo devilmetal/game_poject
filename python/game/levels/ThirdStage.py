@@ -39,7 +39,6 @@ class ThirdStage(Level):
 			[100, 300, 1200, HEIGHT-300],
 			[550, 20, 550, HEIGHT-100],
 			[20, 420, 530, HEIGHT-500],
-			[550, 20, 650, HEIGHT-200],
 			[50, 50, 700, HEIGHT-250],
 			[50, 50, 900, HEIGHT-250],
 			[50, 50, 1100, HEIGHT-250],
@@ -126,9 +125,7 @@ class ThirdStage(Level):
 		#checkpoints
 		#[widht, height, x, y]
 		checkpoints = [
-			[80, 20, 4050, HEIGHT-150],
-			[100, 20, 7100, HEIGHT-100],
-			[80, 20, 11200, HEIGHT-200]
+			[100, 20, 7100, HEIGHT-100]
 		]
 
 		#array of diag moving plat
@@ -333,6 +330,7 @@ class ThirdStage(Level):
 
 		#[width, height, x, y]
 		easy_plats = [
+			[550, 20, 650, HEIGHT-200],
 			[50, 20, 1650, HEIGHT-100],
 			[50, 20, 1520, HEIGHT-200],
 			[50, 20, 10100, HEIGHT-200],
@@ -397,19 +395,36 @@ class ThirdStage(Level):
 			]
 		]
 
+		easy_med_checkpoints = [
+			[80, 20, 4050, HEIGHT-150],
+			[80, 20, 11200, HEIGHT-200]
+		]
+
 		###################################################################################
 
 		#medium
 
 		med_plats = [
+			[50, 20, 650, HEIGHT-200],
 			[50, 20, 1650, HEIGHT-50],
 			[50, 20, 1520, HEIGHT-100],
 			[50, 20, 1650, HEIGHT-150],
 			[50, 20, 1520, HEIGHT-200],
 			[50, 20, 1650, HEIGHT-250],
+			[30, 30, 2885, HEIGHT-165],
+			[50, 20, 10300, HEIGHT-200],
+			[80, HEIGHT-110, 13550, -40],
 		]
 
 		med_spikes = [
+			[0, 2100, HEIGHT-45],
+			[0, 2300, HEIGHT-45],
+			#spikes in the center of the moving platform
+			[0, 2885, HEIGHT-208],
+			[1, 2912, HEIGHT-165],
+			[2, 2885, HEIGHT-138],
+			[3, 2840, HEIGHT-165],
+			#wall of spikes
 			[1, 8445, HEIGHT-180],
 			[3, 8400, HEIGHT-180],
 			[1, 8445, HEIGHT-210],
@@ -433,11 +448,65 @@ class ThirdStage(Level):
 		]
 
 		med_vert_spikes = [
+			[0, 3150, HEIGHT-300, HEIGHT-300, HEIGHT-50, 8],
+			[2, 3150, HEIGHT-255, HEIGHT-255, HEIGHT-5, 8],
+			[0, 3400, HEIGHT-300, HEIGHT-300, HEIGHT-50, 8],
+			[2, 3400, HEIGHT-255, HEIGHT-255, HEIGHT-5, 8],
 			[0, 4810, HEIGHT-90, HEIGHT-300, HEIGHT-44, 5],
 			[2, 4810, HEIGHT-45, HEIGHT-255, HEIGHT+1, 5],
 			[0, 5260, HEIGHT-90, HEIGHT-300, HEIGHT-44, 5],
 			[2, 5260, HEIGHT-45, HEIGHT-255, HEIGHT+1, 5],
+			[0, 10615, HEIGHT-100, HEIGHT-400, HEIGHT-54, 8],
+			[2, 10615, HEIGHT-55, HEIGHT-355, HEIGHT-9, 8],
 		]
+
+		#vertical moving platform
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up,
+		#	[[subbaray of the same kind]]]
+		med_vert_plat = [
+			[900, 300, 7300, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300,
+				[
+				[1000, 300, 8200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
+				[1000, 300, 9200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
+				[1000, 300, 10200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
+				]
+			],
+			[900, HEIGHT-100, 7300, -190, -370, HEIGHT-290, 1, 1, 300, 300,
+				[
+				[1000, HEIGHT-100, 8200, -190, -370, HEIGHT-290, 1, 1, 300, 300],
+				[1000, HEIGHT-100, 9200, -190, -370, HEIGHT-290, 1, 1, 300, 300],
+				[1000, HEIGHT-100, 10200, -190, -370, HEIGHT-290, 1, 1, 300, 300],
+				]
+			],
+			#last vertical ground that can kill if stuck in a tunnel
+			[1000, 600, 11600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 240,
+				[
+				[1000, 600, 12600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 240],
+				[450, 600, 13600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 240]
+				]
+			]
+		]
+
+		#vertical moving magma
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
+		med_vert_magma = [
+			[900, 40, 7300, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300,
+				[
+				[1000, 40, 8200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
+				[1000, 40, 9200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
+				[1000, 40, 10200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
+				]
+			],
+			[900, 40, 7300, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 1, 300, 300,
+				[
+				[1000, 40, 8200, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 1, 300, 300],
+				[1000, 40, 9200, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 1, 300, 300],
+				[1000, 40, 10200, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 1, 300, 300],
+				]
+			]
+		]
+
+
 
 		###################################################################################
 		###################################################################################
@@ -525,6 +594,18 @@ class ThirdStage(Level):
 					self.sub_plat_list.add(subblock)
 				self.magma_list.add(block)
 
+			for plat in easy_med_checkpoints:
+				block = CheckPoint(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				#CheckPoint is white!
+				block.image.fill(constants.WHITE)
+				self.platform_list.add(block)
+
+
+		###################################################################################
 
 		elif level_dif == "medium":
 			for plat in med_plats:
@@ -535,7 +616,7 @@ class ThirdStage(Level):
 				block.level = self
 				self.platform_list.add(block)
 
-			for spike in spikes:
+			for spike in med_spikes:
 				block = Spike(spike[0])
 				block.rect.x = spike[1]
 				block.rect.y = spike[2]
@@ -575,3 +656,75 @@ class ThirdStage(Level):
 				block.subblock.add(subspike)
 				
 				self.mov_plat_list.add(block)
+
+
+			for plat in med_vert_plat:
+				block = SpecialPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.change_y = plat[6]
+				block.change_y_d = plat[6]
+				block.change_y_u = -plat[7]
+				block.pause_down = plat[8]
+				block.pause_up = plat[9]
+				block.player = self.player
+				block.level = self
+				for sub in plat[10]:
+					subblock = SpecialPlatform(sub[0], sub[1])
+					subblock.rect.x = sub[2]
+					subblock.rect.y = sub[3]
+					subblock.boundary_top = sub[4]
+					subblock.boundary_bottom = sub[5]
+					subblock.change_y = sub[6]
+					subblock.change_y_d = sub[6]
+					subblock.change_y_u = -sub[7]
+					subblock.pause_down = sub[8]
+					subblock.pause_up = sub[9]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
+					self.sub_plat_list.add(subblock)
+				self.mov_plat_list.add(block)
+
+
+			for plat in med_vert_magma:
+				block = MagmaPlat(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.change_y = plat[6]
+				block.change_y_d = plat[6]
+				block.change_y_u = -plat[7]
+				block.pause_down = plat[8]
+				block.pause_up = plat[9]
+				block.player = self.player
+				block.level = self
+				for sub in plat[10]:
+					subblock = MagmaPlat(sub[0], sub[1])
+					subblock.rect.x = sub[2]
+					subblock.rect.y = sub[3]
+					subblock.boundary_top = sub[4]
+					subblock.boundary_bottom = sub[5]
+					subblock.change_y = sub[6]
+					subblock.change_y_d = sub[6]
+					subblock.change_y_u = -sub[7]
+					subblock.pause_down = sub[8]
+					subblock.pause_up = sub[9]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
+					self.sub_plat_list.add(subblock)
+				self.magma_list.add(block)
+
+			for plat in easy_med_checkpoints:
+				block = CheckPoint(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				#CheckPoint is white!
+				block.image.fill(constants.WHITE)
+				self.platform_list.add(block)
