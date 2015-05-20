@@ -70,7 +70,7 @@ class Game():
         elif level_nbr == 2:
             if not self.checkpoint:
                 self.start_x = 350
-                self.start_y = HEIGHT - 100 - self.character.rect.height
+                self.start_y = HEIGHT - self.character.rect.height
             self.level = ThirdStage(self.character, level_dif)
             if not self.mixer_level == 2:
                 pygame.mixer.music.fadeout(1000)

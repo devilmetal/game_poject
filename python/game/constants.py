@@ -10,8 +10,8 @@ SKY_BLUE = ( 179, 232, 255)
 # PLAT_COL = ( 102,  51,   0)
 PLAT_COL = (60,56,39)
 # Screen dimensions
-SCREEN_WIDTH  = 1000
-SCREEN_HEIGHT = 800
+SCREEN_WIDTH  = 800
+SCREEN_HEIGHT = 500
 
 #Moving speed variables
 MOVING_FRAME = 0

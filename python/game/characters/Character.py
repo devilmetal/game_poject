@@ -59,10 +59,13 @@ class Character(pygame.sprite.Sprite):
             # Move up/down
             self.rect.y += self.change_y
 
+            used_points = []
+
             # Check and see if we hit anything
             block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False) + pygame.sprite.spritecollide(self, self.level.mov_plat_list, False) + pygame.sprite.spritecollide(self, self.level.sub_plat_list, False)
             for block in block_hit_list:
 
+                used_points.append([block.rect.x+1, block.rect.y+1])
                 # Reset our position based on the top/bottom of the object.
                 if self.change_y > 0:
                     self.rect.bottom = block.rect.top
@@ -76,16 +79,23 @@ class Character(pygame.sprite.Sprite):
             self.rect.x += self.change_x
 
             # See if we hit anything
+
             block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False) + pygame.sprite.spritecollide(self, self.level.mov_plat_list, False) + pygame.sprite.spritecollide(self, self.level.sub_plat_list, False)
             for block in block_hit_list:
+
+                skip = False
+                for point in used_points:
+                    if block.rect.collidepoint(point[0],point[1]):
+                        skip = True
+                        break
                 # If we are moving right,
                 # set our right side to the left side of the item we hit
-
-                if self.change_x > 0:
+                if self.change_x > 0 and not skip:
                     self.rect.right = block.rect.left
-                elif self.change_x < 0:
+                elif self.change_x < 0 and not skip:
                     # Otherwise if we are moving left, do the opposite.
                     self.rect.left = block.rect.right
+
 
         else:
             self.rect.y += self.change_y
