@@ -8,7 +8,7 @@ from levels.ThirdStage import ThirdStage
 from levels.Boss1 import Boss1
 from CrossFade import CrossFade
 HEIGHT = constants.SCREEN_HEIGHT-20
-TAUNTS = ["You're still not skilled enough...","Try again, noob !","Come on !","Do you want to have a rest ?","You may need to lower the difficulty... noob !","Even my grandmother is more skilled than you !","What the f**k did you do ?","You know... Maybe you should give up...","You are more dying than playing bro !","Hahahahahaha ! XD","So close... but so far !","Man... seriously ?"]
+
 class Game():
     # Lists of sprites used in all levels. Add or remove
     # lists as needed for your game.
@@ -40,7 +40,7 @@ class Game():
 
         self.current_level_nbr = level_nbr
         self.joystick = joystick
-        self.taunts = TAUNTS
+        self.taunts = constants.TAUNTS[:]
         self.nmp_data = nmp_data
         self.init_level(level_nbr, level_dif)
 
@@ -124,9 +124,11 @@ class Game():
                 self.character.dead = False
                 self.character.hit = False
                 self.load_level(self.current_level_nbr, self.level_dif)
+
+                if len(self.taunts) == 1:
+                    self.taunts = constants.TAUNTS[:]
+                    
                 taunt = random.choice(self.taunts)
-                if len(self.taunts)==1:
-                    self.taunts = TAUNTS
                 taunt = self.taunts.pop(self.taunts.index(taunt))
                 fade = CrossFade(self.screen)
                 fade.fadeout(self.screen, 15)

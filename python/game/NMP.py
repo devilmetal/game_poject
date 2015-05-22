@@ -40,6 +40,8 @@ def main():
     """ Main Program """
     pygame.init()
 
+    pygame.mouse.set_visible(False)
+
     # Set the height and width of the screen
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
