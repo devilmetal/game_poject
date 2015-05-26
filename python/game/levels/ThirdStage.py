@@ -33,13 +33,10 @@ class ThirdStage(Level):
 		#static platforms
 		#[width, height, x, y]
 		platforms = [
-			#ground platform
-			[2600, 20, 0, HEIGHT],
 			#obstacles
 			[100, 300, 1200, HEIGHT-300],
 			[550, 20, 550, HEIGHT-100],
 			[20, 420, 530, HEIGHT-500],
-			[550, 20, 650, HEIGHT-200],
 			[50, 50, 700, HEIGHT-250],
 			[50, 50, 900, HEIGHT-250],
 			[50, 50, 1100, HEIGHT-250],
@@ -126,9 +123,7 @@ class ThirdStage(Level):
 		#checkpoints
 		#[widht, height, x, y]
 		checkpoints = [
-			[80, 20, 4050, HEIGHT-150],
-			[100, 20, 7100, HEIGHT-100],
-			[80, 20, 11200, HEIGHT-200]
+			[100, 20, 7100, HEIGHT-100]
 		]
 
 		#array of diag moving plat
@@ -144,13 +139,6 @@ class ThirdStage(Level):
 			#spikes between moving magma platforms
 			[0, 10585, HEIGHT-100, HEIGHT-400, HEIGHT-54, 5],
 			[2, 10585, HEIGHT-55, HEIGHT-355, HEIGHT-9, 5],
-		]
-
-		#horizontal moving spikes
-		#[orientation, x, y, left bound, right bound, speed, [subblock]]
-		horiz_spikes = [
-			#spikes in the last part of the stage
-			[1, 12545, HEIGHT-310, 12545, 12895, 4, [3,12500, HEIGHT-310, 12500, 12850, 4]]
 		]
 
 
@@ -237,28 +225,6 @@ class ThirdStage(Level):
 			block.level = self
 			self.platform_list.add(block)
 
-		for spike in horiz_spikes:
-			block = MovingSpike(spike[0])
-			block.rect.x = spike[1]
-			block.rect.y = spike[2]
-			block.boundary_left = spike[3]
-			block.boundary_right = spike[4]
-			block.change_x = spike[5]
-			block.player = self.player
-			block.level = self
-
-			subspike = MovingSpike(spike[6][0])
-			subspike.rect.x = spike[6][1]
-			subspike.rect.y = spike[6][2]
-			subspike.boundary_left = spike[6][3]
-			subspike.boundary_right = spike[6][4]
-			subspike.change_x = spike[6][5]
-			subspike.player = self.player
-			subspike.level = self
-			block.subblock.add(subspike)
-
-			self.mov_plat_list.add(block)
-
 		for wall in horiz_mov_wall:
 			block = SpecialPlatform(wall[0], wall[1])
 			block.rect.x = wall[2]
@@ -326,6 +292,10 @@ class ThirdStage(Level):
 
 		#[width, height, x, y]
 		easy_plats = [
+			#ground platform
+			[2600, 20, 0, HEIGHT],
+			#obstacles
+			[550, 20, 650, HEIGHT-200],
 			[50, 20, 1650, HEIGHT-100],
 			[50, 20, 1520, HEIGHT-200],
 			[50, 20, 10100, HEIGHT-200],
@@ -339,6 +309,10 @@ class ThirdStage(Level):
 			[2, 5260, HEIGHT-45, HEIGHT-255, HEIGHT+1, 2],
 		]
 
+		easy_horiz_spikes = [
+			#spikes in the last part of the stage
+			[1, 12545, HEIGHT-310, 12545, 12895, 4, [3,12500, HEIGHT-310, 12500, 12850, 4]]
+		]
 
 		###/!\/!\/!\ I had to split the platform into subarray in order to make it still move if
 		#plat.rect.x is out of the limit (i.e. abs(plat.rect.x - self.rect.x) < screen.width*3)
@@ -390,19 +364,39 @@ class ThirdStage(Level):
 			]
 		]
 
+		easy_med_checkpoints = [
+			[80, 20, 4050, HEIGHT-150],
+			[80, 20, 11200, HEIGHT-200]
+		]
+
 		###################################################################################
 
 		#medium
 
 		med_plats = [
+			#ground platform
+			[2600, 20, 0, HEIGHT],
+			#osbtacles
+			[50, 20, 650, HEIGHT-200],
 			[50, 20, 1650, HEIGHT-50],
 			[50, 20, 1520, HEIGHT-100],
 			[50, 20, 1650, HEIGHT-150],
 			[50, 20, 1520, HEIGHT-200],
 			[50, 20, 1650, HEIGHT-250],
+			[30, 30, 2885, HEIGHT-165],
+			[50, 20, 10300, HEIGHT-200],
+			[80, HEIGHT-110, 13550, -40],
 		]
 
 		med_spikes = [
+			[0, 2100, HEIGHT-45],
+			[0, 2300, HEIGHT-45],
+			#spikes in the center of the moving platform
+			[0, 2885, HEIGHT-208],
+			[1, 2912, HEIGHT-165],
+			[2, 2885, HEIGHT-138],
+			[3, 2840, HEIGHT-165],
+			#wall of spikes
 			[1, 8445, HEIGHT-180],
 			[3, 8400, HEIGHT-180],
 			[1, 8445, HEIGHT-210],
@@ -423,14 +417,196 @@ class ThirdStage(Level):
 
 		med_horiz_spikes = [
 			[1, 5545, HEIGHT-30, 5545, 5995, 5, [3, 5500, HEIGHT-30, 5500, 5950, 5]],
+			#spikes in the last part of the stage
+			[1, 12545, HEIGHT-310, 12545, 12895, 4, [3,12500, HEIGHT-310, 12500, 12850, 4]]
 		]
 
 		med_vert_spikes = [
+			[0, 3150, HEIGHT-300, HEIGHT-300, HEIGHT-50, 8],
+			[2, 3150, HEIGHT-255, HEIGHT-255, HEIGHT-5, 8],
+			[0, 3400, HEIGHT-300, HEIGHT-300, HEIGHT-50, 8],
+			[2, 3400, HEIGHT-255, HEIGHT-255, HEIGHT-5, 8],
 			[0, 4810, HEIGHT-90, HEIGHT-300, HEIGHT-44, 5],
 			[2, 4810, HEIGHT-45, HEIGHT-255, HEIGHT+1, 5],
 			[0, 5260, HEIGHT-90, HEIGHT-300, HEIGHT-44, 5],
 			[2, 5260, HEIGHT-45, HEIGHT-255, HEIGHT+1, 5],
+			[0, 10615, HEIGHT-100, HEIGHT-400, HEIGHT-54, 8],
+			[2, 10615, HEIGHT-55, HEIGHT-355, HEIGHT-9, 8],
 		]
+
+		#vertical moving platform
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up,
+		#	[[subbaray of the same kind]]]
+		med_vert_plat = [
+			[900, 300, 7300, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300,
+				[
+				[1000, 300, 8200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
+				[1000, 300, 9200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
+				[1000, 300, 10200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 1, 300, 300],
+				]
+			],
+			[900, HEIGHT-100, 7300, -190, -370, HEIGHT-290, 1, 1, 300, 300,
+				[
+				[1000, HEIGHT-100, 8200, -190, -370, HEIGHT-290, 1, 1, 300, 300],
+				[1000, HEIGHT-100, 9200, -190, -370, HEIGHT-290, 1, 1, 300, 300],
+				[1000, HEIGHT-100, 10200, -190, -370, HEIGHT-290, 1, 1, 300, 300],
+				]
+			],
+			#last vertical ground that can kill if stuck in a tunnel
+			[1000, 600, 11600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 240,
+				[
+				[1000, 600, 12600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 240],
+				[450, 600, 13600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 240]
+				]
+			]
+		]
+
+		#vertical moving magma
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
+		med_vert_magma = [
+			[900, 40, 7300, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300,
+				[
+				[1000, 40, 8200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
+				[1000, 40, 9200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
+				[1000, 40, 10200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 1, 300, 300],
+				]
+			],
+			[900, 40, 7300, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 1, 300, 300,
+				[
+				[1000, 40, 8200, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 1, 300, 300],
+				[1000, 40, 9200, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 1, 300, 300],
+				[1000, 40, 10200, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 1, 300, 300],
+				]
+			]
+		]
+
+
+		###################################################################################
+
+		#hard
+
+		hard_plats = [
+			[1580, 20, 0, HEIGHT],
+			[900, 20, 1700, HEIGHT],
+			[50, 20, 650, HEIGHT-200],
+			[50, 20, 1650, HEIGHT-50],
+			[50, 20, 1520, HEIGHT-100],
+			[50, 20, 1650, HEIGHT-150],
+			[50, 20, 1520, HEIGHT-200],
+			[50, 20, 1650, HEIGHT-250],
+			[30, 30, 2885, HEIGHT-165],
+			#replace the first checkpoint
+			[80, 20, 4050, HEIGHT-150],
+			[50, 20, 10300, HEIGHT-200],
+			[80, HEIGHT-110, 13550, -40],
+		]
+
+		hard_spikes = [
+			[0, 2100, HEIGHT-45],
+			[0, 2300, HEIGHT-45],
+			#square of spike in the center of a square moving platform
+			[0, 2885, HEIGHT-208],
+			[1, 2912, HEIGHT-165],
+			[2, 2885, HEIGHT-138],
+			[3, 2840, HEIGHT-165],
+			#wall of spikes
+			[1, 8445, HEIGHT-180],
+			[3, 8400, HEIGHT-180],
+			[1, 8445, HEIGHT-210],
+			[3, 8400, HEIGHT-210],
+			[1, 8445, HEIGHT-240],
+			[3, 8400, HEIGHT-240],
+			[1, 8445, HEIGHT-270],
+			[3, 8400, HEIGHT-270],
+			[1, 8445, HEIGHT-300],
+			[3, 8400, HEIGHT-300],
+			[1, 8445, HEIGHT-330],
+			[3, 8400, HEIGHT-330],
+			[1, 8445, HEIGHT-360],
+			[3, 8400, HEIGHT-360],
+			[1, 8445, HEIGHT-390],
+			[3, 8400, HEIGHT-390],
+		]
+
+		hard_magma = [
+			[120, 20, 1580, HEIGHT+10]
+		]
+
+		hard_vert_spikes = [
+			[0, 800, HEIGHT-345, HEIGHT-445, HEIGHT-145, 5],
+			[2, 800, HEIGHT-300, HEIGHT-400, HEIGHT-100, 5],
+			[0, 1000, HEIGHT-345, HEIGHT-445, HEIGHT-145, 5],
+			[2, 1000, HEIGHT-300, HEIGHT-400, HEIGHT-100, 5],
+			#moving spikes between platform in the air
+			[0, 3150, HEIGHT-300, HEIGHT-300, HEIGHT-50, 8],
+			[2, 3150, HEIGHT-255, HEIGHT-255, HEIGHT-5, 8],
+			[0, 3400, HEIGHT-300, HEIGHT-300, HEIGHT-50, 8],
+			[2, 3400, HEIGHT-255, HEIGHT-255, HEIGHT-5, 8],
+			#spikes inside the tunnel
+			[0, 4810, HEIGHT-90, HEIGHT-300, HEIGHT-44, 6],
+			[2, 4810, HEIGHT-45, HEIGHT-255, HEIGHT+1, 6],
+			[0, 5260, HEIGHT-90, HEIGHT-300, HEIGHT-44, 6],
+			[2, 5260, HEIGHT-45, HEIGHT-255, HEIGHT+1, 6],
+			#at the end of the sandwich plat
+			[0, 10615, HEIGHT-100, HEIGHT-400, HEIGHT-54, 8],
+			[2, 10615, HEIGHT-55, HEIGHT-355, HEIGHT-9, 8],
+		]
+
+		hard_horiz_spikes = [
+			[1, 3350, HEIGHT-200, 3045, 3550, 4, [3, 3305, HEIGHT-200, 3000, 3505, 4]],
+			[1, 5545, HEIGHT-30, 5545, 5995, 6, [3, 5500, HEIGHT-30, 5500, 5950, 6]],
+			[1, 8345, HEIGHT-130, 8345, 8845, 6, [3, 8300, HEIGHT-130, 8300, 8800, 6]],
+			[1, 9945, HEIGHT-130, 9945, 10545, 6, [3, 9900, HEIGHT-130, 9900, 10500, 6]],
+			#spikes in the last part of the stage
+			[1, 12545, HEIGHT-310, 12545, 12895, 6, [3,12500, HEIGHT-310, 12500, 12850, 6]]
+		]
+
+		#vertical moving platform
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up,
+		#	[[subbaray of the same kind]]]
+		hard_vert_plat = [
+			[900, 300, 7300, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 2, 300, 300,
+				[
+				[1000, 300, 8200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 2, 300, 300],
+				[1000, 300, 9200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 2, 300, 300],
+				[1000, 300, 10200, HEIGHT, HEIGHT-180, HEIGHT+300, 1, 2, 300, 300],
+				]
+			],
+			[900, HEIGHT-100, 7300, -190, -370, HEIGHT-290, 1, 2, 300, 300,
+				[
+				[1000, HEIGHT-100, 8200, -190, -370, HEIGHT-290, 1, 2, 300, 300],
+				[1000, HEIGHT-100, 9200, -190, -370, HEIGHT-290, 1, 2, 300, 300],
+				[1000, HEIGHT-100, 10200, -190, -370, HEIGHT-290, 1, 2, 300, 300],
+				]
+			],
+			#last vertical ground that can kill if stuck in a tunnel
+			[1000, 600, 11600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 240,
+				[
+				[1000, 600, 12600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 240],
+				[450, 600, 13600, HEIGHT-50, HEIGHT-200, HEIGHT+550, 2, 2, 300, 240]
+				]
+			]
+		]
+
+		#vertical moving magma
+		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
+		hard_vert_magma = [
+			[900, 40, 7300, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 2, 300, 300,
+				[
+				[1000, 40, 8200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 2, 300, 300],
+				[1000, 40, 9200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 2, 300, 300],
+				[1000, 40, 10200, HEIGHT, HEIGHT-180, HEIGHT+40, 1, 2, 300, 300],
+				]
+			],
+			[900, 40, 7300, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 2, 300, 300,
+				[
+				[1000, 40, 8200, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 2, 300, 300],
+				[1000, 40, 9200, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 2, 300, 300],
+				[1000, 40, 10200, HEIGHT-330, HEIGHT-510, HEIGHT-290, 1, 2, 300, 300],
+				]
+			]
+		]
+
 
 		###################################################################################
 		###################################################################################
@@ -444,6 +620,7 @@ class ThirdStage(Level):
 				block.rect.y = plat[3]
 				block.player = self.player
 				block.level = self
+				block.setcave()
 				self.platform_list.add(block)
 
 			for spike in easy_vert_spikes:
@@ -457,6 +634,29 @@ class ThirdStage(Level):
 				block.level = self
 				self.platform_list.add(block)
 
+			for spike in easy_horiz_spikes:
+				block = MovingSpike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.boundary_left = spike[3]
+				block.boundary_right = spike[4]
+				block.change_x = spike[5]
+				block.player = self.player
+				block.level = self
+				
+				subspike = MovingSpike(spike[6][0])
+				subspike.rect.x = spike[6][1]
+				subspike.rect.y = spike[6][2]
+				subspike.boundary_left = spike[6][3]
+				subspike.boundary_right = spike[6][4]
+				subspike.change_x = spike[6][5]
+				subspike.player = self.player
+				subspike.level = self
+				block.subblock.add(subspike)
+				
+				self.mov_plat_list.add(block)
+
+
 			for plat in easy_vert_plat:
 				block = SpecialPlatform(plat[0], plat[1])
 				block.rect.x = plat[2]
@@ -469,6 +669,7 @@ class ThirdStage(Level):
 				block.pause_down = plat[8]
 				block.pause_up = plat[9]
 				block.player = self.player
+				block.setcave()
 				block.level = self
 				for sub in plat[10]:
 					subblock = SpecialPlatform(sub[0], sub[1])
@@ -482,6 +683,7 @@ class ThirdStage(Level):
 					subblock.pause_down = sub[8]
 					subblock.pause_up = sub[9]
 					subblock.player = self.player
+					subblock.setcave()
 					subblock.level = self
 					block.subblock.add(subblock)
 					self.sub_plat_list.add(subblock)
@@ -518,6 +720,18 @@ class ThirdStage(Level):
 					self.sub_plat_list.add(subblock)
 				self.magma_list.add(block)
 
+			for plat in easy_med_checkpoints:
+				block = CheckPoint(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				#CheckPoint is white!
+				block.image.fill(constants.WHITE)
+				self.platform_list.add(block)
+
+
+		###################################################################################
 
 		elif level_dif == "medium":
 			for plat in med_plats:
@@ -526,9 +740,10 @@ class ThirdStage(Level):
 				block.rect.y = plat[3]
 				block.player = self.player
 				block.level = self
+				block.setcave()
 				self.platform_list.add(block)
 
-			for spike in spikes:
+			for spike in med_spikes:
 				block = Spike(spike[0])
 				block.rect.x = spike[1]
 				block.rect.y = spike[2]
@@ -566,5 +781,204 @@ class ThirdStage(Level):
 				subspike.player = self.player
 				subspike.level = self
 				block.subblock.add(subspike)
-
+				
 				self.mov_plat_list.add(block)
+
+
+			for plat in med_vert_plat:
+				block = SpecialPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.change_y = plat[6]
+				block.change_y_d = plat[6]
+				block.change_y_u = -plat[7]
+				block.pause_down = plat[8]
+				block.pause_up = plat[9]
+				block.player = self.player
+				block.level = self
+				block.setcave()
+				for sub in plat[10]:
+					subblock = SpecialPlatform(sub[0], sub[1])
+					subblock.rect.x = sub[2]
+					subblock.rect.y = sub[3]
+					subblock.boundary_top = sub[4]
+					subblock.boundary_bottom = sub[5]
+					subblock.change_y = sub[6]
+					subblock.change_y_d = sub[6]
+					subblock.change_y_u = -sub[7]
+					subblock.pause_down = sub[8]
+					subblock.pause_up = sub[9]
+					subblock.player = self.player
+					subblock.level = self
+					subblock.setcave()
+					block.subblock.add(subblock)
+					self.sub_plat_list.add(subblock)
+				self.mov_plat_list.add(block)
+
+
+			for plat in med_vert_magma:
+				block = MagmaPlat(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.change_y = plat[6]
+				block.change_y_d = plat[6]
+				block.change_y_u = -plat[7]
+				block.pause_down = plat[8]
+				block.pause_up = plat[9]
+				block.player = self.player
+				block.level = self
+				for sub in plat[10]:
+					subblock = MagmaPlat(sub[0], sub[1])
+					subblock.rect.x = sub[2]
+					subblock.rect.y = sub[3]
+					subblock.boundary_top = sub[4]
+					subblock.boundary_bottom = sub[5]
+					subblock.change_y = sub[6]
+					subblock.change_y_d = sub[6]
+					subblock.change_y_u = -sub[7]
+					subblock.pause_down = sub[8]
+					subblock.pause_up = sub[9]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
+					self.sub_plat_list.add(subblock)
+				self.magma_list.add(block)
+
+			for plat in easy_med_checkpoints:
+				block = CheckPoint(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				#CheckPoint is white!
+				block.image.fill(constants.WHITE)
+				self.platform_list.add(block)
+
+
+		###################################################################################
+
+		elif level_dif == "hard":
+			for plat in hard_plats:
+				block = Platform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				block.setcave()
+				self.platform_list.add(block)
+
+			for spike in hard_spikes:
+				block = Spike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for plat in hard_magma:
+				block = MagmaPlat(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.player = self.player
+				block.level = self
+				self.magma_list.add(block)
+
+			for spike in hard_horiz_spikes:
+				block = MovingSpike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.boundary_left = spike[3]
+				block.boundary_right = spike[4]
+				block.change_x = spike[5]
+				block.player = self.player
+				block.level = self
+				
+				subspike = MovingSpike(spike[6][0])
+				subspike.rect.x = spike[6][1]
+				subspike.rect.y = spike[6][2]
+				subspike.boundary_left = spike[6][3]
+				subspike.boundary_right = spike[6][4]
+				subspike.change_x = spike[6][5]
+				subspike.player = self.player
+				subspike.level = self
+				block.subblock.add(subspike)
+				
+				self.mov_plat_list.add(block)
+
+			for spike in hard_vert_spikes:
+				block = MovingSpike(spike[0])
+				block.rect.x = spike[1]
+				block.rect.y = spike[2]
+				block.boundary_top = spike[3]
+				block.boundary_bottom = spike[4]
+				block.change_y = spike[5]
+				block.player = self.player
+				block.level = self
+				self.platform_list.add(block)
+
+			for plat in hard_vert_plat:
+				block = SpecialPlatform(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.change_y = plat[6]
+				block.change_y_d = plat[6]
+				block.change_y_u = -plat[7]
+				block.pause_down = plat[8]
+				block.pause_up = plat[9]
+				block.player = self.player
+				block.level = self
+				block.setcave()
+				for sub in plat[10]:
+					subblock = SpecialPlatform(sub[0], sub[1])
+					subblock.rect.x = sub[2]
+					subblock.rect.y = sub[3]
+					subblock.boundary_top = sub[4]
+					subblock.boundary_bottom = sub[5]
+					subblock.change_y = sub[6]
+					subblock.change_y_d = sub[6]
+					subblock.change_y_u = -sub[7]
+					subblock.pause_down = sub[8]
+					subblock.pause_up = sub[9]
+					subblock.player = self.player
+					subblock.level = self
+					subblock.setcave()
+					block.subblock.add(subblock)
+					self.sub_plat_list.add(subblock)
+				self.mov_plat_list.add(block)
+
+
+			for plat in hard_vert_magma:
+				block = MagmaPlat(plat[0], plat[1])
+				block.rect.x = plat[2]
+				block.rect.y = plat[3]
+				block.boundary_top = plat[4]
+				block.boundary_bottom = plat[5]
+				block.change_y = plat[6]
+				block.change_y_d = plat[6]
+				block.change_y_u = -plat[7]
+				block.pause_down = plat[8]
+				block.pause_up = plat[9]
+				block.player = self.player
+				block.level = self
+				for sub in plat[10]:
+					subblock = MagmaPlat(sub[0], sub[1])
+					subblock.rect.x = sub[2]
+					subblock.rect.y = sub[3]
+					subblock.boundary_top = sub[4]
+					subblock.boundary_bottom = sub[5]
+					subblock.change_y = sub[6]
+					subblock.change_y_d = sub[6]
+					subblock.change_y_u = -sub[7]
+					subblock.pause_down = sub[8]
+					subblock.pause_up = sub[9]
+					subblock.player = self.player
+					subblock.level = self
+					block.subblock.add(subblock)
+					self.sub_plat_list.add(subblock)
+				self.magma_list.add(block)
