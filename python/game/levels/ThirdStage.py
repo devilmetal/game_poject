@@ -12,6 +12,7 @@ from platforms.MagmaPlat import MagmaPlat
 from world.Parallax import Parallax
 from PNJ.Blob import Blob
 from PNJ.Fairy import Fairy
+from world.Sign import Sign
 import constants
 import pygame
 
@@ -158,6 +159,10 @@ class ThirdStage(Level):
 		end_plat = []
 		end_plat.append([200, 20, 14500, HEIGHT, 3, 'little_fat'])
 
+		signs = [
+			[14300, HEIGHT,"Boss ==>"],
+		]
+
 
 		#adding parallax stuff to background along the level
 		x_parallax=0
@@ -282,6 +287,9 @@ class ThirdStage(Level):
 			paral = Parallax(x,y,width,height,mode,level)
 			self.back_front_world_list.add(paral)
 
+		for elem in signs:
+			sign = Sign(elem[0],elem[1],elem[2])
+			self.pnj_list.add(sign)
 
 		###################################################################################
 		###################################################################################

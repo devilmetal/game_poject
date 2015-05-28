@@ -78,8 +78,9 @@ class FirstStage(Level):
 			[4000, 20, 12100, HEIGHT],
 			#underground platforms
 			#final high platform
-			[120, 60, 14500, HEIGHT-100],
-			[20, 120, 14620, HEIGHT-100],
+			[50, 80, 14380, HEIGHT-120],
+			[190, 20, 14430, HEIGHT-120],
+			[20, 120, 14620, HEIGHT-120],
 			#final platform
 			[360, 20, 14640, HEIGHT]
 		]
@@ -94,7 +95,8 @@ class FirstStage(Level):
 
 		signs = [
 			[14380, HEIGHT-350,"Level 2"],
-			[15000, HEIGHT, "Boss"]
+			[15000, HEIGHT, "Boss"],
+			[14450, HEIGHT, "Level 3"]
 		]
 
 		# checkpoints
@@ -189,7 +191,7 @@ class FirstStage(Level):
 		#Blobs dummies
 
 		blobs = [
-			[500, HEIGHT-100, 1, 2],
+			[500, HEIGHT-100, -1, 2],
 			[8900, HEIGHT-100, 1, 1],
 			[1200, HEIGHT-100, 1, 2],
 		]

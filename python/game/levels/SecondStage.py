@@ -10,6 +10,7 @@ from platforms.SpecialPlatform import SpecialPlatform
 from platforms.SpecialSpike import SpecialSpike
 from platforms.EndPlatform import EndPlatform
 from PNJ.Blob import Blob
+from world.Sign import Sign
 from platforms.CheckPoint import CheckPoint
 
 import constants
@@ -75,7 +76,7 @@ class SecondStage(Level):
 		# checkpoints
 		#[top-left x, top-left , width, height]
 		checkpoints = [
-			[50, 20, 7600, HEIGHT]
+			[50, 20, 7600, HEIGHT-20]
 		]
 
 		#array of static spikes //considering spikes as image of 30x45 instead of 30x46
@@ -209,6 +210,10 @@ class SecondStage(Level):
 		#[width, height, top-left x, top-left y, next level]
 		end_plat = []
 		end_plat.append([120, 20, 16100, HEIGHT, 3, 'bob'])
+
+		signs = [
+			[15800, HEIGHT,"Boss ==>"],
+		]
 
 
 		#adding parallax stuff to background along the level
@@ -366,6 +371,10 @@ class SecondStage(Level):
 			paral = Parallax(x,y,width,height,mode,level)
 			self.back_front_world_list.add(paral)
 
+		for elem in signs:
+			sign = Sign(elem[0],elem[1],elem[2])
+			self.pnj_list.add(sign)
+
 
 		###################################################################################
 		###################################################################################
@@ -434,8 +443,8 @@ class SecondStage(Level):
 		]
 
 		easy_checkpoints = [
-			[50, 20, 3300, HEIGHT],
-			[50, 20, 11800, HEIGHT]
+			[50, 20, 3300, HEIGHT-20],
+			[50, 20, 11800, HEIGHT-20]
 		]
 
 
