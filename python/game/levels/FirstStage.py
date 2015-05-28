@@ -41,7 +41,7 @@ class FirstStage(Level):
 			#just two little thingy to add a monster TODO:Remove
 			[70, 70, 500, HEIGHT-50],
 			[3200, 20, 0, HEIGHT],
-			[300, HEIGHT, 0, 0],
+			[300, HEIGHT, 0, 0, False],
 			[100, 120, 1000, HEIGHT-120],
 			[100, 120, 1500, HEIGHT-120],
 			[100, 240, 1600, HEIGHT-240],
@@ -236,7 +236,11 @@ class FirstStage(Level):
 		"""Generation of the differents platforms/spikes"""
 		# Go through the array above and add platforms
 		for plat in level:
-			block = Platform(plat[0], plat[1])
+			block = None
+			if len(plat) == 5:
+				block = Platform(plat[0], plat[1], plat[4])
+			else:
+				block = Platform(plat[0], plat[1])
 			block.rect.x = plat[2]
 			block.rect.y = plat[3]
 			block.player = self.player
