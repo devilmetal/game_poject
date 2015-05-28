@@ -63,7 +63,7 @@ def main():
             from DifficultyMenu import DifficultyMenu
 
             #DIFFICULTY SELECTION MENU
-            background_image = pygame.image.load("data/back.jpg").convert()
+            background_image = pygame.image.load("data/back_neutral.jpg").convert()
             background_image= pygame.transform.scale(background_image, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
             screen.blit(background_image, [0, 0])
             menu = DifficultyMenu()
@@ -109,7 +109,7 @@ def main():
         elif constants.GAME_STATUS == "menuLevel":
             #LEVEL SELECTION MENU
             from LevelMenu import LevelMenu
-            background_image = pygame.image.load("data/back.jpg").convert()
+            background_image = pygame.image.load("data/back_neutral.jpg").convert()
             background_image= pygame.transform.scale(background_image, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
             screen.blit(background_image, [0, 0])
             menu = LevelMenu()
@@ -144,7 +144,7 @@ def main():
 
         elif constants.GAME_STATUS == "menuSave":
             from SaveMenu import SaveMenu
-            background_image = pygame.image.load("data/back.jpg").convert()
+            background_image = pygame.image.load("data/back_neutral.jpg").convert()
             background_image= pygame.transform.scale(background_image, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
             screen.blit(background_image, [0, 0])
             menu = SaveMenu()

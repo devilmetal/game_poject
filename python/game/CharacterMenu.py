@@ -53,10 +53,14 @@ class CharacterMenu:
         self.selected = position
         #Draw the next position of menu
         #Draw background
-        bg = routines.draw_rectangle(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.BLACK)
+        bg = pygame.image.load("data/back_neutral.jpg").convert()
+        bg= pygame.transform.scale(bg, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
         #Draw funky text
-        txt1 = routines.draw_text("Select your Badass", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/5 - 20, 52, "data/coders_crux/coders_crux.ttf", constants.WHITE)
-        txt2 = routines.draw_text("and go kick some asses !", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/5 + 20, 38, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+        font_path = 'data/coders_crux/coders_crux.ttf'
+        txt0 = routines.draw_text("No More Pixies", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/5 - 20, 82, font_path, constants.WHITE)
+        txt1 = routines.draw_text("Select your Badass", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/5 + 40, 52, font_path, constants.WHITE)
+        txt2 = routines.draw_text("and go kick some asses !", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/5 + 80, 38, font_path, constants.WHITE)
+        bg.blit(txt0[0], txt0[1])
         bg.blit(txt1[0], txt1[1])
         bg.blit(txt2[0], txt2[1])
         self.screen.blit(bg, (0,0))
@@ -79,7 +83,8 @@ class CharacterMenu:
             #Draw background rect of selected figure according to self.selected
             if position == self.selected:
                 back = pygame.Surface([int(float(character[1].width)*float(2.0/scale_tail))+40, int(float(character[1].height)*float(2.0/scale_tail))+40])
-                back.fill((153,102,255))
+                # back.fill((153,102,255))
+                back.fill(Menu.select_color)
                 back_rect = character[1].copy()
                 back_rect.x-=20
                 back_rect.y-=20

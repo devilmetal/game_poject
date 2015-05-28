@@ -9,9 +9,9 @@ class Menu:
     font = pygame.font.Font
     dest_surface = pygame.Surface
     index_pos = 0
-    back_color = (51,51,51)
-    font_color =  (255, 255, 153)
-    select_color = (153,102,255)
+    back_color = (20, 27, 45)
+    font_color =  (255,255,255)
+    select_color = (126, 174, 193)
     pos_selection = 0
     pos_rect = (0,0)
     menu_width = 0
@@ -77,8 +77,8 @@ class Menu:
             text = font_title.render(title, 1, constants.WHITE)
             # screen = self.dest_surface
             textRect = text.get_rect()
-            textRect.centerx = 500
-            textRect.centery = 100
+            textRect.centerx = 400
+            textRect.centery = 150
             self.dest_surface.blit(text,textRect)
         actual_posiecie = 0
         self.menu_height = 0
