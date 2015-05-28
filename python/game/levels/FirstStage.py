@@ -41,7 +41,7 @@ class FirstStage(Level):
 			#just two little thingy to add a monster TODO:Remove
 			[70, 70, 500, HEIGHT-50],
 			[3200, 20, 0, HEIGHT],
-			[300, HEIGHT, 0, 0],
+			[300, HEIGHT, 0, 0, False],
 			[100, 120, 1000, HEIGHT-120],
 			[100, 120, 1500, HEIGHT-120],
 			[100, 240, 1600, HEIGHT-240],
@@ -76,6 +76,8 @@ class FirstStage(Level):
 			[130, 20, 10740, HEIGHT-320],
 			#last ground part
 			[4000, 20, 12100, HEIGHT],
+			#little plat before magma roof to prevent enemies from falling
+			[20, 20, 12200, HEIGHT-20],
 			#underground platforms
 			#final high platform
 			[50, 80, 14380, HEIGHT-120],
@@ -187,17 +189,23 @@ class FirstStage(Level):
 						]
 
 		"""Some foes"""
-		#TODO: REMOVE
-		#Blobs dummies
-
 		blobs = [
-			[500, HEIGHT-100, -1, 2],
-			[8900, HEIGHT-100, 1, 1],
-			[1200, HEIGHT-100, 1, 2],
+			[650, HEIGHT-30, 1, 2],
+			[1200, HEIGHT-30, 1, 2],
+			[1400, HEIGHT-30, 1, 2],
+			[1800, HEIGHT-30, 1, 2],
+			[2000, HEIGHT-30, 1, 2],
+			[8470, HEIGHT-30, 1, 2],
+			#between spikes
+			[8930, HEIGHT-30, 1, 1],
+			#blobs under moving roof
+			[12250, HEIGHT-30, 1, 4],
+			[13900, HEIGHT-30, 1, 4]
 		]
 
 		fairy = [
-			[520,HEIGHT-95,player]
+			# [520,HEIGHT-95, player],
+			[8930, HEIGHT-45, player]
 		]
 
 
@@ -230,7 +238,11 @@ class FirstStage(Level):
 		"""Generation of the differents platforms/spikes"""
 		# Go through the array above and add platforms
 		for plat in level:
-			block = Platform(plat[0], plat[1])
+			block = None
+			if len(plat) == 5:
+				block = Platform(plat[0], plat[1], plat[4])
+			else:
+				block = Platform(plat[0], plat[1])
 			block.rect.x = plat[2]
 			block.rect.y = plat[3]
 			block.player = self.player
@@ -403,13 +415,13 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		easy_roofs = [
-			[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-40, 1, 3, 120, 60]
+			[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-45, 1, 3, 120, 60]
 		]
 
 		#magma on the roof
 		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		easy_magma_roof = [
-			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-30, 1, 3, 120, 60]
+			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-35, 1, 3, 120, 60]
 		]
 
 
@@ -463,13 +475,13 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		medium_roofs = [
-			[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-40, 1, 4, 120, 0]
+			[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-45, 1, 4, 120, 0]
 		]
 
 		#magma on the roof
 		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		medium_magma_roof = [
-			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-30, 1, 4, 120, 0]
+			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-35, 1, 4, 120, 0]
 		]
 
 

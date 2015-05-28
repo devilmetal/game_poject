@@ -11,6 +11,7 @@ from platforms.SpecialSpike import SpecialSpike
 from platforms.EndPlatform import EndPlatform
 from PNJ.Blob import Blob
 from world.Sign import Sign
+from PNJ.Fairy import Fairy
 from platforms.CheckPoint import CheckPoint
 
 import constants
@@ -70,7 +71,10 @@ class SecondStage(Level):
 			[100, 220, 13800, HEIGHT-200],
 			#last square of spikes
 			[30, 30, 14400, HEIGHT-370],
-			[1500, 20, 15200, HEIGHT]
+			[1500, 20, 15200, HEIGHT],
+			#platform for fairy
+			[50, 10, 6450, HEIGHT-370],
+			[50, 10, 6450, HEIGHT-290]
 		]
 
 		# checkpoints
@@ -225,6 +229,33 @@ class SecondStage(Level):
 			front_p.append([x_parallax])
 			x_parallax+=constants.SCREEN_WIDTH
 
+		"""Some foes"""
+		blobs = [
+			#between star spikes
+			[1500, HEIGHT-30, 1, 2],
+			[1500, HEIGHT-30, 1, 3],
+			[1400, HEIGHT-30, 1, 2],
+			[1800, HEIGHT-30, 1, 1],
+			#spikes arena
+			[2300, HEIGHT-30, 1, 2],
+			[2300, HEIGHT-30, 1, 3],
+			#middle checkpoint
+			[7650, HEIGHT-30, 1, 2],
+			[7650, HEIGHT-30, 1, 3],
+			#between star spikes before last checkpoint
+			[11700, HEIGHT-30, -1, 4],
+			[11500, HEIGHT-30, -1, 3],
+			[11300, HEIGHT-30, 1, 2],
+			#just after last checkpoint
+			[11950, HEIGHT-30, 1, 4],
+			[11950, HEIGHT-30, 1, 2]
+		]
+
+		fairy = [
+			# [520,HEIGHT-95, player],
+			[6460, HEIGHT-335, player]
+		]
+
 
 
 		###################################################################################
@@ -375,6 +406,18 @@ class SecondStage(Level):
 			sign = Sign(elem[0],elem[1],elem[2])
 			self.pnj_list.add(sign)
 
+		for pnj in blobs:
+			enemy = Blob(pnj[2],pnj[3])
+			enemy.rect.x = pnj[0]
+			enemy.rect.y = pnj[1]
+			enemy.player=self.player
+			enemy.level=self
+			self.pnj_list.add(enemy)
+
+		for pnj in fairy:
+			pixie = Fairy(pnj[0],pnj[1],pnj[2])
+			self.pnj_list.add(pixie)
+
 
 		###################################################################################
 		###################################################################################
@@ -451,9 +494,9 @@ class SecondStage(Level):
 
 
 		###################################################################################
-		
+
 		#medium
-		
+
 		#[width, height, x, y]
 		medium_plats = [
 			[50, 20, 3950, HEIGHT-200],
@@ -651,7 +694,7 @@ class SecondStage(Level):
 		###################################################################################
 
 		#Hard
-		
+
 		#[widht, height, x, y]
 		hard_plats = [
 			[20, 20, 3950, HEIGHT-200],

@@ -149,7 +149,7 @@ class ThirdStage(Level):
 		horiz_mov_wall = [
 			[500, HEIGHT, -400, 0, -400, 2000, 1, 0, 60, 60,
 				#[width, height, x, y, left bound, right bound, speed right, speed left, pause right, pause left]
-				[[20, HEIGHT, 100, 0, 100, 2400, 1, 0, 60, 60]]
+				[[20, HEIGHT, 100, 0, 100, 2500, 1, 0, 60, 60]]
 			]
 		]
 
@@ -170,6 +170,18 @@ class ThirdStage(Level):
 		while x_parallax < -self.level_limit + constants.SCREEN_WIDTH:
 			front_p.append([x_parallax])
 			x_parallax+=constants.SCREEN_WIDTH
+
+		"""Some foes"""
+		blobs = [
+			[1150, HEIGHT-30, 1, 2],
+			[1150, HEIGHT-30, 1, 4],
+			[1350, HEIGHT-30, 1, 2],
+			[1350, HEIGHT-30, 1, 3]
+		]
+
+		fairy = [
+			[8950, HEIGHT-145, player]
+		]
 
 
 		###################################################################################
@@ -290,6 +302,19 @@ class ThirdStage(Level):
 		for elem in signs:
 			sign = Sign(elem[0],elem[1],elem[2])
 			self.pnj_list.add(sign)
+
+		for pnj in blobs:
+			enemy = Blob(pnj[2],pnj[3])
+			enemy.rect.x = pnj[0]
+			enemy.rect.y = pnj[1]
+			enemy.player=self.player
+			enemy.level=self
+			self.pnj_list.add(enemy)
+
+		for pnj in fairy:
+			pixie = Fairy(pnj[0],pnj[1],pnj[2])
+			self.pnj_list.add(pixie)
+
 
 		###################################################################################
 		###################################################################################
@@ -651,7 +676,7 @@ class ThirdStage(Level):
 				block.change_x = spike[5]
 				block.player = self.player
 				block.level = self
-				
+
 				subspike = MovingSpike(spike[6][0])
 				subspike.rect.x = spike[6][1]
 				subspike.rect.y = spike[6][2]
@@ -661,7 +686,7 @@ class ThirdStage(Level):
 				subspike.player = self.player
 				subspike.level = self
 				block.subblock.add(subspike)
-				
+
 				self.mov_plat_list.add(block)
 
 
@@ -789,7 +814,7 @@ class ThirdStage(Level):
 				subspike.player = self.player
 				subspike.level = self
 				block.subblock.add(subspike)
-				
+
 				self.mov_plat_list.add(block)
 
 
@@ -904,7 +929,7 @@ class ThirdStage(Level):
 				block.change_x = spike[5]
 				block.player = self.player
 				block.level = self
-				
+
 				subspike = MovingSpike(spike[6][0])
 				subspike.rect.x = spike[6][1]
 				subspike.rect.y = spike[6][2]
@@ -914,7 +939,7 @@ class ThirdStage(Level):
 				subspike.player = self.player
 				subspike.level = self
 				block.subblock.add(subspike)
-				
+
 				self.mov_plat_list.add(block)
 
 			for spike in hard_vert_spikes:

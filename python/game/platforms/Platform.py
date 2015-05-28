@@ -6,11 +6,12 @@ class Platform(pygame.sprite.Sprite):
     """ Platform the user can jump on """
     subblock = None
 
-    def __init__(self, width, height):
+    def __init__(self, width, height, top=True):
         """ Platform constructor. Assumes constructed with user passing in
             an array of 5 numbers like what's defined at the top of this code.
             """
         super(Platform, self).__init__()
+        self.top = top
         self.image = pygame.Surface([width, height])
         self.image.fill(constants.PLAT_COL)
         platform_ressources.init_platform_ressources()
@@ -20,10 +21,11 @@ class Platform(pygame.sprite.Sprite):
         new_texture1 = pygame.transform.scale(texture1,(width, height))
         self.image.blit(new_texture1, (0, 0))
         #Compute and apply grass texture
-        grass_width, grass_height = texture2.get_size()
-        self.subblock = pygame.sprite.Group()
-        new_texture2 = pygame.transform.scale(texture2,(width, grass_height))
-        self.image.blit(new_texture2, (0, 0))
+        if self.top:
+            grass_width, grass_height = texture2.get_size()
+            self.subblock = pygame.sprite.Group()
+            new_texture2 = pygame.transform.scale(texture2,(width, grass_height))
+            self.image.blit(new_texture2, (0, 0))
 
         self.rect = self.image.get_rect()
 
@@ -34,6 +36,7 @@ class Platform(pygame.sprite.Sprite):
         width, height = self.image.get_size()
         new_texture1 = pygame.transform.scale(texture1,(width, height))
         self.image.blit(new_texture1, (0, 0))
-        grass_width, grass_height = texture2.get_size()
-        new_texture2 = pygame.transform.scale(texture2,(width, grass_height))
-        self.image.blit(new_texture2, (0, 0))
+        if self.top:
+            grass_width, grass_height = texture2.get_size()
+            new_texture2 = pygame.transform.scale(texture2,(width, grass_height))
+            self.image.blit(new_texture2, (0, 0))
