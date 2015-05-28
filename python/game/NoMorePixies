@@ -3,5 +3,7 @@
 STRING="Starting No More Pixies"
 #print variable on a screen
 echo $STRING
+#go to directory where this script is located
+cd ${0%/*}
+#launch the game
 python NMP.py
-
