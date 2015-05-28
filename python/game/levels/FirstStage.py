@@ -197,6 +197,7 @@ class FirstStage(Level):
 			[1800, HEIGHT-100, 1, 2],
 			[2000, HEIGHT-100, 1, 2],
 			[8470, HEIGHT-100, 1, 2],
+			#between spikes
 			[8900, HEIGHT-100, 1, 1],
 			#blobs under moving roof
 			[12250, HEIGHT-100, 1, 4],
@@ -204,7 +205,8 @@ class FirstStage(Level):
 		]
 
 		fairy = [
-			[520,HEIGHT-95,player]
+			# [520,HEIGHT-95, player],
+			[8930, HEIGHT-45, player]
 		]
 
 
