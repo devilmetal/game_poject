@@ -127,7 +127,7 @@ class Game():
 
                 if len(self.taunts) == 1:
                     self.taunts = constants.TAUNTS[:]
-                    
+
                 taunt = random.choice(self.taunts)
                 taunt = self.taunts.pop(self.taunts.index(taunt))
                 fade = CrossFade(self.screen)

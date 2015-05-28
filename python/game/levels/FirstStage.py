@@ -76,6 +76,8 @@ class FirstStage(Level):
 			[130, 20, 10740, HEIGHT-320],
 			#last ground part
 			[4000, 20, 12100, HEIGHT],
+			#little plat before magma roof to prevent enemies from falling
+			[20, 20, 12200, HEIGHT-20],
 			#underground platforms
 			#final high platform
 			[120, 60, 14500, HEIGHT-100],
@@ -190,8 +192,15 @@ class FirstStage(Level):
 
 		blobs = [
 			[500, HEIGHT-100, 1, 2],
-			[8900, HEIGHT-100, 1, 1],
 			[1200, HEIGHT-100, 1, 2],
+			[1400, HEIGHT-100, 1, 2],
+			[1800, HEIGHT-100, 1, 2],
+			[2000, HEIGHT-100, 1, 2],
+			[8470, HEIGHT-100, 1, 2],
+			[8900, HEIGHT-100, 1, 1],
+			#blobs under moving roof
+			[12250, HEIGHT-100, 1, 4],
+			[13900, HEIGHT-100, 1, 4]
 		]
 
 		fairy = [
@@ -401,13 +410,13 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		easy_roofs = [
-			[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-40, 1, 3, 120, 60]
+			[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-45, 1, 3, 120, 60]
 		]
 
 		#magma on the roof
 		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		easy_magma_roof = [
-			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-30, 1, 3, 120, 60]
+			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-35, 1, 3, 120, 60]
 		]
 
 
@@ -461,13 +470,13 @@ class FirstStage(Level):
 		#falling roof at the end of the level
 		#[width, height, top-left x, top-left y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		medium_roofs = [
-			[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-40, 1, 4, 120, 0]
+			[2100, HEIGHT-40, 12200, -385, -385, HEIGHT-45, 1, 4, 120, 0]
 		]
 
 		#magma on the roof
 		#[width, height, x, y, top bound, bottom bound, speed down, speed up, pause down, pause up]
 		medium_magma_roof = [
-			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-30, 1, 4, 120, 0]
+			[2100, 10, 12200, -385+HEIGHT-40, -385+HEIGHT-40, HEIGHT-35, 1, 4, 120, 0]
 		]
 
 
