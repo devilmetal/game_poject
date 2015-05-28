@@ -35,7 +35,7 @@ class CheckPoint(Platform):
 
         if self.checked:
             #make the camp appear when player touch checkpoint for the first time
-            if self.y >= self.rect.y-self.img.get_height():
+            if self.y > self.rect.y-self.img.get_height():
                 self.y -= self.speed
             else:
                 self.checked = False
@@ -62,7 +62,7 @@ class CheckPoint(Platform):
         if hit:
             tmp_x = self.rect.x+int((self.rect.width-self.player.rect.width)/2)-self.level.world_shift
             tmp_y = self.rect.y-self.player.rect.height
-            if self.level.game.start_x != tmp_x and self.level.game.start_y != tmp_y:
+            if self.level.game.start_x != tmp_x or self.level.game.start_y != tmp_y:
                 #new checkpoint encountered!
                 self.checked = True
                 self.camp = False

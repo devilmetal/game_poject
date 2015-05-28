@@ -187,21 +187,18 @@ class FirstStage(Level):
 						]
 
 		"""Some foes"""
-		#TODO: REMOVE
-		#Blobs dummies
-
 		blobs = [
-			[500, HEIGHT-100, 1, 2],
-			[1200, HEIGHT-100, 1, 2],
-			[1400, HEIGHT-100, 1, 2],
-			[1800, HEIGHT-100, 1, 2],
-			[2000, HEIGHT-100, 1, 2],
-			[8470, HEIGHT-100, 1, 2],
+			[650, HEIGHT-30, 1, 2],
+			[1200, HEIGHT-30, 1, 2],
+			[1400, HEIGHT-30, 1, 2],
+			[1800, HEIGHT-30, 1, 2],
+			[2000, HEIGHT-30, 1, 2],
+			[8470, HEIGHT-30, 1, 2],
 			#between spikes
-			[8900, HEIGHT-100, 1, 1],
+			[8930, HEIGHT-30, 1, 1],
 			#blobs under moving roof
-			[12250, HEIGHT-100, 1, 4],
-			[13900, HEIGHT-100, 1, 4]
+			[12250, HEIGHT-30, 1, 4],
+			[13900, HEIGHT-30, 1, 4]
 		]
 
 		fairy = [
