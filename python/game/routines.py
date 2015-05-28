@@ -78,17 +78,11 @@ def pause(clock,screen,joystick, game_loop):
     """ Pausing the game """
     pause_flag = True
     font = "data/coders_crux/coders_crux.ttf"
-    bgw = constants.SCREEN_WIDTH - 100
-    # bgh = constants.SCREEN_HEIGHT/3
+    bgw = constants.SCREEN_WIDTH - 300
     bgh = constants.SCREEN_HEIGHT/2
-    bg = draw_rectangle(bgw, bgh, (51,51,51))
-    # txt1 = draw_text("Paused", bgw/2, bgh/2 - 30, 52, font, constants.WHITE)
-    # txt2 = draw_text("Continue (c) or A or Quit (q) ?", bgw/2, bgh/2 + 30, 42, font, constants.WHITE)
-    #
-    # bg.blit(txt1[0], txt1[1])
-    # bg.blit(txt2[0], txt2[1])
+    bg = draw_rectangle(bgw, bgh, (20, 27, 45))
 
-    screen.blit(bg, (50, constants.SCREEN_HEIGHT/3 + 30))
+    screen.blit(bg, (150, constants.SCREEN_HEIGHT/3 + 30))
     menu = PauseMenu()
     menu.init(['Continue','Back to menu', 'Quit'], screen)
     menu.draw()
