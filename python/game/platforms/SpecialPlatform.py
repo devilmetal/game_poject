@@ -82,7 +82,7 @@ class SpecialPlatform(MovingPlatform):
                     self.player.change_x = 0
                 self.change_x = 0
                 self.change_y = self.change_y_d
-            
+
 
         else:
             """
@@ -138,7 +138,7 @@ class SpecialPlatform(MovingPlatform):
                     self.change_x = self.change_x_r
                     self.pause = False
 
-            
+
             #case where we have a pause on the left
             if cur_pos > self.boundary_right and not self.pause:
                 self.change_x = 0

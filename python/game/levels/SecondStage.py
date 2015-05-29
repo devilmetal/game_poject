@@ -36,17 +36,17 @@ class SecondStage(Level):
 		#array of platforms
 		#[width, height, x, y]
 		plats = [
-			[300, HEIGHT, 0, 0],
+			[300, HEIGHT, 0, 0, False],
 			[3500, 20, 0, HEIGHT],
 			#squares for spikes
-			[30, 30, 800, HEIGHT-80],
-			[30, 30, 1200, HEIGHT-120],
+			[30, 30, 800, HEIGHT-80, False],
+			[30, 30, 1200, HEIGHT-120, False],
 			#rectangle of spikes
-			[150, 30, 1600, HEIGHT-100],
+			[150, 30, 1600, HEIGHT-100, False],
 			#monster arena
 			[100, 250, 2100, HEIGHT-250],
 			[100, 250, 2800, HEIGHT-250],
-			[150, 20, 2425, HEIGHT-300],
+			[150, 20, 2425, HEIGHT-300, False],
 			#first platform in the air (after first round moving plat)
 			[100, 20, 4750, HEIGHT-200],
 			#little square for the moving platform
@@ -71,7 +71,7 @@ class SecondStage(Level):
 			[100, 220, 12500, HEIGHT-200],
 			[100, 220, 13800, HEIGHT-200],
 			#last square of spikes
-			[30, 30, 14400, HEIGHT-370],
+			[30, 30, 14400, HEIGHT-370, False],
 			[1500, 20, 15200, HEIGHT],
 			#platform for fairy
 			[50, 10, 6450, HEIGHT-370],
@@ -153,6 +153,7 @@ class SecondStage(Level):
 		#top bound, bottom bound, left bound, right bound,
 		#speed up, speed down, speed left, speed right,
 		#is moving round, clockwise movement
+		#blit texture
 		#[[array of subblock]]]
 		block_round_moving = [
 			#moving square of spike
@@ -266,7 +267,11 @@ class SecondStage(Level):
 
 		#static platforms
 		for plat in plats:
-			block = Platform(plat[0], plat[1])
+			block = None
+			if len(plat) == 5:
+				block = Platform(plat[0], plat[1], plat[4])
+			else:
+				block = Platform(plat[0], plat[1])
 			block.rect.x = plat[2]
 			block.rect.y = plat[3]
 			block.player = self.player
@@ -307,7 +312,8 @@ class SecondStage(Level):
 
 		#block round moving platform.
 		for plat in block_round_moving:
-			block = SpecialPlatform(plat[0], plat[1])
+			block = SpecialPlatform(plat[0], plat[1], False)
+			block.top = False
 			block.rect.x = plat[2]
 			block.rect.y = plat[3]
 			block.boundary_top = plat[4]
@@ -502,12 +508,12 @@ class SecondStage(Level):
 		medium_plats = [
 			[50, 20, 3950, HEIGHT-200],
 			#square of spikes for the moving platform
-			[30, 30, 5300, HEIGHT-350],
-			[30, 30, 5700, HEIGHT-350],
+			[30, 30, 5300, HEIGHT-350, False],
+			[30, 30, 5700, HEIGHT-350, False],
 			#platform in the first magma arena
 			[50, 100, 6900, HEIGHT-100],
 			#square for spikes in the middle of the platform where moving magma stands
-			[30, 30, 9000, HEIGHT-200]
+			[30, 30, 9000, HEIGHT-200, False]
 		]
 
 		#[orientation, x, y]
@@ -700,10 +706,10 @@ class SecondStage(Level):
 		hard_plats = [
 			[20, 20, 3950, HEIGHT-200],
 			#square of spikes for the moving platform
-			[30, 30, 5300, HEIGHT-350],
-			[30, 30, 5700, HEIGHT-350],
+			[30, 30, 5300, HEIGHT-350, False],
+			[30, 30, 5700, HEIGHT-350, False],
 			#square for spikes in the middle of the platform where moving magma stands
-			[30, 30, 9000, HEIGHT-200]
+			[30, 30, 9000, HEIGHT-200, False]
 		]
 
 		#[width, height, x, y]
@@ -897,7 +903,11 @@ class SecondStage(Level):
 
 		if level_dif == "easy":
 			for plat in easy_plats:
-				block = Platform(plat[0], plat[1])
+				block = None
+				if len(plat) == 5:
+					block = Platform(plat[0], plat[1], plat[4])
+				else:
+					block = Platform(plat[0], plat[1])
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.player = self.player
@@ -936,7 +946,7 @@ class SecondStage(Level):
 
 			#block round moving platform.
 			for plat in easy_block_round_moving:
-				block = SpecialPlatform(plat[0], plat[1])
+				block = SpecialPlatform(plat[0], plat[1], False)
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.boundary_top = plat[4]
@@ -1011,7 +1021,11 @@ class SecondStage(Level):
 
 		elif level_dif == "medium":
 			for plat in medium_plats:
-				block = Platform(plat[0], plat[1])
+				block = None
+				if len(plat) == 5:
+					block = Platform(plat[0], plat[1], plat[4])
+				else:
+					block = Platform(plat[0], plat[1])
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.player = self.player
@@ -1102,7 +1116,7 @@ class SecondStage(Level):
 
 			#round moving platform.
 			for plat in medium_block_round_moving:
-				block = SpecialPlatform(plat[0], plat[1])
+				block = SpecialPlatform(plat[0], plat[1], False)
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.boundary_top = plat[4]
@@ -1178,7 +1192,11 @@ class SecondStage(Level):
 
 		elif level_dif == "hard":
 			for plat in hard_plats:
-				block = Platform(plat[0], plat[1])
+				block = None
+				if len(plat) == 5:
+					block = Platform(plat[0], plat[1], plat[4])
+				else:
+					block = Platform(plat[0], plat[1])
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.player = self.player
@@ -1268,7 +1286,7 @@ class SecondStage(Level):
 
 			#round moving platform.
 			for plat in hard_round_moving:
-				block = SpecialPlatform(plat[0], plat[1])
+				block = SpecialPlatform(plat[0], plat[1], False)
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.boundary_top = plat[4]
@@ -1315,7 +1333,7 @@ class SecondStage(Level):
 
 			#block round moving platform.
 			for plat in hard_block_round_moving:
-				block = SpecialPlatform(plat[0], plat[1])
+				block = SpecialPlatform(plat[0], plat[1], False)
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.boundary_top = plat[4]

@@ -20,10 +20,10 @@ class Platform(pygame.sprite.Sprite):
         #Apply scratchy texture
         new_texture1 = pygame.transform.scale(texture1,(width, height))
         self.image.blit(new_texture1, (0, 0))
+        self.subblock = pygame.sprite.Group()
         #Compute and apply grass texture
         if self.top:
             grass_width, grass_height = texture2.get_size()
-            self.subblock = pygame.sprite.Group()
             new_texture2 = pygame.transform.scale(texture2,(width, grass_height))
             self.image.blit(new_texture2, (0, 0))
 
