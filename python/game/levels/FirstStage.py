@@ -59,16 +59,16 @@ class FirstStage(Level):
 			#2nd ground plateform
 			[2000, 20, 8300, HEIGHT],
 			#first plateforms with spikes
-			[30, 90, 8800, HEIGHT-90],
+			[30, 90, 8800, HEIGHT-90, False],
 			[60, 5, 8770, HEIGHT-95],
 			[30, 90, 9065, HEIGHT-90],
 			#airwall of spikes
-			[13, 120, 9495, HEIGHT-170],
+			[13, 120, 9495, HEIGHT-170, False],
 			[103, 10, 9450, HEIGHT-180],
 			#second airwall
-			[13, 90, 9800, HEIGHT-170],
+			[13, 90, 9800, HEIGHT-170, False],
 			[103, 10, 9755, HEIGHT-180],
-			[60, HEIGHT-170, 9855, 0],
+			[60, HEIGHT-170, 9855, 0, False],
 			#last air part of the level
 			[30, 95, 10400, HEIGHT-75],
 			[120, 20, 10430, HEIGHT-75],
@@ -197,10 +197,7 @@ class FirstStage(Level):
 			[2000, HEIGHT-30, 1, 2],
 			[8470, HEIGHT-30, 1, 2],
 			#between spikes
-			[8930, HEIGHT-30, 1, 1],
-			#blobs under moving roof
-			[12250, HEIGHT-30, 1, 4],
-			[13900, HEIGHT-30, 1, 4]
+			[8930, HEIGHT-30, 1, 1]
 		]
 
 		fairy = [
@@ -409,7 +406,7 @@ class FirstStage(Level):
 
 		easy_block_horiz = [
 			#fast moving plateform
-			[90, 20, 9760, HEIGHT-50, 9150, 9850, 3, [[23, 30, 9795, HEIGHT-30, 9185, 9885, 3]]]
+			[90, 20, 9760, HEIGHT-50, 9150, 9850, 3, [[23, 30, 9795, HEIGHT-30, 9185, 9885, 3, False]]]
 		]
 
 		#falling roof at the end of the level
@@ -453,7 +450,7 @@ class FirstStage(Level):
 		medium_block_horiz = [
 			#fast moving plateform with spikes under it
 			[90, 20, 9760, HEIGHT-50, 9150, 9850, 5, [
-				['block', 23, 30, 9795, HEIGHT-30, 9185, 9885, 5],
+				['block', 23, 30, 9795, HEIGHT-30, 9185, 9885, 5, False],
 				['spike', 3, 9750, HEIGHT-30, 9140, 9840, 5],
 				['spike', 1, 9815, HEIGHT-30, 9205, 9905, 5]
 				]
@@ -491,6 +488,7 @@ class FirstStage(Level):
 		#hard
 		#[width, height, top-left x, top-left y]
 		hard_plat = [
+			[20, 20, 2700, HEIGHT-20], #to prevent ennemies to fall in holes
 			[50, 20, 3400, HEIGHT],
 			[50, 20, 3800, HEIGHT],
 			[50, 20, 4200, HEIGHT],
@@ -500,13 +498,14 @@ class FirstStage(Level):
 			[50, 20, 6250, HEIGHT-300],
 			[50, 20, 6500, HEIGHT-300],
 			#final platforms
+			[20, 20, 8300, HEIGHT-20], #to prevent ennemies to fall in holes
 			[30, 55, 10870, HEIGHT-320],
-			[20, 300, 10740, HEIGHT-300],
+			[20, 300, 10740, HEIGHT-300, False],
 			[780, 20, 10900, HEIGHT-285],
 			[1050, 20, 10900, HEIGHT-135],
 			[130, 20, 11820, HEIGHT-200],
 			[1400, 20, 10730, HEIGHT],
-			[20, HEIGHT-115, 11950, 0]
+			[20, HEIGHT-115, 11950, 0, False]
 		]
 
 		#[width, height, top-left x, top-left y, left bound, right bound, speed]
@@ -522,7 +521,7 @@ class FirstStage(Level):
 		hard_block_horiz = [
 			#fast moving plateform with spikes under it
 			[90, 20, 9760, HEIGHT-50, 9150, 9850, 5,[
-				['block', 23, 30, 9795, HEIGHT-30, 9185, 9885, 5],
+				['block', 23, 30, 9795, HEIGHT-30, 9185, 9885, 5, False],
 				['spike', 3, 9750, HEIGHT-30, 9140, 9840, 5],
 				['spike', 1, 9815, HEIGHT-30, 9205, 9905, 5]
 				]
@@ -620,7 +619,11 @@ class FirstStage(Level):
 				block.player = self.player
 				block.level = self
 				for subblock in plat[7]:
-					sub = MovingPlatform(subblock[0], subblock[1])
+					sub = None
+					if len(subblock) == 8:
+						sub = MovingPlatform(subblock[0], subblock[1], subblock[7])
+					else:
+						sub = MovingPlatform(subblock[0], subblock[1])
 					sub.rect.x = subblock[2]
 					sub.rect.y = subblock[3]
 					sub.boundary_left = subblock[4]
@@ -632,7 +635,7 @@ class FirstStage(Level):
 				self.mov_plat_list.add(block)
 
 			for roof in easy_roofs:
-				block = SpecialPlatform(roof[0], roof[1])
+				block = SpecialPlatform(roof[0], roof[1], False)
 				block.rect.x = roof[2]
 				block.rect.y = roof[3]
 				block.boundary_top = roof[4]
@@ -709,7 +712,11 @@ class FirstStage(Level):
 				block.level = self
 				for subblock in plat[7]:
 					if subblock[0] == 'block':
-						sub = MovingPlatform(subblock[1], subblock[2])
+						sub = None
+						if len(subblock) == 9:
+							sub = MovingPlatform(subblock[1], subblock[2], subblock[8])
+						else:
+							sub = MovingPlatform(subblock[1], subblock[2])
 						sub.rect.x = subblock[3]
 						sub.rect.y = subblock[4]
 						sub.boundary_left = subblock[5]
@@ -762,7 +769,7 @@ class FirstStage(Level):
 				self.mov_plat_list.add(block)
 
 			for roof in medium_roofs:
-				block = SpecialPlatform(roof[0], roof[1])
+				block = SpecialPlatform(roof[0], roof[1], False)
 				block.rect.x = roof[2]
 				block.rect.y = roof[3]
 				block.boundary_top = roof[4]
@@ -822,7 +829,11 @@ class FirstStage(Level):
 
 		elif level_dif == "hard":
 			for plat in hard_plat:
-				block = Platform(plat[0], plat[1])
+				block = None
+				if len(plat) == 5:
+					block = Platform(plat[0], plat[1], plat[4])
+				else:
+					block = Platform(plat[0], plat[1])
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.player = self.player
@@ -851,7 +862,11 @@ class FirstStage(Level):
 				block.level = self
 				for subblock in plat[7]:
 					if subblock[0] == 'block':
-						sub = MovingPlatform(subblock[1], subblock[2])
+						sub = None
+						if len(subblock) == 9:
+							sub = MovingPlatform(subblock[1], subblock[2], subblock[8])
+						else:
+							sub = MovingPlatform(subblock[1], subblock[2])
 						sub.rect.x = subblock[3]
 						sub.rect.y = subblock[4]
 						sub.boundary_left = subblock[5]
@@ -946,7 +961,7 @@ class FirstStage(Level):
 				self.platform_list.add(block)
 
 			for roof in medium_roofs:
-				block = SpecialPlatform(roof[0], roof[1])
+				block = SpecialPlatform(roof[0], roof[1], False)
 				block.rect.x = roof[2]
 				block.rect.y = roof[3]
 				block.boundary_top = roof[4]
