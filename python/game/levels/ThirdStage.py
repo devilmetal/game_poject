@@ -25,6 +25,7 @@ class ThirdStage(Level):
 		Level.__init__(self, player)
 		next_level = 2
 		self.level_limit = -15000
+		self.level_name = "Stage 3"
 
 		HEIGHT = constants.SCREEN_HEIGHT-20
 
@@ -173,8 +174,6 @@ class ThirdStage(Level):
 
 		"""Some foes"""
 		blobs = [
-			[1150, HEIGHT-30, 1, 2],
-			[1150, HEIGHT-30, 1, 4],
 			[1350, HEIGHT-30, 1, 2],
 			[1350, HEIGHT-30, 1, 3]
 		]

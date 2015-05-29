@@ -24,6 +24,7 @@ class Boss1(Level):
 
         Level.__init__(self, player)
         self.level_limit = -15000
+        self.level_name = "Boss"
         next_level = 0
         HEIGHT = constants.SCREEN_HEIGHT-20
 

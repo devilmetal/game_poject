@@ -4,12 +4,17 @@ import routines
 from Menu import Menu
 
 class PauseMenu(Menu):
+    lvl_name = None
 
     def create_structure(self):
         print "pause_menu"
         Menu.create_structure(self, False)
         screen = self.dest_surface
         txt1 = routines.draw_text("Game paused", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 + 20, 50, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+        txt2 = None
+        if self.lvl_name != None:
+            txt2 = routines.draw_text(self.lvl_name, constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2 - 20, 40, "data/coders_crux/coders_crux.ttf", constants.WHITE)
+            screen.blit(txt2[0], txt2[1])
         screen.blit(txt1[0], txt1[1])
         pygame.display.update()
 

@@ -181,7 +181,7 @@ class Game():
                     if self.joystick.get_button(1) == 1:
                         self.character.jump()
                     if self.joystick.get_button(9) == 1:
-                        self.done = routines.pause(clock,self.screen,self.joystick, self.done)
+                        self.done = routines.pause(clock,self.screen,self.joystick, self.done, self.level.level_name)
                         if self.done:
                             pygame.mixer.music.fadeout(1000)
 
@@ -214,7 +214,7 @@ class Game():
                     if event.key == pygame.K_UP or event.key == pygame.K_w or event.key == pygame.K_SPACE:
                         self.character.jump()
                     if event.key == pygame.K_p:
-                        self.done = routines.pause(clock,self.screen,self.joystick, self.done)
+                        self.done = routines.pause(clock,self.screen,self.joystick, self.done, self.level.level_name)
                         if self.done:
                             pygame.mixer.music.fadeout(1000)
 

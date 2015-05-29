@@ -133,7 +133,7 @@ class Level():
                 if not(screen.get_rect().collidelist([block])):
                     screen.blit(block.image,block.rect)
 
-        self.player.interface.draw(screen, self.player.lives)
+        self.player.interface.draw(screen, self.player.lives, None)
 
         if self.start_level:
             fade = CrossFade(screen)

@@ -35,10 +35,12 @@ class PlayerInterface():
 
 
 
-    def draw(self, screen, lives):
+    def draw(self, screen, lives, lvl_name):
         # self.image = self.lives_arr[lives]
         hearts = pygame.transform.scale(self.image,(34,34))
         font_path = "data/coders_crux/coders_crux.ttf"
         txt = routines.draw_text("x" + str(lives), 0, 0, 44, font_path, constants.WHITE)
+        txt2 = routines.draw_text(lvl_name, 0, 0, 44, font_path, constants.WHITE)
         screen.blit(hearts, [10, 10])
         screen.blit(txt[0], [50, 15])
+        screen.blit(txt2[0], [680, 15])
