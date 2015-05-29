@@ -28,6 +28,7 @@ class SecondStage(Level):
 		Level.__init__(self, player)
 
 		self.level_limit = -16000
+		self.level_name = "Stage 2"
 		next_level = 1
 		HEIGHT = constants.SCREEN_HEIGHT-20
 

@@ -74,7 +74,7 @@ def game_over_screen(clock, screen):
     pygame.time.delay(4000)
 
 
-def pause(clock,screen,joystick, game_loop):
+def pause(clock,screen,joystick, game_loop, lvl_name=None):
     """ Pausing the game """
     pause_flag = True
     font = "data/coders_crux/coders_crux.ttf"
@@ -84,6 +84,7 @@ def pause(clock,screen,joystick, game_loop):
 
     screen.blit(bg, (150, constants.SCREEN_HEIGHT/3 + 30))
     menu = PauseMenu()
+    menu.lvl_name = lvl_name
     menu.init(['Continue','Back to menu', 'Quit'], screen)
     menu.draw()
     pygame.key.set_repeat(199,69)#(delay,interval)
