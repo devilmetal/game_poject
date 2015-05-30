@@ -94,6 +94,8 @@ def main():
             menu = CharacterMenu(screen,nmp_data)
             fade = CrossFade(screen)
             fade.fade(screen, 20)
+            pygame.key.set_repeat(199,69)#(delay,interval)
+            pygame.display.update()
             selected = menu.run(joystick)
             # player = None
             if selected == 0:
@@ -113,7 +115,6 @@ def main():
             background_image= pygame.transform.scale(background_image, (constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
             screen.blit(background_image, [0, 0])
             menu = LevelMenu()
-
             choices_levels = nmp_data.save[nmp_data.selected_slot][nmp_data.selected_diff][nmp_data.selected_char]['levels']
             choices = []
             for l_choice in choices_levels:
@@ -127,14 +128,19 @@ def main():
                     choices.append('Dragon')
             menu.init(choices, screen)
             menu.draw()
+            fade = CrossFade(screen)
+            fade.fade(screen, 20)
             pygame.key.set_repeat(199,69)#(delay,interval)
             pygame.display.update()
             menu_position = None
             menu_position = menu.run(joystick)
-            fade = CrossFade(screen)
-            fade.fadeout(screen, 15)
+
             if not menu_position == None:
                 level_nbr = nmp_data.save[nmp_data.selected_slot][nmp_data.selected_diff][nmp_data.selected_char]['levels'][menu_position]
+                fade = CrossFade(screen)
+                fade.fadeout(screen, 15)
+                pygame.key.set_repeat(199,69)#(delay,interval)
+                pygame.display.update()
 
         elif constants.GAME_STATUS == "level":
             from Game import Game
