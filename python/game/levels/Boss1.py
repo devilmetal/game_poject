@@ -32,7 +32,7 @@ class Boss1(Level):
         #array of platforms
         #[width, height, x, y]
         plats = [
-                [300, HEIGHT, 0, 0],
+                [300, HEIGHT, 0, 0, False],
                 [5000, 20, 0, HEIGHT],
                 #squares for spikes
                 [30, 30, 800, HEIGHT-80],
@@ -67,7 +67,11 @@ class Boss1(Level):
 
 
         for plat in plats:
-            block = Platform(plat[0], plat[1])
+            block = None
+            if len(plat) == 5:
+                block = Platform(plat[0], plat[1], plat[4])
+            else:
+                block = Platform(plat[0], plat[1])
             block.rect.x = plat[2]
             block.rect.y = plat[3]
             block.player = self.player
