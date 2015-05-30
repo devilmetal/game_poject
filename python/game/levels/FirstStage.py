@@ -189,6 +189,7 @@ class FirstStage(Level):
 						]
 
 		"""Some foes"""
+		#[x, y, left(-1)/right(1), speed]
 		blobs = [
 			[650, HEIGHT-30, 1, 2],
 			[1200, HEIGHT-30, 1, 2],
@@ -200,8 +201,8 @@ class FirstStage(Level):
 			[8930, HEIGHT-30, 1, 1]
 		]
 
+		#[x, y, character]
 		fairy = [
-			# [520,HEIGHT-95, player],
 			[8930, HEIGHT-45, player]
 		]
 

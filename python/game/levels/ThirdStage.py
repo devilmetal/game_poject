@@ -38,28 +38,28 @@ class ThirdStage(Level):
 			#obstacles
 			[100, 300, 1200, HEIGHT-300],
 			[550, 20, 550, HEIGHT-100],
-			[20, 420, 530, HEIGHT-500],
+			[20, 420, 530, HEIGHT-500, False],
 			[50, 50, 700, HEIGHT-250],
 			[50, 50, 900, HEIGHT-250],
 			[50, 50, 1100, HEIGHT-250],
 			#second obstacles
-			[20, HEIGHT-80, 1500, 0],
-			[20, 300, 1700, HEIGHT-300],
+			[20, HEIGHT-80, 1500, 0, False],
+			[20, 300, 1700, HEIGHT-300, False],
 			#third obstacles
-			[20, HEIGHT-80, 1850, 0],
+			[20, HEIGHT-80, 1850, 0, False],
 			#air platform
 			[100, 20, 3250, HEIGHT-150],
-			[30, 30, 3685, HEIGHT-165],
+			[30, 30, 3685, HEIGHT-165, False], #sqaure for spikes block
 			#second ground platform
 			[2000, 20, 4300, HEIGHT],
-			[400, HEIGHT-50, 4400, 0],
-			[400, HEIGHT-150, 4850, 0],
+			[400, HEIGHT-50, 4400, 0, False],
+			[400, HEIGHT-150, 4850, 0, False],
 			[400, 100, 4850, HEIGHT-100],
-			[100, HEIGHT-50, 5300, 0],
-			[130, HEIGHT-100, 5400, 0],
-			[120, HEIGHT-50, 5530, 0],
-			[130, HEIGHT-100, 5650, 0],
-			[220, HEIGHT-50, 5780, 0],
+			[100, HEIGHT-50, 5300, 0, False],
+			[130, HEIGHT-100, 5400, 0, False],
+			[120, HEIGHT-50, 5530, 0, False],
+			[130, HEIGHT-100, 5650, 0, False],
+			[220, HEIGHT-50, 5780, 0, False],
 			[30, 50, 5450, HEIGHT-50],
 			[30, 20, 5700, HEIGHT-50],
 			[50, 20, 6400, HEIGHT-100],
@@ -74,7 +74,7 @@ class ThirdStage(Level):
 			[50, HEIGHT-150, 7750, -50],
 			[90, 20, 8200, HEIGHT-200],
 			[50, 270, 8900, HEIGHT-350],
-			[50, 300, 8600, HEIGHT-500],
+			[50, 300, 8600, HEIGHT-500, False],
 			[50, 20, 8850, HEIGHT-200],
 			[50, 20, 8650, HEIGHT-250],
 			[50, 20, 8950, HEIGHT-200],
@@ -173,11 +173,14 @@ class ThirdStage(Level):
 			x_parallax+=constants.SCREEN_WIDTH
 
 		"""Some foes"""
+		#only foe easy and medium difficulty
+		#[x, y, left(-1)/right(1), speed]
 		blobs = [
 			[1350, HEIGHT-30, 1, 2],
 			[1350, HEIGHT-30, 1, 3]
 		]
 
+		#[x, y, character]
 		fairy = [
 			[8950, HEIGHT-145, player]
 		]
@@ -189,7 +192,11 @@ class ThirdStage(Level):
 
 		"""generation of the platforms"""
 		for plat in platforms:
-			block = Platform(plat[0], plat[1])
+			block = None
+			if len(plat) == 5:
+				block = Platform(plat[0], plat[1], plat[4])
+			else:
+				block = Platform(plat[0], plat[1])
 			block.rect.x = plat[2]
 			block.rect.y = plat[3]
 			block.player = self.player
@@ -242,7 +249,7 @@ class ThirdStage(Level):
 			self.platform_list.add(block)
 
 		for wall in horiz_mov_wall:
-			block = SpecialPlatform(wall[0], wall[1])
+			block = SpecialPlatform(wall[0], wall[1], False)
 			block.rect.x = wall[2]
 			block.rect.y = wall[3]
 			block.boundary_left = wall[4]
@@ -301,14 +308,6 @@ class ThirdStage(Level):
 		for elem in signs:
 			sign = Sign(elem[0],elem[1],elem[2])
 			self.pnj_list.add(sign)
-
-		for pnj in blobs:
-			enemy = Blob(pnj[2],pnj[3])
-			enemy.rect.x = pnj[0]
-			enemy.rect.y = pnj[1]
-			enemy.player=self.player
-			enemy.level=self
-			self.pnj_list.add(enemy)
 
 		for pnj in fairy:
 			pixie = Fairy(pnj[0],pnj[1],pnj[2])
@@ -415,7 +414,7 @@ class ThirdStage(Level):
 			[50, 20, 1650, HEIGHT-150],
 			[50, 20, 1520, HEIGHT-200],
 			[50, 20, 1650, HEIGHT-250],
-			[30, 30, 2885, HEIGHT-165],
+			[30, 30, 2885, HEIGHT-165, False],
 			[50, 20, 10300, HEIGHT-200],
 			[80, HEIGHT-110, 13550, -40],
 		]
@@ -526,7 +525,7 @@ class ThirdStage(Level):
 			[50, 20, 1650, HEIGHT-150],
 			[50, 20, 1520, HEIGHT-200],
 			[50, 20, 1650, HEIGHT-250],
-			[30, 30, 2885, HEIGHT-165],
+			[30, 30, 2885, HEIGHT-165, False],
 			#replace the first checkpoint
 			[80, 20, 4050, HEIGHT-150],
 			[50, 20, 10300, HEIGHT-200],
@@ -647,7 +646,11 @@ class ThirdStage(Level):
 
 		if level_dif == "easy":
 			for plat in easy_plats:
-				block = Platform(plat[0], plat[1])
+				block = None
+				if len(plat) == 5:
+					block = Platform(plat[0], plat[1], plat[4])
+				else:
+					block = Platform(plat[0], plat[1])
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.player = self.player
@@ -767,7 +770,11 @@ class ThirdStage(Level):
 
 		elif level_dif == "medium":
 			for plat in med_plats:
-				block = Platform(plat[0], plat[1])
+				block = None
+				if len(plat) == 5:
+					block = Platform(plat[0], plat[1], plat[4])
+				else:
+					block = Platform(plat[0], plat[1])
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.player = self.player
@@ -895,7 +902,11 @@ class ThirdStage(Level):
 
 		elif level_dif == "hard":
 			for plat in hard_plats:
-				block = Platform(plat[0], plat[1])
+				block = None
+				if len(plat) == 5:
+					block = Platform(plat[0], plat[1], plat[4])
+				else:
+					block = Platform(plat[0], plat[1])
 				block.rect.x = plat[2]
 				block.rect.y = plat[3]
 				block.player = self.player
@@ -1014,3 +1025,12 @@ class ThirdStage(Level):
 					block.subblock.add(subblock)
 					self.sub_plat_list.add(subblock)
 				self.magma_list.add(block)
+
+		if level_dif == 'easy' or level_dif == 'medium':
+			for pnj in blobs:
+				enemy = Blob(pnj[2],pnj[3])
+				enemy.rect.x = pnj[0]
+				enemy.rect.y = pnj[1]
+				enemy.player=self.player
+				enemy.level=self
+				self.pnj_list.add(enemy)

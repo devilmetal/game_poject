@@ -232,6 +232,7 @@ class SecondStage(Level):
 			x_parallax+=constants.SCREEN_WIDTH
 
 		"""Some foes"""
+		#[x, y, left(-1)/right(1), speed]
 		blobs = [
 			#between star spikes
 			[1500, HEIGHT-30, 1, 2],
@@ -252,9 +253,8 @@ class SecondStage(Level):
 			[11950, HEIGHT-30, 1, 4],
 			[11950, HEIGHT-30, 1, 2]
 		]
-
+		#[x, y, character]
 		fairy = [
-			# [520,HEIGHT-95, player],
 			[6460, HEIGHT-335, player]
 		]
 
