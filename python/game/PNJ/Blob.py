@@ -105,6 +105,7 @@ class Blob(PNJ):
         self.rect.y -= 1
 
         if hit_up and not self.player.hit:
+            self.player.change_y = -10
             self.dead = True
             self.kill_annimation()
 
