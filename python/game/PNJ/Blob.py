@@ -15,6 +15,10 @@ class Blob(PNJ):
         #Loading images
         PNJ_ressources.init_blob_ressources()
 
+        #Time start for kill animation
+        self.t_start = 0
+        self.elapsed = 0
+
         #Frame incr. + frame speed
         self.frame_inc=0
         self.speed_frame = 3
@@ -36,6 +40,11 @@ class Blob(PNJ):
             PNJ.update(self)
             self.calc_image()
             self.check_hit()
+        else:
+            if self.elapsed < 1000: #wait 1 seconds before killing blob
+                self.elapsed = pygame.time.get_ticks() - self.t_start
+            else:
+                self.kill()
 
     def calc_image(self):
         if self.change_x < 0:
@@ -105,7 +114,7 @@ class Blob(PNJ):
         self.rect.y -= 1
 
         if hit_up and not self.player.hit:
-            self.player.change_y = -10
+            self.player.change_y = -5
             self.dead = True
             self.kill_annimation()
 
@@ -119,5 +128,6 @@ class Blob(PNJ):
         self.rect.y += 17
         PNJ_ressources.blob_ressources['dead_sound'].play()
         self.image = PNJ_ressources.blob_ressources['dead'][0]
+        self.t_start = pygame.time.get_ticks()
         #pygame.time.wait(1000) #wait 1 second
-        #self.kill() #destroy the object
+        # self.kill() #destroy the object
