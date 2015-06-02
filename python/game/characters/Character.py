@@ -45,7 +45,7 @@ class Character(pygame.sprite.Sprite):
 
         self.mov_plat = False #is a moving plateform
         self.hit = False
-        self.lives = 6 #the number of lives the player has TODO: this information will be retrieved from the player saved data!
+        self.lives = 6 #the number of lives the player has
         self.game_over = False
 
     def update(self):
@@ -116,7 +116,6 @@ class Character(pygame.sprite.Sprite):
             if (self.sound_effect):
                 self.sound_effect = False
                 pygame.mixer.Sound('data/sound/death-1.wav').play()
-                # pygame.mixer.Sound('data/sound/death-2.aif').play()
         elif self.location == 'air':
             if self.status == 'move_r' or self.status == 'idle_r' :
                 self.image = self.jump_r_image

@@ -99,30 +99,6 @@ def pause(clock,screen,joystick, game_loop, lvl_name=None):
     if selected == 'q':
         constants.GAME_STATUS = 'exit'
         game_loop = True
-        # pygame.quit()
-        # quit()
     pygame.display.update()
 
     return game_loop
-
-
-    # while pause_flag:
-    #     for event in pygame.event.get():
-    #
-    #         if event.type == pygame.JOYBUTTONDOWN:
-    #             if joystick.get_button(1) == 1:#X button
-    #                 pause_flag = False
-    #             if joystick.get_button(2) == 1:#O button
-    #                 pygame.quit()
-    #                 quit()
-    #
-    #         if event.type == pygame.QUIT:
-    #             pygame.quit()
-    #             quit()
-    #         if event.type == pygame.KEYDOWN:
-    #             if event.key == pygame.K_c:
-    #                 pause_flag = False
-    #             elif event.key == pygame.K_q:
-    #                 pygame.quit()
-    #                 quit()
-        #clock.tick(60)
