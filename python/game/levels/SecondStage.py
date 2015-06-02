@@ -218,7 +218,7 @@ class SecondStage(Level):
 		end_plat.append([120, 20, 16100, HEIGHT, 3, 'bob'])
 
 		signs = [
-			[15800, HEIGHT,"Boss ==>"],
+			[15800, HEIGHT,"Boss ==>", 'red'],
 		]
 
 
@@ -410,7 +410,7 @@ class SecondStage(Level):
 			self.back_front_world_list.add(paral)
 
 		for elem in signs:
-			sign = Sign(elem[0],elem[1],elem[2])
+			sign = Sign(elem[0],elem[1],elem[2], elem[3])
 			self.pnj_list.add(sign)
 
 		for pnj in blobs:

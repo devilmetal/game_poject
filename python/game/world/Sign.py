@@ -3,12 +3,19 @@ import world_ressources
 import pygame
 
 class Sign(pygame.sprite.Sprite):
-    def __init__(self,x,y,text):
+    def __init__(self,x,y,text,color=''):
         world_ressources.init_sign_ressources()
         super(Sign, self).__init__()
         #We copy the image to blot the text on it.
-        self.image = world_ressources.sign_ressources['sign'][0].copy()
-        self.rect = world_ressources.sign_ressources['sign'][1].copy()
+        name = ''
+
+        if color == 'blue' or color == 'red' or color == 'yellow':
+            name = 'sign_' + color
+        else:
+            name = 'sign'
+
+        self.image = world_ressources.sign_ressources[name][0].copy()
+        self.rect = world_ressources.sign_ressources[name][1].copy()
         self.rect.x=x
         self.rect.y=y-self.rect.height+3
         #Blit text

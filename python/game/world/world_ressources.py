@@ -19,3 +19,6 @@ def init_parallax_ressources(width,height):
 def init_sign_ressources():
     if sign_ressources == {}:
         sign_ressources['sign'] = routines.load_png('world/sign/sign.png')
+        sign_ressources['sign_blue'] = routines.load_png('world/sign/sign_blue.png')
+        sign_ressources['sign_yellow'] = routines.load_png('world/sign/sign_yellow.png')
+        sign_ressources['sign_red'] = routines.load_png('world/sign/sign_red.png')

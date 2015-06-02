@@ -96,9 +96,9 @@ class FirstStage(Level):
 		end_plat.append([40, 20, 14580, HEIGHT, 2, 'little_fat'])
 
 		signs = [
-			[14380, HEIGHT-350,"Level 2"],
-			[15000, HEIGHT, "Boss"],
-			[14450, HEIGHT, "Level 3"]
+			[14380, HEIGHT-350,"Level 2", 'red'],
+			[15000, HEIGHT, "Boss ==>", 'blue'],
+			[14450, HEIGHT, "Level 3", 'yellow']
 		]
 
 		# checkpoints
@@ -354,7 +354,7 @@ class FirstStage(Level):
 
 		for elem in signs:
 			#elem[0]=x,elem[1]=y,elem[2]=text
-			sign = Sign(elem[0],elem[1],elem[2])
+			sign = Sign(elem[0],elem[1],elem[2],elem[3])
 			self.pnj_list.add(sign)
 
 
@@ -370,7 +370,7 @@ class FirstStage(Level):
 		"""Obstacle for other character than Hulk"""
 
 		if self.name == "bob" or self.name == "little_fat":
-			block = Platform(50, HEIGHT)
+			block = Platform(50, HEIGHT, False)
 			block.rect.x = 14700
 			block.rect.y = 0
 			block.player = self.player

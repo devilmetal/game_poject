@@ -161,7 +161,7 @@ class ThirdStage(Level):
 		end_plat.append([200, 20, 14500, HEIGHT, 3, 'little_fat'])
 
 		signs = [
-			[14300, HEIGHT,"Boss ==>"],
+			[14300, HEIGHT,"Boss ==>", 'yellow'],
 		]
 
 
@@ -306,7 +306,7 @@ class ThirdStage(Level):
 			self.back_front_world_list.add(paral)
 
 		for elem in signs:
-			sign = Sign(elem[0],elem[1],elem[2])
+			sign = Sign(elem[0],elem[1],elem[2],elem[3])
 			self.pnj_list.add(sign)
 
 		for pnj in fairy:
